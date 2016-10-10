@@ -1,0 +1,14 @@
+{
+  "name": "ui",
+  "version": "1.0.0",
+  "description": "The UI of Promise",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "bin.bai",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^1.13.2"
+  }
+}

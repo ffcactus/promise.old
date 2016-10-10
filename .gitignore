@@ -1,5 +1,8 @@
-**/target
+**/.metadata
+**/.recommenders
 **/.classpath
 **/.project
 **/.settings
+**/target
 **/node_modules
+**/build
