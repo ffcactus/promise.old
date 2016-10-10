@@ -1,6 +1,9 @@
-**/.metadata
-**/.recommenders
-**/.settings
-**/target
-**/node_modules
-**/build
+.metadata
+.settings/
+.metadata/
+.project
+dist/
+target/
+node_modules/
+build/
+
