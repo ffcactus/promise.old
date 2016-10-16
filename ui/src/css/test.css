@@ -1,0 +1,27 @@
+html {
+  height: 100%;
+}
+body {
+	background-color: black;
+	min-height: 100%;
+}
+#first {
+	background-color: blue;
+    border: 0 solid green;
+    padding: 25px;
+    margin: 25px;
+	margin-bottom: 0;
+}
+#second {
+	background-color: yellow;
+    border: 0 solid green;
+    padding: 25px;
+    margin: 25px;
+	margin-top: 0;
+}
+#inner {
+	background-color: red;
+    border: 25px solid green;
+    padding: 25px;
+    margin: 25px;	
+}
