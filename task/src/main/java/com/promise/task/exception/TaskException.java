@@ -1,7 +1,7 @@
 package com.promise.task.exception;
 
-import com.promise.constant.PromiseCategory;
-import com.promise.exception.PromiseException;
+import com.promise.common.constant.PromiseCategory;
+import com.promise.common.exception.PromiseException;
 
 public class TaskException extends PromiseException {
 
