@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.promise.task.Task;
 
 @RestController
-public class TaskController
+public class GetTaskController
 {
     @Autowired
     private Task task;
 
     @GetMapping("/task")
     @ResponseBody
-    String getTask()
+    public String getTask()
     {
         task.setName("" + Math.random());
         return task.getName();

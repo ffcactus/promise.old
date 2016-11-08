@@ -18,6 +18,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        
+        <dependency>
+            <groupId>com.promise</groupId>
+            <artifactId>com.promise.common</artifactId>
+            <version>0.1.0</version>
+        </dependency>
     </dependencies>
 
     <properties>

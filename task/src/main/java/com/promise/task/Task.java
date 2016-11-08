@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Task
 {
+	private String id;
     private String name;
 
     public Task()
@@ -15,7 +16,15 @@ public class Task
         System.out.println("Task object created.");
     }
 
-    public String getName()
+    public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName()
     {
         return name;
     }
