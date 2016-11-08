@@ -11,6 +11,7 @@ import com.promise.auth.db.ScopeDao;
 import com.promise.auth.db.ScopeDatabaseInterface;
 import com.promise.auth.dto.AccessPointDto;
 import com.promise.auth.dto.CreateScopeRequestDto;
+import com.promise.auth.dto.GetScopeResponseDto;
 
 @Component
 @Scope("singleton")
@@ -34,9 +35,9 @@ public class ScopeServiceImpl implements ScopeServiceInterface {
 	}
 
 	@Override
-	public void getScope(String id) {
+	public GetScopeResponseDto getScope(String id) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
