@@ -7,10 +7,12 @@ import com.promise.common.constant.PromiseCategory;
  * The object to represent the scope.
  *
  */
-public class Scope extends PromiseResource {
-	
-	public Scope(String id) {
-		super(id, PromiseCategory.SCOPE);
-	}
-	
+public class Scope extends PromiseResource
+{
+
+    public Scope(String id)
+    {
+        super(id, PromiseCategory.SCOPE);
+    }
+
 }

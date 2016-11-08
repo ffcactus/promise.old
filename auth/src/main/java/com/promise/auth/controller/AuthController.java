@@ -15,18 +15,21 @@ import com.promise.common.exception.InternelErrorException;
 
 @RestController
 @RequestMapping("/rest")
-public class AuthController {
+public class AuthController
+{
 
-	@PostMapping("/login")
-	Token getLoginSession(@RequestBody LoginDto loginDto)
-	        throws LoginFailException,
-	        InternelErrorException {
-		return null;
+    @PostMapping("/login")
+    Token getLoginSession(@RequestBody LoginDto loginDto)
+            throws LoginFailException,
+            InternelErrorException
+    {
+        return null;
 
-	}
+    }
 
-	@PostMapping("/auth")
-	void auth(@RequestHeader Map<String, String> head) {
-		System.out.println(head.toString());
-	}
+    @PostMapping("/auth")
+    void auth(@RequestHeader Map<String, String> head)
+    {
+        System.out.println(head.toString());
+    }
 }

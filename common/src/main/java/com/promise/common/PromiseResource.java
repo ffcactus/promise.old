@@ -8,34 +8,41 @@ import com.promise.common.constant.PromiseConstant;
  * attributes.
  *
  */
-public class PromiseResource {
+public class PromiseResource
+{
 
-	private String id;
-	private PromiseCategory category;
+    private String id;
+    private PromiseCategory category;
 
-	public PromiseResource(String id, PromiseCategory category) {
-		this.id = id;
-		this.category = category;
-	}
+    public PromiseResource(String id, PromiseCategory category)
+    {
+        this.id = id;
+        this.category = category;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public String getId()
+    {
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id)
+    {
+        this.id = id;
+    }
 
-	public String getUri() {
-		return PromiseConstant.makeUri(category, id);
-	}
+    public String getUri()
+    {
+        return PromiseConstant.makeUri(category, id);
+    }
 
-	public PromiseCategory getCategory() {
-		return category;
-	}
+    public PromiseCategory getCategory()
+    {
+        return category;
+    }
 
-	public void setCategory(PromiseCategory category) {
-		this.category = category;
-	}
+    public void setCategory(PromiseCategory category)
+    {
+        this.category = category;
+    }
 
 }

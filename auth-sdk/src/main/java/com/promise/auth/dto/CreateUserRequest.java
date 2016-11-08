@@ -3,14 +3,14 @@ package com.promise.auth.dto;
 /**
  * The object that represent the input to create a user.
  */
-public class CreateUserRequestDto
+public class CreateUserRequest
 {
     private String username;
     private char[] password;
     private String email;
     private String scopeUri;
 
-    public CreateUserRequestDto()
+    public CreateUserRequest()
     {
 
     }
@@ -45,11 +45,13 @@ public class CreateUserRequestDto
         this.email = email;
     }
 
-	public String getScopeUri() {
-		return scopeUri;
-	}
+    public String getScopeUri()
+    {
+        return scopeUri;
+    }
 
-	public void setScopeUri(String scopeUri) {
-		this.scopeUri = scopeUri;
-	}
+    public void setScopeUri(String scopeUri)
+    {
+        this.scopeUri = scopeUri;
+    }
 }

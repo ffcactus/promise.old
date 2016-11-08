@@ -44,12 +44,14 @@ public class User
         this.email = email;
     }
 
-	public List<Scope> getScope() {
-		return scope;
-	}
+    public List<Scope> getScope()
+    {
+        return scope;
+    }
 
-	public void setScope(List<Scope> scope) {
-		this.scope = scope;
-	}
+    public void setScope(List<Scope> scope)
+    {
+        this.scope = scope;
+    }
 
 }

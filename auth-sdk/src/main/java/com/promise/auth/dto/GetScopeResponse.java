@@ -1,13 +1,16 @@
-package com.promise.auth.db;
+package com.promise.auth.dto;
 
-public class ScopeDao
+import java.util.ArrayList;
+
+public class GetScopeResponse
 {
 
     private String id;
     private String name;
     private String description;
+    private ArrayList<AccessPoint> accessPointList;
 
-    public ScopeDao()
+    public GetScopeResponse()
     {
 
     }
@@ -40,6 +43,16 @@ public class ScopeDao
     public void setDescription(String description)
     {
         this.description = description;
+    }
+
+    public ArrayList<AccessPoint> getAccessPointList()
+    {
+        return accessPointList;
+    }
+
+    public void setAccessPointList(ArrayList<AccessPoint> accessPointList)
+    {
+        this.accessPointList = accessPointList;
     }
 
 }

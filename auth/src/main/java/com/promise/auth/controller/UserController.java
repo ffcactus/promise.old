@@ -8,24 +8,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.promise.auth.dto.CreateUserRequestDto;
-import com.promise.auth.dto.GetUserResponseDto;
-import com.promise.service.UserServiceInterface;
+import com.promise.auth.dto.CreateUserRequest;
+import com.promise.auth.dto.GetUserResponse;
+import com.promise.auth.service.UserServiceInterface;
 
 @RestController
 @RequestMapping("/rest")
-public class UserController {
+public class UserController
+{
 
-	@Autowired
-	private UserServiceInterface userInterface;
+    @Autowired
+    private UserServiceInterface userInterface;
 
-	@PostMapping("/user")
-	void createUser(@RequestBody CreateUserRequestDto dto) {
-		userInterface.createUser(dto);
-	}
+    @PostMapping("/user")
+    void createUser(@RequestBody CreateUserRequest dto)
+    {
+        userInterface.createUser(dto);
+    }
 
-	@GetMapping("/user/{id}")
-	GetUserResponseDto getUser(@PathVariable String id) {
-		return null;
-	}
+    @GetMapping("/user/{id}")
+    GetUserResponse getUser(@PathVariable String id)
+    {
+        return null;
+    }
 }

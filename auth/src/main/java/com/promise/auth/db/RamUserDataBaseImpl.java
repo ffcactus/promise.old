@@ -11,29 +11,35 @@ import com.promise.auth.util.PasswordUtil.HashResult;
 
 @Component
 @Scope("singleton")
-public class RamUserDataBaseImpl implements UserDatabaseInterface {
+public class RamUserDataBaseImpl implements UserDatabaseInterface
+{
 
-	Map<String, UserDao> ramDB = new HashMap<String, UserDao>();
+    Map<String, UserDao> ramDB = new HashMap<String, UserDao>();
 
-	@Override
-	public boolean isUsernameExist(String username) {
-		for (UserDao user : ramDB.values()) {
-			if (user.getUsername() == username) {
-				return true;
-			}
-		}
-		return false;
-	}
+    @Override
+    public boolean isUsernameExist(String username)
+    {
+        for (UserDao user : ramDB.values())
+        {
+            if (user.getUsername() == username)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	@Override
-	public void createUser(UserDao user) {
-		ramDB.put(UUID.randomUUID().toString(), user);
-	}
+    @Override
+    public void createUser(UserDao user)
+    {
+        ramDB.put(UUID.randomUUID().toString(), user);
+    }
 
-	@Override
-	public UserDao getUser(String username, HashResult hashResult) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public UserDao getUser(String username, HashResult hashResult)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }
