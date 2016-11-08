@@ -1,9 +1,13 @@
-package com.promise.exception;
+package com.promise.common.exception;
 
-import com.promise.constant.PromiseCategory;
+import com.promise.common.constant.PromiseCategory;
 
-public class PromiseException {
+public class PromiseException extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1444334913003287888L;
 	private Exception e;
 	private PromiseCategory category;
 	private String name;
@@ -22,6 +26,7 @@ public class PromiseException {
 
 	/**
 	 * Get the raw Java exception.
+	 * 
 	 * @return The raw Java exception.
 	 */
 	public Exception getE() {

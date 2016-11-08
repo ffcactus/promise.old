@@ -1,4 +1,4 @@
-package com.promise.constant;
+package com.promise.common.constant;
 
 public enum PromiseCategory {
 	/**
@@ -10,4 +10,5 @@ public enum PromiseCategory {
 	 * The Category of "Task".
 	 */
 	TASK,
+	SCOPE,
 }
