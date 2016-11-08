@@ -1,102 +1,82 @@
 package com.promise.service;
 
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.Charset;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.promise.auth.Token;
-import com.promise.auth.db.ScopeDao;
 import com.promise.auth.db.UserDao;
-import com.promise.auth.db.UserDateBaseInterface;
-import com.promise.auth.dto.ScopeDto;
-import com.promise.auth.dto.UserDto;
+import com.promise.auth.db.UserDatabaseInterface;
+import com.promise.auth.dto.CreateUserRequestDto;
+import com.promise.auth.dto.GetUserResponseDto;
+import com.promise.auth.util.PasswordUtil;
+import com.promise.auth.util.PasswordUtil.HashResult;
+import com.promise.common.exception.NoDBInstanceException;
 
-public class UserService implements UserInterface
-{
-    @Autowired
-    private UserDateBaseInterface userDatabaseInterface;
+public class UserServiceImpl implements UserServiceInterface {
 
-    @Override
-    public void createUser(UserDto userDto)
-    {
-        try
-        {
-            final MessageDigest md = MessageDigest.getInstance("SHA-256");
-            // should avoid the creation of String object, because it's immutable.
-            md.update(toBytes(userDto.getPassword()));
-            userDatabaseInterface.createUser(userDto2Dao(userDto, md.digest(), null));
-        }
-        catch (final NoSuchAlgorithmException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+	@Autowired
+	private UserDatabaseInterface userDatabaseInterface;
 
-    }
+	@Override
+	public void createUser(CreateUserRequestDto userDto) {
+		try {
+			userDatabaseInterface.createUser(createUserRequestDto2Dao(userDto));
+		} catch (final NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-    @Override
-    public UserDto getUser(Token token)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	}
 
-    @Override
-    public UserDto getUser(String username, char[] password)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@Override
+	public GetUserResponseDto getUser(Token token) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    /**
-     * Convert the char[] to byte[]
-     *
-     * @param chars
-     * @return
-     */
-    private byte[] toBytes(char[] chars)
-    {
-        final CharBuffer charBuffer = CharBuffer.wrap(chars);
-        final ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(charBuffer);
-        final byte[] bytes = Arrays.copyOfRange(
-                byteBuffer.array(),
-                byteBuffer.position(),
-                byteBuffer.limit());
-        Arrays.fill(charBuffer.array(), '\u0000'); // clear sensitive data
-        Arrays.fill(byteBuffer.array(), (byte) 0); // clear sensitive data
-        return bytes;
-    }
+	@Override
+	public GetUserResponseDto getUser(String username, char[] password)
+	        throws NoSuchAlgorithmException, NoDBInstanceException {
+		HashResult hashResult = PasswordUtil.hashPassword(password);
+		UserDao userDao = userDatabaseInterface.getUser(username, hashResult);
+		return dao2GetUserResponseDto(userDao);
+	}
 
-    /**
-     * Convert the user DTO to user DAO
-     *
-     * @param userDto
-     * @param hash
-     * @param salt
-     * @return
-     */
-    private UserDao userDto2Dao(UserDto userDto, byte[] hash, byte[] salt)
-    {
-        final UserDao userDao = new UserDao();
-        userDao.setUsername(userDto.getUsername());
-        userDao.setEmail(userDto.getEmail());
-        userDao.setSalt(salt);
-        userDao.setHash(hash);
-        final List<ScopeDao> scopeDaoList = new ArrayList<>();
-        for (final ScopeDto each : userDto.getScopeList())
-        {
-            scopeDaoList.add(new ScopeDao(each.getType(), each.getValue()));
-        }
-        userDao.setScopeList(scopeDaoList);
-        userDao.setId(null);
-        return userDao;
-    }
+	/**
+	 * Convert DAO to GetUserResponseDto.
+	 * 
+	 * @param input
+	 *            UserDao
+	 * @return GetUserResponseDto
+	 */
+	private GetUserResponseDto dao2GetUserResponseDto(UserDao input) {
+		final GetUserResponseDto ret = new GetUserResponseDto();
+		ret.setUsername(input.getUsername());
+		ret.setEmail(input.getEmail());
+		ret.setScopeUri(input.getScopeUri());
+		ret.setId(input.getId());
+		return ret;
+	}
 
+	/**
+	 * Convert CreateUserRequestDto to DAO
+	 *
+	 * @param input
+	 *            CreateUserRequestDto
+	 * @return UserDao
+	 * @throws NoSuchAlgorithmException
+	 */
+	private UserDao createUserRequestDto2Dao(CreateUserRequestDto input) throws NoSuchAlgorithmException {
+		final UserDao ret = new UserDao();
+		ret.setUsername(input.getUsername());
+		ret.setEmail(input.getEmail());
+		final HashResult hashResult = PasswordUtil.hashPassword(input.getPassword());
+		ret.setSalt(hashResult.getSalt());
+		ret.setHash(hashResult.getHash());
+		ret.setScopeUri(input.getScopeUri());
+		ret.setId(null);
+		return ret;
+	}
+	
 }

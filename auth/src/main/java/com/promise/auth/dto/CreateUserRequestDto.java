@@ -1,18 +1,16 @@
 package com.promise.auth.dto;
 
-import java.util.List;
-
 /**
  * The object that represent the input to create a user.
  */
-public class UserDto
+public class CreateUserRequestDto
 {
     private String username;
     private char[] password;
     private String email;
-    private List<ScopeDto> scopeList;
+    private String scopeUri;
 
-    public UserDto()
+    public CreateUserRequestDto()
     {
 
     }
@@ -47,13 +45,11 @@ public class UserDto
         this.email = email;
     }
 
-    public List<ScopeDto> getScopeList()
-    {
-        return scopeList;
-    }
+	public String getScopeUri() {
+		return scopeUri;
+	}
 
-    public void setScopeList(List<ScopeDto> scopeList)
-    {
-        this.scopeList = scopeList;
-    }
+	public void setScopeUri(String scopeUri) {
+		this.scopeUri = scopeUri;
+	}
 }

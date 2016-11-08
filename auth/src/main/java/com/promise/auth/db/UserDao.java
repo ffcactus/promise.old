@@ -1,82 +1,67 @@
 package com.promise.auth.db;
 
-import java.util.List;
-
 /**
  * Represent the User information in database.
  *
  */
-public class UserDao
-{
-    private String id;
-    private String username;
-    private String email;
-    private byte[] hashcode;
-    private byte[] salt;
-    private List<ScopeDao> scopeList;
+public class UserDao {
 
-    public UserDao()
-    {
+	private String id;
+	private String username;
+	private String email;
+	private byte[] hashcode;
+	private byte[] salt;
+	private String scopeUri;
 
-    }
+	public UserDao() {
 
-    public String getId()
-    {
-        return id;
-    }
+	}
 
-    public void setId(String id)
-    {
-        this.id = id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getUsername()
-    {
-        return username;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setUsername(String username)
-    {
-        this.username = username;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public String getEmail()
-    {
-        return email;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public byte[] getHashcode()
-    {
-        return hashcode;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setHash(byte[] hashcode)
-    {
-        this.hashcode = hashcode;
-    }
+	public byte[] getHashcode() {
+		return hashcode;
+	}
 
-    public byte[] getSalt()
-    {
-        return salt;
-    }
+	public void setHash(byte[] hashcode) {
+		this.hashcode = hashcode;
+	}
 
-    public void setSalt(byte[] salt)
-    {
-        this.salt = salt;
-    }
+	public byte[] getSalt() {
+		return salt;
+	}
 
-    public List<ScopeDao> getScopeList()
-    {
-        return scopeList;
-    }
+	public void setSalt(byte[] salt) {
+		this.salt = salt;
+	}
 
-    public void setScopeList(List<ScopeDao> scopeList)
-    {
-        this.scopeList = scopeList;
-    }
+	public String getScopeUri() {
+		return scopeUri;
+	}
+
+	public void setScopeUri(String scopeUri) {
+		this.scopeUri = scopeUri;
+	}
 }

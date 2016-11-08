@@ -1,20 +1,19 @@
 package com.promise.auth.dto;
 
 /**
- * The object that use in the transaction between the service and client.
+ * AccessPoint aggregates the scope object. <br>
+ * Examples:<br>
+ * { type: "uri", value: "/rest/user" }<br>
+ * { type: "scope", value: "/rest/scope/xxxx" }
+ *
  */
-public class ScopeDto {
+public class AccessPointDto {
 
 	private String type;
 	private String value;
 
-	public ScopeDto() {
+	public AccessPointDto() {
 
-	}
-
-	public ScopeDto(String type, String value) {
-		this.type = type;
-		this.value = value;
 	}
 
 	public String getType() {

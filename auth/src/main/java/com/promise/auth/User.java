@@ -1,11 +1,13 @@
 package com.promise.auth;
 
+import java.util.List;
+
 public class User
 {
     private String id;
     private String username;
     private String email;
-    private String credential;
+    private List<Scope> scope;
 
     public User()
     {
@@ -42,13 +44,12 @@ public class User
         this.email = email;
     }
 
-    public String getCredential()
-    {
-        return credential;
-    }
+	public List<Scope> getScope() {
+		return scope;
+	}
 
-    public void setCredential(String credential)
-    {
-        this.credential = credential;
-    }
+	public void setScope(List<Scope> scope) {
+		this.scope = scope;
+	}
+
 }
