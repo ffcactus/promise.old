@@ -1,8 +1,6 @@
 package com.promise.integrationtest.auth;
 
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,10 +10,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.http.ResponseEntity;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.promise.auth.dto.AccessPoint;
 import com.promise.auth.dto.CreateScopeRequest;
+import com.promise.auth.dto.CreateScopeResponse;
+import com.promise.integrationtest.util.HttpJsonClient;
 
 public class ScopeTest
 {
@@ -45,10 +45,16 @@ public class ScopeTest
     {
     }
 
+    /**
+     * Test the POST GET DELETE of scope.
+     *
+     * @throws Exception
+     */
     @Test
     public void testScopeCreation()
             throws Exception
     {
+        // Create the scope.
         final CreateScopeRequest request = new CreateScopeRequest();
         request.setName("Admin Scope");
         request.setDescription("Admin scope that have all the right.");
@@ -56,18 +62,29 @@ public class ScopeTest
         accessPointList.add(new AccessPoint(AccessPoint.URI, "rest/auth"));
         accessPointList.add(new AccessPoint(AccessPoint.URI, "rest/task"));
         request.setAccessPointList(accessPointList);
-        //this.restTemplate.postForObject("http://localhost:" + port + "/rest/scope", request, CreateScopeResponse.class);
-        final URL url = new URL(URI_HEAD);
-        final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setConnectTimeout(1000);
-        connection.setDoOutput(true);
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Accept", "application/json");
-        final OutputStream os = connection.getOutputStream();
-        os.write(new ObjectMapper().writeValueAsBytes(request));
-        os.flush();
-        Assert.assertEquals(HttpURLConnection.HTTP_CREATED, connection.getResponseCode());
 
+        // Test the creation result.
+        final ResponseEntity<CreateScopeResponse> postRet = HttpJsonClient.httpPost(URI_HEAD, request, CreateScopeResponse.class);
+        final CreateScopeResponse postResponse = postRet.getBody();
+        Assert.assertEquals(HttpURLConnection.HTTP_CREATED, postRet.getStatusCodeValue());
+        Assert.assertEquals(request.getName(), postResponse.getName());
+        Assert.assertEquals(request.getDescription(), postResponse.getDescription());
+        Assert.assertNotNull(postResponse.getId());
+        Assert.assertArrayEquals(request.getAccessPointList().toArray(), postResponse.getAccessPointList().toArray());
+
+        // Test the get result.
+        final ResponseEntity<CreateScopeResponse> getRet = HttpJsonClient
+                .httpGet(URI_HEAD + "/" + postResponse.getId(), CreateScopeResponse.class);
+        final CreateScopeResponse getResponse = getRet.getBody();
+        Assert.assertEquals(HttpURLConnection.HTTP_OK, getRet.getStatusCodeValue());
+        Assert.assertEquals(request.getName(), getResponse.getName());
+        Assert.assertEquals(request.getDescription(), getResponse.getDescription());
+        Assert.assertNotNull(getResponse.getId());
+        Assert.assertArrayEquals(request.getAccessPointList().toArray(), getResponse.getAccessPointList().toArray());
+
+        // Delete the scope.
+
+        // Check the result of non-existence.
     }
 
 }

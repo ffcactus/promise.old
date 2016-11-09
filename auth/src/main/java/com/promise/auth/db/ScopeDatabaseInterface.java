@@ -1,5 +1,7 @@
 package com.promise.auth.db;
 
+import java.util.List;
+
 import com.promise.common.exception.NoDBInstanceException;
 
 public interface ScopeDatabaseInterface
@@ -17,6 +19,8 @@ public interface ScopeDatabaseInterface
             throws NoDBInstanceException;
 
     public AccessPointDao createAccessPoint(AccessPointDao accessPoint);
+
+    public List<AccessPointDao> getScopeAccessPointList(String scopeId);
 
     public void removeAccessPoint(String id)
             throws NoDBInstanceException;

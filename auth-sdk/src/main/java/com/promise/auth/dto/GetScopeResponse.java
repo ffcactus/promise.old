@@ -1,6 +1,6 @@
 package com.promise.auth.dto;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class GetScopeResponse
 {
@@ -8,7 +8,7 @@ public class GetScopeResponse
     private String id;
     private String name;
     private String description;
-    private ArrayList<AccessPoint> accessPointList;
+    private List<AccessPoint> accessPointList;
 
     public GetScopeResponse()
     {
@@ -45,12 +45,12 @@ public class GetScopeResponse
         this.description = description;
     }
 
-    public ArrayList<AccessPoint> getAccessPointList()
+    public List<AccessPoint> getAccessPointList()
     {
         return accessPointList;
     }
 
-    public void setAccessPointList(ArrayList<AccessPoint> accessPointList)
+    public void setAccessPointList(List<AccessPoint> accessPointList)
     {
         this.accessPointList = accessPointList;
     }

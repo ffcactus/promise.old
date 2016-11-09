@@ -44,4 +44,13 @@ public class AccessPoint
     {
         this.value = value;
     }
+
+    @Override
+    public boolean equals(Object other)
+    {
+        return other instanceof AccessPoint
+                && type.equals(((AccessPoint) other).getType())
+                && value.equals(((AccessPoint) other).getValue());
+    }
+
 }

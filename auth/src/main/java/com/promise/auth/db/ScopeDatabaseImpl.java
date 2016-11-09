@@ -2,7 +2,9 @@ package com.promise.auth.db;
 
 import java.util.AbstractMap;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -82,6 +84,20 @@ public class ScopeDatabaseImpl implements ScopeDatabaseInterface
     }
 
     @Override
+    public List<AccessPointDao> getScopeAccessPointList(String scopeId)
+    {
+        final List<AccessPointDao> ret = new ArrayList<>();
+        for (final AbstractMap.SimpleEntry<String, String> each : bindingDB.values())
+        {
+            if (each.getValue().equals(scopeId))
+            {
+                ret.add(accessPointDB.get(each.getKey()));
+            }
+        }
+        return ret;
+    }
+
+    @Override
     public void removeAccessPoint(String id)
             throws NoDBInstanceException
     {
@@ -110,7 +126,7 @@ public class ScopeDatabaseImpl implements ScopeDatabaseInterface
         for (final String id : bindingDB.keySet())
         {
             final AbstractMap.SimpleEntry<String, String> c = bindingDB.get(id);
-            if (c.getKey() == accessPointId && c.getValue() == scopeId)
+            if (c.getKey().equals(accessPointId) && c.getValue().equals(scopeId))
             {
                 bindingDB.remove(id);
             }
