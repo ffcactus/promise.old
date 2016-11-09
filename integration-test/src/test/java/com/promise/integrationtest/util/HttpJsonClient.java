@@ -109,6 +109,8 @@ public class HttpJsonClient
                     br.close();
                     final ObjectMapper mapper = new ObjectMapper();
                     return new ResponseEntity<T>(mapper.readValue(sb.toString(), responseClass), HttpStatus.valueOf(status));
+                case HttpURLConnection.HTTP_NOT_FOUND:
+                    return new ResponseEntity<T>((T) null, HttpStatus.valueOf(status));
             }
         }
         catch (final MalformedURLException ex)

@@ -72,19 +72,28 @@ public class ScopeTest
         Assert.assertNotNull(postResponse.getId());
         Assert.assertArrayEquals(request.getAccessPointList().toArray(), postResponse.getAccessPointList().toArray());
 
-        // Test the get result.
-        final ResponseEntity<CreateScopeResponse> getRet = HttpJsonClient
+        // Test create a scope of the which the name is exist.
+        // TODO
+
+        // Test the get a exist scope.
+        final ResponseEntity<CreateScopeResponse> getRet0 = HttpJsonClient
                 .httpGet(URI_HEAD + "/" + postResponse.getId(), CreateScopeResponse.class);
-        final CreateScopeResponse getResponse = getRet.getBody();
-        Assert.assertEquals(HttpURLConnection.HTTP_OK, getRet.getStatusCodeValue());
+        final CreateScopeResponse getResponse = getRet0.getBody();
+        Assert.assertEquals(HttpURLConnection.HTTP_OK, getRet0.getStatusCodeValue());
         Assert.assertEquals(request.getName(), getResponse.getName());
         Assert.assertEquals(request.getDescription(), getResponse.getDescription());
         Assert.assertNotNull(getResponse.getId());
         Assert.assertArrayEquals(request.getAccessPointList().toArray(), getResponse.getAccessPointList().toArray());
 
+        // Test get a non-exist scope.
+        final ResponseEntity<CreateScopeResponse> getRet1 = HttpJsonClient
+                .httpGet(URI_HEAD + "/xxxxx", CreateScopeResponse.class);
+        Assert.assertEquals(HttpURLConnection.HTTP_NOT_FOUND, getRet1.getStatusCodeValue());
+        Assert.assertNull(getRet1.getBody());
         // Delete the scope.
+        // TODO
 
-        // Check the result of non-existence.
+        // Check the result of non-exist scope.
     }
 
 }
