@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.promise.auth.dto.CreateScopeRequest;
 import com.promise.auth.dto.CreateScopeResponse;
 import com.promise.auth.dto.GetScopeResponse;
+import com.promise.auth.service.AuthServiceStatistic;
 import com.promise.auth.service.ScopeServiceInterface;
 import com.promise.common.constant.PromiseCategory;
 import com.promise.common.exception.InvalidRequestBodyException;
@@ -26,10 +27,14 @@ public class ScopeController
     @Autowired
     private ScopeServiceInterface service;
 
+    @Autowired
+    private AuthServiceStatistic statistic;
+
     @PostMapping("/scope")
     public ResponseEntity<CreateScopeResponse> createScope(@RequestBody CreateScopeRequest scope)
             throws InvalidRequestBodyException
     {
+        statistic.recodeUri("/scope POST");
         if (!scope.isValidRequest())
         {
             throw new InvalidRequestBodyException(null, PromiseCategory.SCOPE);
@@ -40,6 +45,7 @@ public class ScopeController
     @GetMapping("/scope/{id}")
     public ResponseEntity<GetScopeResponse> getScope(@PathVariable String id)
     {
+        statistic.recodeUri("/scope{id} GET");
         try
         {
             return new ResponseEntity<>(service.getScope(id), HttpStatus.OK);
@@ -48,5 +54,12 @@ public class ScopeController
         {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/scope/statistic")
+    public ResponseEntity<AuthServiceStatistic> getStatistic()
+    {
+        statistic.recodeUri("/scope/statistic GET");
+        return new ResponseEntity<>(statistic, HttpStatus.OK);
     }
 }
