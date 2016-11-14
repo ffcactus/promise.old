@@ -2,27 +2,18 @@ package com.promise.auth.dto;
 
 import java.util.List;
 
-public class GetScopeResponse
-{
+import com.promise.common.PromiseResource;
+import com.promise.common.constant.PromiseCategory;
 
-    private String id;
+public class GetScopeResponse extends PromiseResource
+{
     private String name;
     private String description;
     private List<AccessPoint> accessPointList;
 
     public GetScopeResponse()
     {
-
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String id)
-    {
-        this.id = id;
+        setCategory(PromiseCategory.SCOPE);
     }
 
     public String getName()

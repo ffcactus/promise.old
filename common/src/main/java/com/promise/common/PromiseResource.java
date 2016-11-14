@@ -1,5 +1,6 @@
 package com.promise.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.promise.common.constant.PromiseCategory;
 import com.promise.common.constant.PromiseConstant;
 
@@ -12,7 +13,13 @@ public class PromiseResource
 {
 
     private String id;
+    @JsonIgnore
     private PromiseCategory category;
+
+    public PromiseResource()
+    {
+
+    }
 
     public PromiseResource(String id, PromiseCategory category)
     {

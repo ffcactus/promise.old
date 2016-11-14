@@ -47,6 +47,13 @@ public class ScopeDatabaseImpl implements ScopeDatabaseInterface
     }
 
     @Override
+    public List<ScopeDao> getScopeList(int start, int count)
+    {
+        final List<ScopeDao> ret = new ArrayList<>(scopeDB.values());
+        return ret;
+    }
+
+    @Override
     public void deleteScope(String id)
             throws NoDBInstanceException
     {

@@ -2,9 +2,10 @@ package com.promise.auth.dto;
 
 import java.util.List;
 
-public class CreateScopeResponse
+import com.promise.common.PromiseResource;
+
+public class CreateScopeResponse extends PromiseResource
 {
-    private String id;
     private String name;
     private String description;
     private List<AccessPoint> accessPointList;
@@ -12,16 +13,6 @@ public class CreateScopeResponse
     public CreateScopeResponse()
     {
 
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String id)
-    {
-        this.id = id;
     }
 
     public String getName()

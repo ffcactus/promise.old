@@ -15,6 +15,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class HttpJsonClient
 {
+    public static final int CONNECTION_TIMEOUT = 1000;
+    public static final int READ_TIMEOUT = 1000;
+
     public static <T, E> ResponseEntity<T> httpPost(String url, E request, Class<T> responseClass)
     {
         HttpURLConnection c = null;
@@ -23,11 +26,10 @@ public class HttpJsonClient
             final URL u = new URL(url);
             c = (HttpURLConnection) u.openConnection();
             c.setRequestMethod("POST");
-            c.setConnectTimeout(1000);
-            c.setReadTimeout(1000);
+            c.setConnectTimeout(CONNECTION_TIMEOUT);
+            c.setReadTimeout(READ_TIMEOUT);
             c.setDoInput(true);
             c.setDoOutput(true);
-            c.setRequestMethod("POST");
             c.setRequestProperty("Content-Type", "application/json");
             c.setRequestProperty("Accept", "application/json");
             c.setUseCaches(false);
@@ -85,11 +87,10 @@ public class HttpJsonClient
         {
             final URL u = new URL(url);
             c = (HttpURLConnection) u.openConnection();
-            c.setRequestMethod("POST");
-            c.setConnectTimeout(1000);
-            c.setReadTimeout(1000);
-            c.setDoInput(true);
             c.setRequestMethod("GET");
+            c.setConnectTimeout(CONNECTION_TIMEOUT);
+            c.setReadTimeout(READ_TIMEOUT);
+            c.setDoInput(true);
             c.setRequestProperty("Content-Type", "application/json");
             c.setRequestProperty("Accept", "application/json");
             c.setUseCaches(false);
@@ -111,6 +112,63 @@ public class HttpJsonClient
                     return new ResponseEntity<T>(mapper.readValue(sb.toString(), responseClass), HttpStatus.valueOf(status));
                 case HttpURLConnection.HTTP_NOT_FOUND:
                     return new ResponseEntity<T>((T) null, HttpStatus.valueOf(status));
+            }
+        }
+        catch (final MalformedURLException ex)
+        {
+            System.out.println(ex);
+        }
+        catch (final IOException ex)
+        {
+            System.out.println(ex);
+        }
+        finally
+        {
+            if (c != null)
+            {
+                try
+                {
+                    c.disconnect();
+                }
+                catch (final Exception ex)
+                {
+                    System.out.println(ex);
+                }
+            }
+        }
+        return null;
+    }
+
+    public static ResponseEntity<String> httpDelete(String url)
+    {
+        HttpURLConnection c = null;
+        try
+        {
+            final URL u = new URL(url);
+            c = (HttpURLConnection) u.openConnection();
+            c.setRequestMethod("DELETE");
+            c.setConnectTimeout(CONNECTION_TIMEOUT);
+            c.setReadTimeout(READ_TIMEOUT);
+            c.setDoInput(true);
+            c.setRequestProperty("Content-Type", "application/json");
+            c.setRequestProperty("Accept", "application/json");
+            c.setUseCaches(false);
+            c.setAllowUserInteraction(false);
+            c.connect();
+            final int status = c.getResponseCode();
+            switch (status)
+            {
+                case HttpURLConnection.HTTP_ACCEPTED:
+                case HttpURLConnection.HTTP_NOT_FOUND:
+                    final BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
+                    final StringBuilder sb = new StringBuilder();
+                    String line;
+                    while ((line = br.readLine()) != null)
+                    {
+                        sb.append(line + "\n");
+                    }
+                    br.close();
+                    return new ResponseEntity<String>(sb.toString(), HttpStatus.valueOf(status));
             }
         }
         catch (final MalformedURLException ex)

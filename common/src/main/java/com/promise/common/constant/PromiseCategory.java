@@ -11,5 +11,6 @@ public enum PromiseCategory
      * The Category of "Task".
      */
     TASK,
+    USER,
     SCOPE,
 }

@@ -12,6 +12,8 @@ public interface ScopeDatabaseInterface
     public ScopeDao getScope(String id)
             throws NoDBInstanceException;
 
+    public List<ScopeDao> getScopeList(int start, int count);
+
     public void deleteScope(String id)
             throws NoDBInstanceException;
 

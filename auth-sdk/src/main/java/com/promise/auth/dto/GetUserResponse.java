@@ -1,22 +1,22 @@
 package com.promise.auth.dto;
 
+import com.promise.common.PromiseResource;
+import com.promise.common.constant.PromiseCategory;
+
 /**
  * The object to represent the response of getting a user.
- * 
- * @author b00392874
+ *
  *
  */
-public class GetUserResponse
+public class GetUserResponse extends PromiseResource
 {
-
-    private String id;
     private String username;
     private String email;
     private String scopeUri;
 
     public GetUserResponse()
     {
-
+        setCategory(PromiseCategory.USER);
     }
 
     public String getUsername()
@@ -49,13 +49,4 @@ public class GetUserResponse
         this.scopeUri = scopeUri;
     }
 
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String id)
-    {
-        this.id = id;
-    }
 }

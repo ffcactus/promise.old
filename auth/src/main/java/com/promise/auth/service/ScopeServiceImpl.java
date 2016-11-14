@@ -13,6 +13,7 @@ import com.promise.auth.db.ScopeDatabaseInterface;
 import com.promise.auth.dto.AccessPoint;
 import com.promise.auth.dto.CreateScopeRequest;
 import com.promise.auth.dto.CreateScopeResponse;
+import com.promise.auth.dto.GetScopeListResponse;
 import com.promise.auth.dto.GetScopeResponse;
 import com.promise.common.exception.NoDBInstanceException;
 
@@ -55,6 +56,38 @@ public class ScopeServiceImpl implements ScopeServiceInterface
         final ScopeDao scopeDao = db.getScope(id);
         final List<AccessPointDao> accessPointDaoList = db.getScopeAccessPointList(id);
         return convertToGetScopeResponse(scopeDao, accessPointDaoList);
+    }
+
+    @Override
+    public void deleteScope(String id)
+            throws NoDBInstanceException
+    {
+        db.deleteScope(id);
+    }
+
+    @Override
+    public GetScopeListResponse getScopeList(int start, int count)
+    {
+        final List<ScopeDao> scopeDaoList = db.getScopeList(start, count);
+        final GetScopeListResponse ret = new GetScopeListResponse();
+
+        // The start point should follow the start point in the request?
+        ret.setStart(start);
+        ret.setCount(scopeDaoList.size());
+        final List<GetScopeResponse> memberList = new ArrayList<>();
+        for (final ScopeDao each : scopeDaoList)
+        {
+            try
+            {
+                memberList.add(getScope(each.getId()));
+            }
+            catch (final NoDBInstanceException e)
+            {
+                System.out.println("Failed to get scope by ID.");
+            }
+        }
+        ret.setMemberList(memberList);
+        return ret;
     }
 
     @Override
