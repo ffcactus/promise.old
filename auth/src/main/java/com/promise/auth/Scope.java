@@ -12,7 +12,8 @@ public class Scope extends PromiseResource
 
     public Scope(String id)
     {
-        super(id, PromiseCategory.SCOPE);
+        setId(id);
+        setCategory(PromiseCategory.SCOPE);
     }
 
 }

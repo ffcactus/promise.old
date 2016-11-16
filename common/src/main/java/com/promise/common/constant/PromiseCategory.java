@@ -2,15 +2,20 @@ package com.promise.common.constant;
 
 public enum PromiseCategory
 {
-    /**
-     * The Category of "Authentication and Authorization".
-     */
-    AA,
+    TASK ("task"),
+    USER ("user"),
+    SCOPE ("scope"),
+    AA ("aa");
 
-    /**
-     * The Category of "Task".
-     */
-    TASK,
-    USER,
-    SCOPE,
+    private final String value;
+
+    PromiseCategory(String value)
+    {
+        this.value = value;
+    }
+
+    public String getValue()
+    {
+        return value;
+    }
 }

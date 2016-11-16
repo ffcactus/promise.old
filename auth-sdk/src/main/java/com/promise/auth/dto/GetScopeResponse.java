@@ -3,7 +3,6 @@ package com.promise.auth.dto;
 import java.util.List;
 
 import com.promise.common.PromiseResource;
-import com.promise.common.constant.PromiseCategory;
 
 public class GetScopeResponse extends PromiseResource
 {
@@ -13,7 +12,7 @@ public class GetScopeResponse extends PromiseResource
 
     public GetScopeResponse()
     {
-        setCategory(PromiseCategory.SCOPE);
+
     }
 
     public String getName()
@@ -45,5 +44,4 @@ public class GetScopeResponse extends PromiseResource
     {
         this.accessPointList = accessPointList;
     }
-
 }

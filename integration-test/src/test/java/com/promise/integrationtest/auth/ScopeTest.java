@@ -22,7 +22,7 @@ import com.promise.integrationtest.util.HttpJsonClient;
 
 public class ScopeTest
 {
-    private static final String URI_HEAD = "http://139.129.234.210:8080/auth/rest/scope";
+    private static final String URI_HEAD = "http://139.129.234.210/rest/scope";
     private static final CreateScopeRequest createRequest0;
     private static final CreateScopeRequest createRequest1;
     private static final List<AccessPoint> accessPointList0;
@@ -33,7 +33,7 @@ public class ScopeTest
         createRequest0 = new CreateScopeRequest();
         createRequest0.setName("Admin Scope");
         createRequest0.setDescription("Admin scope that has all the rights.");
-        accessPointList0 = new ArrayList<AccessPoint>();
+        accessPointList0 = new ArrayList<>();
         accessPointList0.add(new AccessPoint(AccessPoint.URI, "rest/auth"));
         accessPointList0.add(new AccessPoint(AccessPoint.URI, "rest/task"));
         accessPointList0.add(new AccessPoint(AccessPoint.URI, "rest/scope"));
@@ -42,7 +42,7 @@ public class ScopeTest
         createRequest1 = new CreateScopeRequest();
         createRequest1.setName("User Scope");
         createRequest1.setDescription("User scope that doesn't have all the rights.");
-        accessPointList1 = new ArrayList<AccessPoint>();
+        accessPointList1 = new ArrayList<>();
         accessPointList1.add(new AccessPoint(AccessPoint.URI, "rest/auth"));
         accessPointList1.add(new AccessPoint(AccessPoint.URI, "rest/task"));
         createRequest1.setAccessPointList(accessPointList1);
@@ -79,6 +79,7 @@ public class ScopeTest
                 .httpPost(URI_HEAD, createRequest0, CreateScopeResponse.class);
         final CreateScopeResponse postResponse = postRet.getBody();
         Assert.assertEquals(HttpURLConnection.HTTP_CREATED, postRet.getStatusCodeValue());
+        CommonTestUtil.assertPromiseResource(postResponse);
         Assert.assertEquals(createRequest0.getName(), postResponse.getName());
         Assert.assertEquals(createRequest0.getDescription(), postResponse.getDescription());
         Assert.assertNotNull(postResponse.getId());
@@ -133,6 +134,7 @@ public class ScopeTest
         final GetScopeResponse getResponse = getScopeRet.getBody();
 
         Assert.assertEquals(HttpURLConnection.HTTP_OK, getScopeRet.getStatusCodeValue());
+        CommonTestUtil.assertPromiseResource(postResponse);
         Assert.assertEquals(createRequest0.getName(), getResponse.getName());
         Assert.assertEquals(createRequest0.getDescription(), getResponse.getDescription());
         Assert.assertNotNull(getResponse.getId());
@@ -173,18 +175,20 @@ public class ScopeTest
 
         Assert.assertEquals(HttpURLConnection.HTTP_OK, getScopeListRet.getStatusCodeValue());
         Assert.assertEquals(0, getScopeListResponse.getStart());
-        Assert.assertEquals(-1, getScopeListResponse.getCount());
+        Assert.assertEquals(2, getScopeListResponse.getCount());
         Assert.assertEquals(2, getScopeListResponse.getMemberList().size());
 
-        if (getScopeListResponse.getMemberList().get(0).getId() == postResponse0.getId())
+        if (getScopeListResponse.getMemberList().get(0).getId().equals(postResponse0.getId()))
         {
             final GetScopeResponse t0 = getScopeListResponse.getMemberList().get(0);
+            CommonTestUtil.assertPromiseResource(t0);
             Assert.assertEquals(createRequest0.getName(), t0.getName());
             Assert.assertEquals(createRequest0.getDescription(), t0.getDescription());
             Assert.assertNotNull(t0.getId());
             Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest0.getAccessPointList(), t0.getAccessPointList()));
 
-            final GetScopeResponse t1 = getScopeListResponse.getMemberList().get(0);
+            final GetScopeResponse t1 = getScopeListResponse.getMemberList().get(1);
+            CommonTestUtil.assertPromiseResource(t1);
             Assert.assertEquals(createRequest1.getName(), t1.getName());
             Assert.assertEquals(createRequest1.getDescription(), t1.getDescription());
             Assert.assertNotNull(t1.getId());
@@ -193,12 +197,14 @@ public class ScopeTest
         else
         {
             final GetScopeResponse t0 = getScopeListResponse.getMemberList().get(0);
+            CommonTestUtil.assertPromiseResource(t0);
             Assert.assertEquals(createRequest1.getName(), t0.getName());
             Assert.assertEquals(createRequest1.getDescription(), t0.getDescription());
             Assert.assertNotNull(t0.getId());
             Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest1.getAccessPointList(), t0.getAccessPointList()));
 
-            final GetScopeResponse t1 = getScopeListResponse.getMemberList().get(0);
+            final GetScopeResponse t1 = getScopeListResponse.getMemberList().get(1);
+            CommonTestUtil.assertPromiseResource(t1);
             Assert.assertEquals(createRequest0.getName(), t1.getName());
             Assert.assertEquals(createRequest0.getDescription(), t1.getDescription());
             Assert.assertNotNull(t1.getId());

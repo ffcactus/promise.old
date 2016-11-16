@@ -1,5 +1,7 @@
 package com.promise.auth.db;
 
+import java.util.UUID;
+
 public class AccessPointDao
 {
 
@@ -10,6 +12,18 @@ public class AccessPointDao
     public AccessPointDao()
     {
 
+    }
+
+    /**
+     * Make an instance that the ID is set.
+     * 
+     * @return
+     */
+    public AccessPointDao makeInstance()
+    {
+        final AccessPointDao ret = new AccessPointDao();
+        ret.setId(UUID.randomUUID().toString());
+        return ret;
     }
 
     public String getId()

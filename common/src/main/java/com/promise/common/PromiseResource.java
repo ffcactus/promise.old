@@ -1,8 +1,6 @@
 package com.promise.common;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.promise.common.constant.PromiseCategory;
-import com.promise.common.constant.PromiseConstant;
 
 /**
  * Represent the common object. These objects will contain URI and category
@@ -13,18 +11,12 @@ public class PromiseResource
 {
 
     private String id;
-    @JsonIgnore
     private PromiseCategory category;
+    private String uri;
 
     public PromiseResource()
     {
 
-    }
-
-    public PromiseResource(String id, PromiseCategory category)
-    {
-        this.id = id;
-        this.category = category;
     }
 
     public String getId()
@@ -39,7 +31,7 @@ public class PromiseResource
 
     public String getUri()
     {
-        return PromiseConstant.makeUri(category, id);
+        return uri;
     }
 
     public PromiseCategory getCategory()
@@ -50,6 +42,34 @@ public class PromiseResource
     public void setCategory(PromiseCategory category)
     {
         this.category = category;
+    }
+
+    public void setUri(String uri)
+    {
+        this.uri = uri;
+    }
+
+    /**
+     * Copy ID, category and URI.
+     *
+     * @param to
+     * @param from
+     */
+    public static void attributeCopy(PromiseResource to, PromiseResource from)
+    {
+        to.id = from.id;
+        to.category = from.category;
+        to.uri = from.uri;
+    }
+
+    /**
+     * Generate URI from category and ID.
+     *
+     * @param r
+     */
+    public static void makeUri(PromiseResource r)
+    {
+        r.uri = "/rest/" + r.category.getValue() + "/" + r.id;
     }
 
 }

@@ -15,6 +15,8 @@ import com.promise.auth.dto.CreateScopeRequest;
 import com.promise.auth.dto.CreateScopeResponse;
 import com.promise.auth.dto.GetScopeListResponse;
 import com.promise.auth.dto.GetScopeResponse;
+import com.promise.common.PromiseResource;
+import com.promise.common.constant.PromiseCategory;
 import com.promise.common.exception.NoDBInstanceException;
 
 @Component
@@ -29,9 +31,7 @@ public class ScopeServiceImpl implements ScopeServiceInterface
     public CreateScopeResponse createScope(CreateScopeRequest dto)
     {
         CreateScopeResponse ret;
-        ScopeDao scopeDao = new ScopeDao();
-        scopeDao.setName(dto.getName());
-        scopeDao.setDescription(dto.getDescription());
+        ScopeDao scopeDao = ScopeDao.makeInstance(dto);
         scopeDao = db.createScope(scopeDao);
         ret = convertScopeDao(scopeDao);
         // AcessPoint type is the same in the request and response.
@@ -108,7 +108,8 @@ public class ScopeServiceImpl implements ScopeServiceInterface
     private CreateScopeResponse convertScopeDao(ScopeDao input)
     {
         final CreateScopeResponse ret = new CreateScopeResponse();
-        ret.setId(input.getId());
+        PromiseResource.attributeCopy(ret, input);
+        ret.setCategory(PromiseCategory.SCOPE);
         ret.setName(input.getName());
         ret.setDescription(input.getDescription());
         return ret;
@@ -117,7 +118,7 @@ public class ScopeServiceImpl implements ScopeServiceInterface
     private GetScopeResponse convertToGetScopeResponse(ScopeDao scopeDao, List<AccessPointDao> accessPointDaoList)
     {
         final GetScopeResponse ret = new GetScopeResponse();
-        ret.setId(scopeDao.getId());
+        PromiseResource.attributeCopy(ret, scopeDao);
         ret.setName(scopeDao.getName());
         ret.setDescription(scopeDao.getDescription());
         final List<AccessPoint> accessPointList = new ArrayList<>();

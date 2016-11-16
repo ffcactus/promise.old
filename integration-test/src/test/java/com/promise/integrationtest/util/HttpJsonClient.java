@@ -52,7 +52,7 @@ public class HttpJsonClient
                     }
                     br.close();
                     final ObjectMapper mapper = new ObjectMapper();
-                    return new ResponseEntity<T>(mapper.readValue(sb.toString(), responseClass), HttpStatus.valueOf(status));
+                    return new ResponseEntity<>(mapper.readValue(sb.toString(), responseClass), HttpStatus.valueOf(status));
             }
         }
         catch (final MalformedURLException ex)
@@ -109,9 +109,9 @@ public class HttpJsonClient
                     }
                     br.close();
                     final ObjectMapper mapper = new ObjectMapper();
-                    return new ResponseEntity<T>(mapper.readValue(sb.toString(), responseClass), HttpStatus.valueOf(status));
+                    return new ResponseEntity<>(mapper.readValue(sb.toString(), responseClass), HttpStatus.valueOf(status));
                 case HttpURLConnection.HTTP_NOT_FOUND:
-                    return new ResponseEntity<T>((T) null, HttpStatus.valueOf(status));
+                    return new ResponseEntity<>((T) null, HttpStatus.valueOf(status));
             }
         }
         catch (final MalformedURLException ex)
@@ -150,6 +150,7 @@ public class HttpJsonClient
             c.setConnectTimeout(CONNECTION_TIMEOUT);
             c.setReadTimeout(READ_TIMEOUT);
             c.setDoInput(true);
+            c.setDoOutput(true);
             c.setRequestProperty("Content-Type", "application/json");
             c.setRequestProperty("Accept", "application/json");
             c.setUseCaches(false);
@@ -159,7 +160,6 @@ public class HttpJsonClient
             switch (status)
             {
                 case HttpURLConnection.HTTP_ACCEPTED:
-                case HttpURLConnection.HTTP_NOT_FOUND:
                     final BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
                     final StringBuilder sb = new StringBuilder();
                     String line;
@@ -168,7 +168,9 @@ public class HttpJsonClient
                         sb.append(line + "\n");
                     }
                     br.close();
-                    return new ResponseEntity<String>(sb.toString(), HttpStatus.valueOf(status));
+                    return new ResponseEntity<>(sb.toString(), HttpStatus.valueOf(status));
+                case HttpURLConnection.HTTP_NOT_FOUND:
+                    return new ResponseEntity<>(null, HttpStatus.valueOf(status));
             }
         }
         catch (final MalformedURLException ex)

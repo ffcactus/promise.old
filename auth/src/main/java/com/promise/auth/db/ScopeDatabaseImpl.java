@@ -26,9 +26,7 @@ public class ScopeDatabaseImpl implements ScopeDatabaseInterface
     @Override
     public ScopeDao createScope(ScopeDao scopeDao)
     {
-        final String id = UUID.randomUUID().toString();
-        scopeDao.setId(id);
-        scopeDB.put(id, scopeDao);
+        scopeDB.put(scopeDao.getId(), scopeDao);
         return scopeDao;
     }
 
@@ -84,9 +82,7 @@ public class ScopeDatabaseImpl implements ScopeDatabaseInterface
     @Override
     public AccessPointDao createAccessPoint(AccessPointDao accessPoint)
     {
-        final String id = UUID.randomUUID().toString();
-        accessPoint.setId(id);
-        accessPointDB.put(id, accessPoint);
+        accessPointDB.put(accessPoint.getId(), accessPoint);
         return accessPoint;
     }
 
