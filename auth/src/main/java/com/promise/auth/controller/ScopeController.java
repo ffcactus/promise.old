@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.promise.auth.dto.CreateScopeRequest;
-import com.promise.auth.dto.CreateScopeResponse;
-import com.promise.auth.dto.GetScopeListResponse;
-import com.promise.auth.dto.GetScopeResponse;
+import com.promise.auth.sdk.dto.CreateScopeRequest;
+import com.promise.auth.sdk.dto.CreateScopeResponse;
+import com.promise.auth.sdk.dto.GetScopeListResponse;
+import com.promise.auth.sdk.dto.GetScopeResponse;
 import com.promise.auth.service.AuthServiceStatistic;
 import com.promise.auth.service.ScopeServiceInterface;
 import com.promise.common.constant.PromiseCategory;

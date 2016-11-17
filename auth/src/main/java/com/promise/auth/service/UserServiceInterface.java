@@ -3,8 +3,9 @@ package com.promise.auth.service;
 import java.security.NoSuchAlgorithmException;
 
 import com.promise.auth.Token;
-import com.promise.auth.dto.CreateUserRequest;
-import com.promise.auth.dto.GetUserResponse;
+import com.promise.auth.sdk.dto.CreateUserRequest;
+import com.promise.auth.sdk.dto.CreateUserResponse;
+import com.promise.auth.sdk.dto.GetUserResponse;
 import com.promise.common.exception.NoDBInstanceException;
 
 public interface UserServiceInterface
@@ -12,15 +13,15 @@ public interface UserServiceInterface
 
     /**
      * Create a user.
-     * 
-     * @param user
-     *        The UserDto
+     *
+     * @param user The DTO that represents the user to create.
+     * @return The DTO that represents the user created.
      */
-    public void createUser(CreateUserRequest user);
+    public CreateUserResponse createUser(CreateUserRequest user);
 
     /**
      * Get user by token.
-     * 
+     *
      * @param token
      *        The token that can retrieve the user.
      * @return The UserDto.
@@ -29,7 +30,7 @@ public interface UserServiceInterface
 
     /**
      * Get user by username and password.
-     * 
+     *
      * @param username
      *        The username of the user.
      * @param password

@@ -1,8 +1,9 @@
-package com.promise.auth.dto;
+package com.promise.auth.sdk.dto;
 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.promise.auth.sdk.AccessPoint;
 import com.promise.common.PromiseHttpRequest;
 
 public class CreateScopeRequest extends PromiseHttpRequest

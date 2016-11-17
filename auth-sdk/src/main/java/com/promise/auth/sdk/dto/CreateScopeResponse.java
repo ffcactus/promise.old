@@ -1,16 +1,17 @@
-package com.promise.auth.dto;
+package com.promise.auth.sdk.dto;
 
 import java.util.List;
 
+import com.promise.auth.sdk.AccessPoint;
 import com.promise.common.PromiseResource;
 
-public class GetScopeResponse extends PromiseResource
+public class CreateScopeResponse extends PromiseResource
 {
     private String name;
     private String description;
     private List<AccessPoint> accessPointList;
 
-    public GetScopeResponse()
+    public CreateScopeResponse()
     {
 
     }
@@ -44,4 +45,5 @@ public class GetScopeResponse extends PromiseResource
     {
         this.accessPointList = accessPointList;
     }
+
 }

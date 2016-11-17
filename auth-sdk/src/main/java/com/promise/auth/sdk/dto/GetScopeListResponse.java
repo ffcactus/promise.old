@@ -1,4 +1,4 @@
-package com.promise.auth.dto;
+package com.promise.auth.sdk.dto;
 
 import java.util.List;
 

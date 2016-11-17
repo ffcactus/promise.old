@@ -1,4 +1,4 @@
-package com.promise.auth.dto;
+package com.promise.auth.sdk;
 
 /**
  * AccessPoint aggregates the scope object. <br>

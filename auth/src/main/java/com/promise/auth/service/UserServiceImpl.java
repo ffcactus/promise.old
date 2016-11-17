@@ -9,8 +9,9 @@ import org.springframework.stereotype.Component;
 import com.promise.auth.Token;
 import com.promise.auth.db.UserDao;
 import com.promise.auth.db.UserDatabaseInterface;
-import com.promise.auth.dto.CreateUserRequest;
-import com.promise.auth.dto.GetUserResponse;
+import com.promise.auth.sdk.dto.CreateUserRequest;
+import com.promise.auth.sdk.dto.CreateUserResponse;
+import com.promise.auth.sdk.dto.GetUserResponse;
 import com.promise.auth.util.PasswordUtil;
 import com.promise.auth.util.PasswordUtil.HashResult;
 import com.promise.common.exception.NoDBInstanceException;
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserServiceInterface
     private UserDatabaseInterface userDatabaseInterface;
 
     @Override
-    public void createUser(CreateUserRequest userDto)
+    public CreateUserResponse createUser(CreateUserRequest userDto)
     {
         try
         {
@@ -35,6 +36,7 @@ public class UserServiceImpl implements UserServiceInterface
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        return null;
 
     }
 

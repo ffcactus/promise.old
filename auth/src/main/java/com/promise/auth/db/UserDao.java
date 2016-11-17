@@ -1,5 +1,7 @@
 package com.promise.auth.db;
 
+import java.util.List;
+
 /**
  * Represent the User information in database.
  *
@@ -12,7 +14,7 @@ public class UserDao
     private String email;
     private byte[] hashcode;
     private byte[] salt;
-    private String scopeUri;
+    private List<String> scopeUri;
 
     public UserDao()
     {
@@ -69,12 +71,12 @@ public class UserDao
         this.salt = salt;
     }
 
-    public String getScopeUri()
+    public List<String> getScopeUri()
     {
         return scopeUri;
     }
 
-    public void setScopeUri(String scopeUri)
+    public void setScopeUri(List<String> scopeUri)
     {
         this.scopeUri = scopeUri;
     }

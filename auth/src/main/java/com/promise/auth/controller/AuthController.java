@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.promise.auth.LoginDto;
 import com.promise.auth.Token;
-import com.promise.auth.exception.LoginFailException;
+import com.promise.auth.sdk.exception.LoginFailException;
 import com.promise.common.exception.InternelErrorException;
 
 @RestController

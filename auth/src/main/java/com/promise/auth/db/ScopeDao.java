@@ -2,7 +2,7 @@ package com.promise.auth.db;
 
 import java.util.UUID;
 
-import com.promise.auth.dto.CreateScopeRequest;
+import com.promise.auth.sdk.dto.CreateScopeRequest;
 import com.promise.common.PromiseResource;
 import com.promise.common.constant.PromiseCategory;
 

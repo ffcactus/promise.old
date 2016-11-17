@@ -1,27 +1,16 @@
-package com.promise.auth;
+package com.promise.auth.sdk.dto;
 
-import java.util.List;
+import com.promise.common.PromiseResource;
 
-public class User
+public class CreateUserResponse extends PromiseResource
 {
-    private String id;
     private String username;
     private String email;
-    private List<Scope> scope;
+    private String[] scopeUri;
 
-    public User()
+    public CreateUserResponse()
     {
 
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String id)
-    {
-        this.id = id;
     }
 
     public String getUsername()
@@ -44,14 +33,14 @@ public class User
         this.email = email;
     }
 
-    public List<Scope> getScope()
+    public String[] getScopeUri()
     {
-        return scope;
+        return scopeUri;
     }
 
-    public void setScope(List<Scope> scope)
+    public void setScopeUri(String[] scopeUri)
     {
-        this.scope = scope;
+        this.scopeUri = scopeUri;
     }
 
 }

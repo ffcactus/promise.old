@@ -1,18 +1,24 @@
-package com.promise.auth.dto;
+package com.promise.auth.sdk.dto;
+
+import java.util.List;
+
+import com.promise.common.PromiseResource;
+import com.promise.common.constant.PromiseCategory;
 
 /**
- * The object that represent the input to create a user.
+ * The object to represent the response of getting a user.
+ *
+ *
  */
-public class CreateUserRequest
+public class GetUserResponse extends PromiseResource
 {
     private String username;
-    private char[] password;
     private String email;
-    private String scopeUri;
+    private List<String> scopeUri;
 
-    public CreateUserRequest()
+    public GetUserResponse()
     {
-
+        setCategory(PromiseCategory.USER);
     }
 
     public String getUsername()
@@ -25,16 +31,6 @@ public class CreateUserRequest
         this.username = username;
     }
 
-    public char[] getPassword()
-    {
-        return password;
-    }
-
-    public void setPassword(char[] password)
-    {
-        this.password = password;
-    }
-
     public String getEmail()
     {
         return email;
@@ -45,13 +41,14 @@ public class CreateUserRequest
         this.email = email;
     }
 
-    public String getScopeUri()
+    public List<String> getScopeUri()
     {
         return scopeUri;
     }
 
-    public void setScopeUri(String scopeUri)
+    public void setScopeUri(List<String> scopeUri)
     {
         this.scopeUri = scopeUri;
     }
+
 }

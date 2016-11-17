@@ -12,11 +12,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
-import com.promise.auth.dto.AccessPoint;
-import com.promise.auth.dto.CreateScopeRequest;
-import com.promise.auth.dto.CreateScopeResponse;
-import com.promise.auth.dto.GetScopeListResponse;
-import com.promise.auth.dto.GetScopeResponse;
+import com.promise.auth.sdk.AccessPoint;
+import com.promise.auth.sdk.dto.CreateScopeRequest;
+import com.promise.auth.sdk.dto.CreateScopeResponse;
+import com.promise.auth.sdk.dto.GetScopeListResponse;
+import com.promise.auth.sdk.dto.GetScopeResponse;
 import com.promise.integrationtest.util.CommonTestUtil;
 import com.promise.integrationtest.util.HttpJsonClient;
 

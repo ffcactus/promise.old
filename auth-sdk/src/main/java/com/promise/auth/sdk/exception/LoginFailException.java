@@ -1,4 +1,4 @@
-package com.promise.auth.exception;
+package com.promise.auth.sdk.exception;
 
 import com.promise.common.constant.PromiseCategory;
 import com.promise.common.exception.PromiseException;

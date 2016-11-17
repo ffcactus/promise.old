@@ -1,9 +1,9 @@
 package com.promise.auth.service;
 
-import com.promise.auth.dto.CreateScopeRequest;
-import com.promise.auth.dto.CreateScopeResponse;
-import com.promise.auth.dto.GetScopeListResponse;
-import com.promise.auth.dto.GetScopeResponse;
+import com.promise.auth.sdk.dto.CreateScopeRequest;
+import com.promise.auth.sdk.dto.CreateScopeResponse;
+import com.promise.auth.sdk.dto.GetScopeListResponse;
+import com.promise.auth.sdk.dto.GetScopeResponse;
 import com.promise.common.exception.NoDBInstanceException;
 
 public interface ScopeServiceInterface

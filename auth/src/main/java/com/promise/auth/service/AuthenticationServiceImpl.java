@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.promise.auth.LoginDto;
-import com.promise.auth.dto.GetUserResponse;
-import com.promise.auth.exception.LoginFailException;
+import com.promise.auth.sdk.dto.GetUserResponse;
+import com.promise.auth.sdk.exception.LoginFailException;
 import com.promise.common.constant.PromiseCategory;
 import com.promise.common.exception.InternelErrorException;
 import com.promise.common.exception.NoDBInstanceException;
