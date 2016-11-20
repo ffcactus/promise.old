@@ -12,11 +12,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
-import com.promise.auth.sdk.AccessPoint;
 import com.promise.auth.sdk.dto.CreateScopeRequest;
 import com.promise.auth.sdk.dto.CreateScopeResponse;
 import com.promise.auth.sdk.dto.GetScopeListResponse;
 import com.promise.auth.sdk.dto.GetScopeResponse;
+import com.promise.common.PromiseAccessPoint;
 import com.promise.integrationtest.util.CommonTestUtil;
 import com.promise.integrationtest.util.HttpJsonClient;
 
@@ -25,8 +25,8 @@ public class ScopeTest
     private static final String URI_HEAD = "http://139.129.234.210/rest/scope";
     private static final CreateScopeRequest createRequest0;
     private static final CreateScopeRequest createRequest1;
-    private static final List<AccessPoint> accessPointList0;
-    private static final List<AccessPoint> accessPointList1;
+    private static final List<PromiseAccessPoint> accessPointList0;
+    private static final List<PromiseAccessPoint> accessPointList1;
 
     static
     {
@@ -34,17 +34,17 @@ public class ScopeTest
         createRequest0.setName("Admin Scope");
         createRequest0.setDescription("Admin scope that has all the rights.");
         accessPointList0 = new ArrayList<>();
-        accessPointList0.add(new AccessPoint(AccessPoint.URI, "rest/auth"));
-        accessPointList0.add(new AccessPoint(AccessPoint.URI, "rest/task"));
-        accessPointList0.add(new AccessPoint(AccessPoint.URI, "rest/scope"));
+        accessPointList0.add(new PromiseAccessPoint(PromiseAccessPoint.URI, "rest/auth"));
+        accessPointList0.add(new PromiseAccessPoint(PromiseAccessPoint.URI, "rest/task"));
+        accessPointList0.add(new PromiseAccessPoint(PromiseAccessPoint.URI, "rest/scope"));
         createRequest0.setAccessPointList(accessPointList0);
 
         createRequest1 = new CreateScopeRequest();
         createRequest1.setName("User Scope");
         createRequest1.setDescription("User scope that doesn't have all the rights.");
         accessPointList1 = new ArrayList<>();
-        accessPointList1.add(new AccessPoint(AccessPoint.URI, "rest/auth"));
-        accessPointList1.add(new AccessPoint(AccessPoint.URI, "rest/task"));
+        accessPointList1.add(new PromiseAccessPoint(PromiseAccessPoint.URI, "rest/auth"));
+        accessPointList1.add(new PromiseAccessPoint(PromiseAccessPoint.URI, "rest/task"));
         createRequest1.setAccessPointList(accessPointList1);
     }
 

@@ -2,14 +2,14 @@ package com.promise.auth.sdk.dto;
 
 import java.util.List;
 
-import com.promise.auth.sdk.AccessPoint;
+import com.promise.common.PromiseAccessPoint;
 import com.promise.common.PromiseResource;
 
 public class CreateScopeResponse extends PromiseResource
 {
     private String name;
     private String description;
-    private List<AccessPoint> accessPointList;
+    private List<PromiseAccessPoint> accessPointList;
 
     public CreateScopeResponse()
     {
@@ -36,12 +36,12 @@ public class CreateScopeResponse extends PromiseResource
         this.description = description;
     }
 
-    public List<AccessPoint> getAccessPointList()
+    public List<PromiseAccessPoint> getAccessPointList()
     {
         return accessPointList;
     }
 
-    public void setAccessPointList(List<AccessPoint> accessPointList)
+    public void setAccessPointList(List<PromiseAccessPoint> accessPointList)
     {
         this.accessPointList = accessPointList;
     }

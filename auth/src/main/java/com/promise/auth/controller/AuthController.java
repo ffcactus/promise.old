@@ -2,6 +2,7 @@ package com.promise.auth.controller;
 
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -17,6 +18,7 @@ import com.promise.common.exception.InternelErrorException;
 @RequestMapping("/rest")
 public class AuthController
 {
+    private final Logger log = Logger.getLogger(AuthController.class);
 
     @PostMapping("/login")
     Token getLoginSession(@RequestBody LoginDto loginDto)
@@ -30,6 +32,6 @@ public class AuthController
     @PostMapping("/auth")
     void auth(@RequestHeader Map<String, String> head)
     {
-        System.out.println(head.toString());
+        log.info("Hello World");
     }
 }

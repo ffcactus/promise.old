@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.promise.auth.sdk.client.AuthClient;
 import com.promise.auth.sdk.dto.CreateUserRequest;
 import com.promise.auth.sdk.dto.CreateUserResponse;
 import com.promise.auth.sdk.dto.GetUserResponse;
 import com.promise.auth.service.AuthServiceStatistic;
 import com.promise.auth.service.UserServiceInterface;
+import com.promise.common.PromiseAccessPoint;
+import com.promise.common.PromiseToken;
 import com.promise.common.constant.PromiseCategory;
 import com.promise.common.exception.InvalidRequestBodyException;
 
@@ -43,6 +46,7 @@ public class UserController
     @GetMapping("/user/{id}")
     GetUserResponse getUser(@PathVariable String id)
     {
+        AuthClient.aa(new PromiseToken("token"), new PromiseAccessPoint());
         return null;
     }
 }

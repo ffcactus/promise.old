@@ -3,14 +3,14 @@ package com.promise.auth.sdk.dto;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.promise.auth.sdk.AccessPoint;
+import com.promise.common.PromiseAccessPoint;
 import com.promise.common.PromiseHttpRequest;
 
 public class CreateScopeRequest extends PromiseHttpRequest
 {
     private String name;
     private String description;
-    private List<AccessPoint> accessPointList;
+    private List<PromiseAccessPoint> accessPointList;
 
     public CreateScopeRequest()
     {
@@ -26,12 +26,12 @@ public class CreateScopeRequest extends PromiseHttpRequest
         this.name = name;
     }
 
-    public List<AccessPoint> getAccessPointList()
+    public List<PromiseAccessPoint> getAccessPointList()
     {
         return accessPointList;
     }
 
-    public void setAccessPointList(List<AccessPoint> accessPointList)
+    public void setAccessPointList(List<PromiseAccessPoint> accessPointList)
     {
         this.accessPointList = accessPointList;
     }

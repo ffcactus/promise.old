@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 import com.promise.auth.db.AccessPointDao;
 import com.promise.auth.db.ScopeDao;
 import com.promise.auth.db.ScopeDatabaseInterface;
-import com.promise.auth.sdk.AccessPoint;
 import com.promise.auth.sdk.dto.CreateScopeRequest;
 import com.promise.auth.sdk.dto.CreateScopeResponse;
 import com.promise.auth.sdk.dto.GetScopeListResponse;
 import com.promise.auth.sdk.dto.GetScopeResponse;
+import com.promise.common.PromiseAccessPoint;
 import com.promise.common.PromiseResource;
 import com.promise.common.constant.PromiseCategory;
 import com.promise.common.exception.NoDBInstanceException;
@@ -38,7 +38,7 @@ public class ScopeServiceImpl implements ScopeServiceInterface
         ret.setAccessPointList(dto.getAccessPointList());
 
         final ArrayList<String> accessPointIdList = new ArrayList<>();
-        for (final AccessPoint each : dto.getAccessPointList())
+        for (final PromiseAccessPoint each : dto.getAccessPointList())
         {
             accessPointIdList.add(db.createAccessPoint(convertAccessPointDto(each)).getId());
         }
@@ -97,7 +97,7 @@ public class ScopeServiceImpl implements ScopeServiceInterface
 
     }
 
-    private AccessPointDao convertAccessPointDto(AccessPoint input)
+    private AccessPointDao convertAccessPointDto(PromiseAccessPoint input)
     {
         final AccessPointDao ret = new AccessPointDao();
         ret.setType(input.getType());
@@ -121,10 +121,10 @@ public class ScopeServiceImpl implements ScopeServiceInterface
         PromiseResource.attributeCopy(ret, scopeDao);
         ret.setName(scopeDao.getName());
         ret.setDescription(scopeDao.getDescription());
-        final List<AccessPoint> accessPointList = new ArrayList<>();
+        final List<PromiseAccessPoint> accessPointList = new ArrayList<>();
         for (final AccessPointDao each : accessPointDaoList)
         {
-            accessPointList.add(new AccessPoint(each.getType(), each.getValue()));
+            accessPointList.add(new PromiseAccessPoint(each.getType(), each.getValue()));
         }
         ret.setAccessPointList(accessPointList);
         return ret;

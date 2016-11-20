@@ -1,4 +1,4 @@
-package com.promise.auth.sdk;
+package com.promise.common;
 
 /**
  * AccessPoint aggregates the scope object. <br>
@@ -7,19 +7,19 @@ package com.promise.auth.sdk;
  * { type: "scope", value: "/rest/scope/xxxx" }
  *
  */
-public class AccessPoint
+public class PromiseAccessPoint
 {
     public static final String URI = "URI";
     public static final String SCOPE = "SCOPE";
     private String type;
     private String value;
 
-    public AccessPoint()
+    public PromiseAccessPoint()
     {
 
     }
 
-    public AccessPoint(String type, String value)
+    public PromiseAccessPoint(String type, String value)
     {
         this.type = type;
         this.value = value;
@@ -48,9 +48,9 @@ public class AccessPoint
     @Override
     public boolean equals(Object other)
     {
-        return other instanceof AccessPoint
-                && type.equals(((AccessPoint) other).getType())
-                && value.equals(((AccessPoint) other).getValue());
+        return other instanceof PromiseAccessPoint
+                && type.equals(((PromiseAccessPoint) other).getType())
+                && value.equals(((PromiseAccessPoint) other).getValue());
     }
 
 }

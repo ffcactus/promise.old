@@ -7,6 +7,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,16 @@ public class PromiseClient
     public static final int CONNECTION_TIMEOUT = 1000;
     public static final int READ_TIMEOUT = 1000;
 
-    public static <T, E> ResponseEntity<T> httpPost(String url, E request, Class<T> responseClass)
+    public static Map<String, String> makeHeader(PromiseToken token, PromiseAccessPoint accessPoint)
+    {
+        final Map<String, String> ret = new HashMap<String, String>();
+        ret.put("promise-token", token.getValue());
+        ret.put("promise-accesspoint-type", accessPoint.getType());
+        ret.put("promise-accesspoint-value", accessPoint.getValue());
+        return ret;
+    }
+
+    public static <T, E> ResponseEntity<T> httpPost(String url, E request, Map<String, String> header, Class<T> responseClass)
     {
         HttpURLConnection c = null;
         try
@@ -30,13 +41,24 @@ public class PromiseClient
             c.setReadTimeout(READ_TIMEOUT);
             c.setDoInput(true);
             c.setDoOutput(true);
-            c.setRequestProperty("Content-Type", "application/json");
-            c.setRequestProperty("Accept", "application/json");
             c.setUseCaches(false);
             c.setAllowUserInteraction(false);
+            c.setRequestProperty("Content-Type", "application/json");
+            c.setRequestProperty("Accept", "application/json");
+            if (header != null)
+            {
+                for (final String key : header.keySet())
+                {
+                    c.setRequestProperty(key, header.get(key));
+                }
+            }
             final OutputStream os = c.getOutputStream();
-            os.write(new ObjectMapper().writeValueAsBytes(request));
-            os.flush();
+            if (request != null)
+            {
+                os.write(new ObjectMapper().writeValueAsBytes(request));
+                os.flush();
+            }
+
             c.connect();
             final int status = c.getResponseCode();
             switch (status)
@@ -80,7 +102,7 @@ public class PromiseClient
         return null;
     }
 
-    public static <T> ResponseEntity<T> httpGet(String url, Class<T> responseClass)
+    public static <T> ResponseEntity<T> httpGet(String url, Map<String, String> header, Class<T> responseClass)
     {
         HttpURLConnection c = null;
         try
@@ -91,10 +113,17 @@ public class PromiseClient
             c.setConnectTimeout(CONNECTION_TIMEOUT);
             c.setReadTimeout(READ_TIMEOUT);
             c.setDoInput(true);
-            c.setRequestProperty("Content-Type", "application/json");
-            c.setRequestProperty("Accept", "application/json");
             c.setUseCaches(false);
             c.setAllowUserInteraction(false);
+            c.setRequestProperty("Content-Type", "application/json");
+            c.setRequestProperty("Accept", "application/json");
+            if (header != null)
+            {
+                for (final String key : header.keySet())
+                {
+                    c.setRequestProperty(key, header.get(key));
+                }
+            }
             c.connect();
             final int status = c.getResponseCode();
             switch (status)
@@ -139,7 +168,7 @@ public class PromiseClient
         return null;
     }
 
-    public static ResponseEntity<String> httpDelete(String url)
+    public static ResponseEntity<String> httpDelete(String url, Map<String, String> header)
     {
         HttpURLConnection c = null;
         try
@@ -151,10 +180,17 @@ public class PromiseClient
             c.setReadTimeout(READ_TIMEOUT);
             c.setDoInput(true);
             c.setDoOutput(true);
-            c.setRequestProperty("Content-Type", "application/json");
-            c.setRequestProperty("Accept", "application/json");
             c.setUseCaches(false);
             c.setAllowUserInteraction(false);
+            c.setRequestProperty("Content-Type", "application/json");
+            c.setRequestProperty("Accept", "application/json");
+            if (header != null)
+            {
+                for (final String key : header.keySet())
+                {
+                    c.setRequestProperty(key, header.get(key));
+                }
+            }
             c.connect();
             final int status = c.getResponseCode();
             switch (status)
