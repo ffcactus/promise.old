@@ -2,6 +2,9 @@ package com.promise.auth.service;
 
 import java.security.NoSuchAlgorithmException;
 
+import javax.annotation.PostConstruct;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -22,15 +25,30 @@ import com.promise.common.exception.NoDBInstanceException;
 public class UserServiceImpl implements UserServiceInterface
 {
 
+    private static Logger log = Logger.getLogger(UserServiceImpl.class);
+
+    @PostConstruct
+    private void postConstruct()
+    {
+        if (userDatabase.isUsernameExist("Administrator"))
+        {
+            final CreateUserRequest userDto = new CreateUserRequest();
+            userDto.setUsername("Administrator");
+            userDto.setPassword("admin".toCharArray());
+            this.createUser(userDto);
+            log.warn("Administrator is created.");
+        }
+    }
+
     @Autowired
-    private UserDatabaseInterface userDatabaseInterface;
+    private UserDatabaseInterface userDatabase;
 
     @Override
     public CreateUserResponse createUser(CreateUserRequest userDto)
     {
         try
         {
-            userDatabaseInterface.createUser(createUserRequestDto2Dao(userDto));
+            userDatabase.createUser(createUserRequestDto2Dao(userDto));
         }
         catch (final NoSuchAlgorithmException e)
         {
@@ -53,7 +71,7 @@ public class UserServiceImpl implements UserServiceInterface
             throws NoSuchAlgorithmException, NoDBInstanceException
     {
         final HashResult hashResult = PasswordUtil.hashPassword(password);
-        final UserDao userDao = userDatabaseInterface.getUser(username, hashResult);
+        final UserDao userDao = userDatabase.getUser(username, hashResult);
         return dao2GetUserResponseDto(userDao);
     }
 

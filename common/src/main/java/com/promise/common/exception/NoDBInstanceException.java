@@ -6,20 +6,20 @@ public class NoDBInstanceException extends PromiseException
 {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 6875358611678749969L;
 
     public NoDBInstanceException(Exception e, PromiseCategory category)
     {
-        super(e);
+        super();
         this.setCategory(category);
         this.setName(category.name());
         this.setDescription("Failed to find the instance in database.");
-        String[] reason = {
+        final String[] reason = {
                 "Failed to find the instance in database."
         };
-        String[] solution = {
+        final String[] solution = {
                 "Make sure the instance is exist."
         };
         this.setReason(reason);

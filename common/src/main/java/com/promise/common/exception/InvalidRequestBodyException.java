@@ -11,7 +11,7 @@ public class InvalidRequestBodyException extends PromiseException
 
     public InvalidRequestBodyException(Exception e, PromiseCategory category)
     {
-        super(e);
+        super();
         this.setCategory(category);
         this.setName(category.name());
         this.setDescription("Failed to process the request.");

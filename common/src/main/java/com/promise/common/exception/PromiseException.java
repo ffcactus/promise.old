@@ -6,10 +6,9 @@ public class PromiseException extends Exception
 {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1444334913003287888L;
-    private Exception e;
     private PromiseCategory category;
     private String name;
     private String description;
@@ -18,22 +17,10 @@ public class PromiseException extends Exception
 
     /**
      * The default construct that encapsulate the standard Java exception.
-     * 
-     * @param e
+     *
      */
-    public PromiseException(Exception e)
+    public PromiseException()
     {
-        this.e = e;
-    }
-
-    /**
-     * Get the raw Java exception.
-     * 
-     * @return The raw Java exception.
-     */
-    public Exception getE()
-    {
-        return e;
     }
 
     public PromiseCategory getCategory()
@@ -84,6 +71,12 @@ public class PromiseException extends Exception
     public void setSolution(String[] solution)
     {
         this.solution = solution;
+    }
+
+    @Override
+    public String getMessage()
+    {
+        return "name = " + name + ", description = " + description;
     }
 
 }

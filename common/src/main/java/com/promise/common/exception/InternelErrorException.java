@@ -6,20 +6,20 @@ public class InternelErrorException extends PromiseException
 {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = -1993521634515998110L;
 
-    public InternelErrorException(Exception e, PromiseCategory category)
+    public InternelErrorException(PromiseCategory category)
     {
-        super(e);
+        super();
         this.setCategory(category);
         this.setName(category.name());
         this.setDescription("The execution failed.");
-        String[] reason = {
+        final String[] reason = {
                 "An internel error happend."
         };
-        String[] solution = {
+        final String[] solution = {
                 "Contact support."
         };
         this.setReason(reason);

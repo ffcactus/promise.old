@@ -1,5 +1,6 @@
 package com.promise.auth.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,10 +34,13 @@ public class ScopeController
     @Autowired
     private AuthServiceStatistic statistic;
 
+    private static Logger log = Logger.getLogger(ScopeController.class);
+
     @PostMapping("/scope")
     public ResponseEntity<CreateScopeResponse> createScope(@RequestBody CreateScopeRequest scope)
             throws InvalidRequestBodyException
     {
+        log.info("HTTP POST /rest/scope " + scope.toDebugString());
         statistic.recodeUri("/rest/scope POST");
         if (!scope.isValidRequest())
         {
@@ -51,6 +55,7 @@ public class ScopeController
             @RequestParam(value = "count", defaultValue = "0") int count)
             throws InvalidRequestBodyException
     {
+        log.info("HTTP GET /rest/scope");
         statistic.recodeUri("/rest/scope GET");
         if (start < 0 || count < 0)
         {
@@ -60,9 +65,10 @@ public class ScopeController
         return new ResponseEntity<>(service.getScopeList(start, count), HttpStatus.OK);
     }
 
-    @GetMapping("/rest/scope/{id}")
+    @GetMapping("/scope/{id}")
     public ResponseEntity<GetScopeResponse> getScope(@PathVariable String id)
     {
+        log.info("HTTP GET /rest/scope/" + id);
         statistic.recodeUri("/scope{id} GET");
         try
         {
@@ -77,6 +83,7 @@ public class ScopeController
     @DeleteMapping("/scope/{id}")
     public ResponseEntity<String> deleteScope(@PathVariable String id)
     {
+        log.info("HTTP DELETE /rest/scope/" + id);
         statistic.recodeUri("/rest/scope{id} DELETE");
         try
         {
@@ -89,9 +96,10 @@ public class ScopeController
         }
     }
 
-    @GetMapping("/rest/scope/statistic")
+    @GetMapping("/scope/statistic")
     public ResponseEntity<AuthServiceStatistic> getStatistic()
     {
+        log.info("HTTP GET /rest/scope/statistic");
         statistic.recodeUri("/rest/scope/statistic GET");
         return new ResponseEntity<>(statistic, HttpStatus.OK);
     }

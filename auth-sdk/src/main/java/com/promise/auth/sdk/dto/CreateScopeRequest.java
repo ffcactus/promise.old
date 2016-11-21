@@ -60,4 +60,10 @@ public class CreateScopeRequest extends PromiseHttpRequest
         }
     }
 
+    @JsonIgnore
+    public String toDebugString()
+    {
+        return "name = " + name;
+    }
+
 }
