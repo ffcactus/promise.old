@@ -13,4 +13,9 @@ public class PromiseToken
     {
         return value;
     }
+    
+    public boolean equals(Object other)
+    {
+        return (other != null && other instanceof PromiseToken && ((PromiseToken) other).getValue().equals(value));
+    }
 }

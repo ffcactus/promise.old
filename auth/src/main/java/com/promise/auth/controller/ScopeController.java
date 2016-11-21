@@ -37,7 +37,7 @@ public class ScopeController
     public ResponseEntity<CreateScopeResponse> createScope(@RequestBody CreateScopeRequest scope)
             throws InvalidRequestBodyException
     {
-        statistic.recodeUri("/scope POST");
+        statistic.recodeUri("/rest/scope POST");
         if (!scope.isValidRequest())
         {
             throw new InvalidRequestBodyException(null, PromiseCategory.SCOPE);
@@ -51,7 +51,7 @@ public class ScopeController
             @RequestParam(value = "count", defaultValue = "0") int count)
             throws InvalidRequestBodyException
     {
-        statistic.recodeUri("/scope GET");
+        statistic.recodeUri("/rest/scope GET");
         if (start < 0 || count < 0)
         {
             // TODO Invalid URL?
@@ -60,7 +60,7 @@ public class ScopeController
         return new ResponseEntity<>(service.getScopeList(start, count), HttpStatus.OK);
     }
 
-    @GetMapping("/scope/{id}")
+    @GetMapping("/rest/scope/{id}")
     public ResponseEntity<GetScopeResponse> getScope(@PathVariable String id)
     {
         statistic.recodeUri("/scope{id} GET");
@@ -77,7 +77,7 @@ public class ScopeController
     @DeleteMapping("/scope/{id}")
     public ResponseEntity<String> deleteScope(@PathVariable String id)
     {
-        statistic.recodeUri("/scope{id} DELETE");
+        statistic.recodeUri("/rest/scope{id} DELETE");
         try
         {
             service.deleteScope(id);
@@ -89,10 +89,10 @@ public class ScopeController
         }
     }
 
-    @GetMapping("/scope/statistic")
+    @GetMapping("/rest/scope/statistic")
     public ResponseEntity<AuthServiceStatistic> getStatistic()
     {
-        statistic.recodeUri("/scope/statistic GET");
+        statistic.recodeUri("/rest/scope/statistic GET");
         return new ResponseEntity<>(statistic, HttpStatus.OK);
     }
 }

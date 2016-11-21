@@ -2,10 +2,11 @@ package com.promise.auth.service;
 
 import java.security.NoSuchAlgorithmException;
 
-import com.promise.auth.Token;
 import com.promise.auth.sdk.dto.CreateUserRequest;
 import com.promise.auth.sdk.dto.CreateUserResponse;
 import com.promise.auth.sdk.dto.GetUserResponse;
+import com.promise.common.PromiseToken;
+import com.promise.common.PromiseUser;
 import com.promise.common.exception.NoDBInstanceException;
 
 public interface UserServiceInterface
@@ -26,7 +27,7 @@ public interface UserServiceInterface
      *        The token that can retrieve the user.
      * @return The UserDto.
      */
-    public GetUserResponse getUser(Token token);
+    public GetUserResponse getUser(PromiseToken token);
 
     /**
      * Get user by username and password.
@@ -39,7 +40,7 @@ public interface UserServiceInterface
      * @throws NoSuchAlgorithmException
      * @throws NoDBInstanceException
      */
-    public GetUserResponse getUser(String username, char[] password)
+    public PromiseUser getUser(String username, char[] password)
             throws NoSuchAlgorithmException,
             NoDBInstanceException;
 }

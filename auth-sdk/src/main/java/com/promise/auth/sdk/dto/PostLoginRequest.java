@@ -1,12 +1,12 @@
-package com.promise.auth;
+package com.promise.auth.sdk.dto;
 
-public class LoginDto
-{
+public class PostLoginRequest {
+
     private String userName;
     private String password;
     private String domain;
 
-    public LoginDto()
+    public PostLoginRequest()
     {
     }
 

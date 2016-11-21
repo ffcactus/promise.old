@@ -29,6 +29,34 @@ public class PromiseClient
         return ret;
     }
 
+    public static PromiseToken getToken(Map<String, String> header)
+    {
+
+        final String value = header.get("promise-token");
+        if (value != null)
+        {
+            return new PromiseToken(value);
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public static PromiseAccessPoint getAccessPoint(Map<String, String> header)
+    {
+        final String type = header.get("promise-accesspoint-type");
+        final String value = header.get("promise-accesspoint-value");
+        if (type != null && value != null)
+        {
+            return new PromiseAccessPoint(type, value);
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     public static <T, E> ResponseEntity<T> httpPost(String url, E request, Map<String, String> header, Class<T> responseClass)
     {
         HttpURLConnection c = null;

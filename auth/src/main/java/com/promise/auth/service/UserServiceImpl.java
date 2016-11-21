@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.promise.auth.Token;
 import com.promise.auth.db.UserDao;
 import com.promise.auth.db.UserDatabaseInterface;
 import com.promise.auth.sdk.dto.CreateUserRequest;
@@ -14,6 +13,8 @@ import com.promise.auth.sdk.dto.CreateUserResponse;
 import com.promise.auth.sdk.dto.GetUserResponse;
 import com.promise.auth.util.PasswordUtil;
 import com.promise.auth.util.PasswordUtil.HashResult;
+import com.promise.common.PromiseToken;
+import com.promise.common.PromiseUser;
 import com.promise.common.exception.NoDBInstanceException;
 
 @Component(value = "userServiceImpl")
@@ -41,14 +42,14 @@ public class UserServiceImpl implements UserServiceInterface
     }
 
     @Override
-    public GetUserResponse getUser(Token token)
+    public GetUserResponse getUser(PromiseToken token)
     {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public GetUserResponse getUser(String username, char[] password)
+    public PromiseUser getUser(String username, char[] password)
             throws NoSuchAlgorithmException, NoDBInstanceException
     {
         final HashResult hashResult = PasswordUtil.hashPassword(password);
@@ -63,9 +64,9 @@ public class UserServiceImpl implements UserServiceInterface
      *        UserDao
      * @return GetUserResponseDto
      */
-    private GetUserResponse dao2GetUserResponseDto(UserDao input)
+    private PromiseUser dao2GetUserResponseDto(UserDao input)
     {
-        final GetUserResponse ret = new GetUserResponse();
+        final PromiseUser ret = new PromiseUser();
         ret.setUsername(input.getUsername());
         ret.setEmail(input.getEmail());
         ret.setScopeUri(input.getScopeUri());
