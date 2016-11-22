@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.promise</groupId>
-    <artifactId>com.promise.integration-test</artifactId>
+    <artifactId>integration-test</artifactId>
     <version>0.1.0</version>
 
     <parent>
@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>com.promise</groupId>
-            <artifactId>com.promise.auth-sdk</artifactId>
+            <artifactId>auth-sdk</artifactId>
             <version>0.1.0</version>
         </dependency>
         <dependency>

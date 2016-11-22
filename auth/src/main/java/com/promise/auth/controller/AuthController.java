@@ -22,6 +22,7 @@ import com.promise.auth.service.AuthServiceInterface;
 import com.promise.auth.service.AuthServiceStatistic;
 import com.promise.common.PromiseAccessPoint;
 import com.promise.common.PromiseClient;
+import com.promise.common.PromiseErrorResponse;
 import com.promise.common.PromiseToken;
 import com.promise.common.constant.PromiseCategory;
 import com.promise.common.exception.InternelErrorException;
@@ -42,18 +43,19 @@ public class AuthController
     private final Logger log = Logger.getLogger(AuthController.class);
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<PromiseException> exceptionHandler(HttpServletRequest req, Exception ex)
+    public ResponseEntity<PromiseErrorResponse> exceptionHandler(HttpServletRequest req, Exception ex)
     {
-        log.info("Handling exception " + ex.getMessage());
         if (ex instanceof PromiseException)
         {
-            return new ResponseEntity<>((PromiseException) ex, HttpStatus.INTERNAL_SERVER_ERROR);
+            log.info("Handling PromiseException " + ((PromiseException) ex).getMessage());
+            final PromiseErrorResponse response = PromiseErrorResponse.makeInstance((PromiseException) ex);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         else
         {
-            return new ResponseEntity<>(
-                    new InternelErrorException(PromiseCategory.AA),
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+            log.info("Handling unknown Exception " + ex.getStackTrace());
+            final PromiseErrorResponse response = PromiseErrorResponse.makeInstance(new InternelErrorException(PromiseCategory.AA));
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
