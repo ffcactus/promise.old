@@ -62,7 +62,6 @@ public class UserServiceImpl implements UserServiceInterface
     @Override
     public GetUserResponse getUser(PromiseToken token)
     {
-        // TODO Auto-generated method stub
         return null;
     }
 

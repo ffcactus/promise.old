@@ -1,5 +1,6 @@
 package com.promise.auth.db;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -8,6 +9,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.promise.auth.util.PasswordUtil.HashResult;
+import com.promise.common.constant.PromiseCategory;
+import com.promise.common.exception.NoDBInstanceException;
 
 @Component
 @Scope("singleton")
@@ -21,7 +24,7 @@ public class RamUserDataBaseImpl implements UserDatabaseInterface
     {
         for (UserDao user : ramDB.values())
         {
-            if (user.getUsername() == username)
+            if (user.getUsername().equals(username))
             {
                 return true;
             }
@@ -37,9 +40,16 @@ public class RamUserDataBaseImpl implements UserDatabaseInterface
 
     @Override
     public UserDao getUser(String username, HashResult hashResult)
+            throws NoDBInstanceException
     {
-        // TODO Auto-generated method stub
-        return null;
+        for (UserDao user : ramDB.values())
+        {
+            if (user.getUsername().equals(username) && Arrays.equals(user.getHashcode(), hashResult.getHash()))
+            {
+                return user;
+            }
+        }
+        throw new NoDBInstanceException(PromiseCategory.USER);
     }
 
 }

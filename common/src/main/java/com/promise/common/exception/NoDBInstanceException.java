@@ -10,7 +10,7 @@ public class NoDBInstanceException extends PromiseException
      */
     private static final long serialVersionUID = 6875358611678749969L;
 
-    public NoDBInstanceException(Exception e, PromiseCategory category)
+    public NoDBInstanceException(PromiseCategory category)
     {
         super();
         this.setCategory(category);

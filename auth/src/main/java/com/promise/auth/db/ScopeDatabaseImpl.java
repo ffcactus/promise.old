@@ -40,7 +40,7 @@ public class ScopeDatabaseImpl implements ScopeDatabaseInterface
         }
         else
         {
-            throw new NoDBInstanceException(null, PromiseCategory.SCOPE);
+            throw new NoDBInstanceException(PromiseCategory.SCOPE);
         }
     }
 
@@ -61,7 +61,7 @@ public class ScopeDatabaseImpl implements ScopeDatabaseInterface
         }
         else
         {
-            throw new NoDBInstanceException(null, PromiseCategory.SCOPE);
+            throw new NoDBInstanceException(PromiseCategory.SCOPE);
         }
     }
 
@@ -75,7 +75,7 @@ public class ScopeDatabaseImpl implements ScopeDatabaseInterface
         }
         else
         {
-            throw new NoDBInstanceException(null, PromiseCategory.SCOPE);
+            throw new NoDBInstanceException(PromiseCategory.SCOPE);
         }
     }
 
@@ -110,7 +110,7 @@ public class ScopeDatabaseImpl implements ScopeDatabaseInterface
         }
         else
         {
-            throw new NoDBInstanceException(null, PromiseCategory.SCOPE);
+            throw new NoDBInstanceException(PromiseCategory.SCOPE);
         }
     }
 
