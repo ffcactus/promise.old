@@ -4,6 +4,7 @@ import java.security.NoSuchAlgorithmException;
 
 import com.promise.auth.sdk.dto.CreateUserRequest;
 import com.promise.auth.sdk.dto.CreateUserResponse;
+import com.promise.auth.sdk.dto.GetUserListResponse;
 import com.promise.auth.sdk.dto.GetUserResponse;
 import com.promise.common.PromiseToken;
 import com.promise.common.PromiseUser;
@@ -19,6 +20,14 @@ public interface UserServiceInterface
      * @return The DTO that represents the user created.
      */
     public CreateUserResponse createUser(CreateUserRequest user);
+
+    /**
+     * Get user by ID.
+     *
+     * @param id the ID of the user.
+     * @return The DTO that represents the user or null if it can't be found.
+     */
+    public GetUserResponse getUser(String id);
 
     /**
      * Get user by token.
@@ -43,4 +52,13 @@ public interface UserServiceInterface
     public PromiseUser getUser(String username, char[] password)
             throws NoSuchAlgorithmException,
             NoDBInstanceException;
+
+    /**
+     * Get user list.
+     *
+     * @param start
+     * @param count
+     * @return
+     */
+    public GetUserListResponse getUserList(int start, int count);
 }

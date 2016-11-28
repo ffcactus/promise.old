@@ -1,9 +1,10 @@
 package com.promise.auth.db;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -17,12 +18,12 @@ import com.promise.common.exception.NoDBInstanceException;
 public class RamUserDataBaseImpl implements UserDatabaseInterface
 {
 
-    Map<String, UserDao> ramDB = new HashMap<String, UserDao>();
+    Map<String, UserDao> ramDB = new HashMap<>();
 
     @Override
     public boolean isUsernameExist(String username)
     {
-        for (UserDao user : ramDB.values())
+        for (final UserDao user : ramDB.values())
         {
             if (user.getUsername().equals(username))
             {
@@ -33,16 +34,24 @@ public class RamUserDataBaseImpl implements UserDatabaseInterface
     }
 
     @Override
-    public void createUser(UserDao user)
+    public UserDao createUser(UserDao user)
     {
-        ramDB.put(UUID.randomUUID().toString(), user);
+        ramDB.put(user.getId(), user);
+        return user;
+    }
+
+    @Override
+    public List<UserDao> getUser(int start, int count)
+    {
+        final List<UserDao> ret = new ArrayList<>(ramDB.values());
+        return ret;
     }
 
     @Override
     public UserDao getUser(String username, HashResult hashResult)
             throws NoDBInstanceException
     {
-        for (UserDao user : ramDB.values())
+        for (final UserDao user : ramDB.values())
         {
             if (user.getUsername().equals(username) && Arrays.equals(user.getHashcode(), hashResult.getHash()))
             {

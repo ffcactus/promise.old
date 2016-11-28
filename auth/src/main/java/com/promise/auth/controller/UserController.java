@@ -1,5 +1,6 @@
 package com.promise.auth.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,11 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.promise.auth.sdk.client.AuthClient;
 import com.promise.auth.sdk.dto.CreateUserRequest;
 import com.promise.auth.sdk.dto.CreateUserResponse;
+import com.promise.auth.sdk.dto.GetUserListResponse;
 import com.promise.auth.sdk.dto.GetUserResponse;
 import com.promise.auth.service.AuthServiceStatistic;
 import com.promise.auth.service.UserServiceInterface;
@@ -31,6 +34,8 @@ public class UserController
     @Autowired
     private UserServiceInterface userService;
 
+    private static final Logger log = Logger.getLogger(UserController.class);
+
     @PostMapping("/user")
     ResponseEntity<CreateUserResponse> createUser(@RequestBody CreateUserRequest dto)
             throws InvalidRequestBodyException
@@ -41,6 +46,21 @@ public class UserController
             throw new InvalidRequestBodyException(null, PromiseCategory.USER);
         }
         return new ResponseEntity<>(userService.createUser(dto), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/user")
+    ResponseEntity<GetUserListResponse> getUserList(
+            @RequestParam(value = "start", defaultValue = "0") int start,
+            @RequestParam(value = "count", defaultValue = "0") int count)
+            throws InvalidRequestBodyException
+    {
+        log.info("HTTP GET /rest/user");
+        if (start < 0 || count < 0)
+        {
+            // TODO Invalid URL?
+            throw new InvalidRequestBodyException(null, PromiseCategory.USER);
+        }
+        return new ResponseEntity<>(userService.getUserList(start, count), HttpStatus.OK);
     }
 
     @GetMapping("/user/{id}")

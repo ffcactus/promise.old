@@ -1,10 +1,11 @@
 package com.promise.auth.service;
 
 import java.security.NoSuchAlgorithmException;
-
-import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import com.promise.auth.db.UserDao;
 import com.promise.auth.db.UserDatabaseInterface;
 import com.promise.auth.sdk.dto.CreateUserRequest;
 import com.promise.auth.sdk.dto.CreateUserResponse;
+import com.promise.auth.sdk.dto.GetUserListResponse;
 import com.promise.auth.sdk.dto.GetUserResponse;
 import com.promise.auth.util.PasswordUtil;
 import com.promise.auth.util.PasswordUtil.HashResult;
@@ -20,35 +22,22 @@ import com.promise.common.PromiseToken;
 import com.promise.common.PromiseUser;
 import com.promise.common.exception.NoDBInstanceException;
 
-@Component(value = "userServiceImpl")
+@Component
 @Scope("singleton")
-public class UserServiceImpl implements UserServiceInterface
+public class UserServiceImpl implements UserServiceInterface, InitializingBean
 {
-
-    private static Logger log = Logger.getLogger(UserServiceImpl.class);
-
-    @PostConstruct
-    private void postConstruct()
-    {
-        if (userDatabase.isUsernameExist("Administrator"))
-        {
-            final CreateUserRequest userDto = new CreateUserRequest();
-            userDto.setUsername("Administrator");
-            userDto.setPassword("admin".toCharArray());
-            this.createUser(userDto);
-            log.warn("Administrator is created.");
-        }
-    }
-
     @Autowired
     private UserDatabaseInterface userDatabase;
+
+    private static Logger log = Logger.getLogger(UserServiceImpl.class);
 
     @Override
     public CreateUserResponse createUser(CreateUserRequest userDto)
     {
         try
         {
-            userDatabase.createUser(createUserRequestDto2Dao(userDto));
+            final UserDao userDao = userDatabase.createUser(UserDao.makeInstance(userDto));
+            return UserDao.toDto(userDao);
         }
         catch (final NoSuchAlgorithmException e)
         {
@@ -57,6 +46,12 @@ public class UserServiceImpl implements UserServiceInterface
         }
         return null;
 
+    }
+
+    @Override
+    public GetUserResponse getUser(String id)
+    {
+        return null;
     }
 
     @Override
@@ -72,6 +67,28 @@ public class UserServiceImpl implements UserServiceInterface
         final HashResult hashResult = PasswordUtil.hashPassword(password);
         final UserDao userDao = userDatabase.getUser(username, hashResult);
         return dao2GetUserResponseDto(userDao);
+    }
+
+    @Override
+    public GetUserListResponse getUserList(int start, int count)
+    {
+        final List<UserDao> userDaoList = userDatabase.getUser(start, count);
+        final GetUserListResponse ret = new GetUserListResponse();
+
+        // The start point should follow the start point in the request?
+        ret.setStart(start);
+        ret.setCount(userDaoList.size());
+        final List<GetUserResponse> memberList = new ArrayList<>();
+        for (final UserDao each : userDaoList)
+        {
+            final GetUserResponse t = getUser(each.getId());
+            if (t != null)
+            {
+                memberList.add(t);
+            }
+        }
+        ret.setMemberList(memberList);
+        return ret;
     }
 
     /**
@@ -91,26 +108,22 @@ public class UserServiceImpl implements UserServiceInterface
         return ret;
     }
 
-    /**
-     * Convert CreateUserRequestDto to DAO
-     *
-     * @param input
-     *        CreateUserRequestDto
-     * @return UserDao
-     * @throws NoSuchAlgorithmException
-     */
-    private UserDao createUserRequestDto2Dao(CreateUserRequest input)
-            throws NoSuchAlgorithmException
+    @Override
+    public void afterPropertiesSet()
+            throws Exception
     {
-        final UserDao ret = new UserDao();
-        ret.setUsername(input.getUsername());
-        ret.setEmail(input.getEmail());
-        final HashResult hashResult = PasswordUtil.hashPassword(input.getPassword());
-        ret.setSalt(hashResult.getSalt());
-        ret.setHash(hashResult.getHash());
-        ret.setScopeUri(input.getScopeUri());
-        ret.setId(null);
-        return ret;
+        if (userDatabase.isUsernameExist("Administrator"))
+        {
+            final CreateUserRequest userDto = new CreateUserRequest();
+            userDto.setUsername("Administrator");
+            userDto.setPassword("admin".toCharArray());
+            createUser(userDto);
+            log.warn("Administrator is created.");
+        }
+        else
+        {
+            log.info("Administrator already exist.");
+        }
     }
 
 }

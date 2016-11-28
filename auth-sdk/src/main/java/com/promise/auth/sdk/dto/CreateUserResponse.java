@@ -1,12 +1,14 @@
 package com.promise.auth.sdk.dto;
 
+import java.util.List;
+
 import com.promise.common.PromiseResource;
 
 public class CreateUserResponse extends PromiseResource
 {
     private String username;
     private String email;
-    private String[] scopeUri;
+    private List<String> scopeUri;
 
     public CreateUserResponse()
     {
@@ -33,12 +35,12 @@ public class CreateUserResponse extends PromiseResource
         this.email = email;
     }
 
-    public String[] getScopeUri()
+    public List<String> getScopeUri()
     {
         return scopeUri;
     }
 
-    public void setScopeUri(String[] scopeUri)
+    public void setScopeUri(List<String> scopeUri)
     {
         this.scopeUri = scopeUri;
     }

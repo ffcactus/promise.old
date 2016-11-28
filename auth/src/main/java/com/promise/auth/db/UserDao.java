@@ -1,15 +1,22 @@
 package com.promise.auth.db;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.UUID;
+
+import com.promise.auth.sdk.dto.CreateUserRequest;
+import com.promise.auth.sdk.dto.CreateUserResponse;
+import com.promise.auth.util.PasswordUtil;
+import com.promise.auth.util.PasswordUtil.HashResult;
+import com.promise.common.PromiseResource;
+import com.promise.common.constant.PromiseCategory;
 
 /**
  * Represent the User information in database.
  *
  */
-public class UserDao
+public class UserDao extends PromiseResource
 {
-
-    private String id;
     private String username;
     private String email;
     private byte[] hashcode;
@@ -21,14 +28,55 @@ public class UserDao
 
     }
 
-    public String getId()
+    /**
+     * Make an instance of ScopeDao in which the ID, category and URI already
+     * set.
+     *
+     * @return
+     */
+    public static UserDao makeInstance()
     {
-        return id;
+        final UserDao ret = new UserDao();
+        ret.setId(UUID.randomUUID().toString());
+        ret.setCategory(PromiseCategory.USER);
+        PromiseResource.makeUri(ret);
+        return ret;
     }
 
-    public void setId(String id)
+    /**
+     * Make an instance of ScopeDao from DTO object.
+     *
+     * @param dto
+     * @return
+     * @throws NoSuchAlgorithmException
+     */
+    public static UserDao makeInstance(CreateUserRequest dto)
+            throws NoSuchAlgorithmException
     {
-        this.id = id;
+        final UserDao ret = makeInstance();
+        ret.setUsername(dto.getUsername());
+        ret.setEmail(dto.getEmail());
+        ret.setScopeUri(dto.getScopeUri());
+        final HashResult hash = PasswordUtil.hashPassword(dto.getPassword());
+        ret.setHash(hash.getHash());
+        ret.setSalt(hash.getSalt());
+
+        return ret;
+    }
+
+    public static CreateUserResponse toDto(UserDao dao)
+    {
+        final CreateUserResponse ret = new CreateUserResponse();
+
+        ret.setId(dao.getId());
+        ret.setUri(dao.getUri());
+        ret.setCategory(dao.getCategory());
+
+        ret.setUsername(ret.getUsername());
+        ret.setEmail(dao.getEmail());
+        ret.setScopeUri(dao.getScopeUri());
+
+        return ret;
     }
 
     public String getUsername()
