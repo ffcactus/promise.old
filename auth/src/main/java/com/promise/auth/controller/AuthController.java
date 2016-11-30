@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.promise.auth.aspect.PromisePublicInterface;
 import com.promise.auth.sdk.dto.PostAuthResponse;
 import com.promise.auth.sdk.dto.PostLoginRequest;
 import com.promise.auth.sdk.dto.PostLoginResponse;
@@ -60,6 +61,7 @@ public class AuthController
     }
 
     @PostMapping("/login")
+    @PromisePublicInterface
     public PostLoginResponse getLoginSession(@RequestBody PostLoginRequest request)
             throws InternelErrorException, LoginFailureException
     {

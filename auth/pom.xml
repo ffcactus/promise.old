@@ -14,6 +14,7 @@
 	</parent>
 
 	<dependencies>
+		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -25,6 +26,19 @@
 			<version>${org.springframework.boot.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<!--  AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${org.aspectj.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjtools</artifactId>
+			<version>${org.aspectj.version}</version>
+		</dependency>
+		<!-- Promise -->
 		<dependency>
 			<groupId>com.promise.module</groupId>
 			<artifactId>common</artifactId>
