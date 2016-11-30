@@ -1,6 +1,7 @@
 package com.promise.auth.service;
 
 import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,7 +16,7 @@ import com.promise.common.PromiseUser;
 public class TokenServiceImpl implements TokenServiceInterface
 {
 
-    private static List<SimpleEntry<PromiseToken, PromiseUser>> db;
+    private static List<SimpleEntry<PromiseToken, PromiseUser>> db = new ArrayList<SimpleEntry<PromiseToken, PromiseUser>>();
 
     @Override
     public PromiseToken getToken(PromiseUser user)

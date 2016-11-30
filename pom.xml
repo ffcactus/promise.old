@@ -18,6 +18,7 @@
 		<org.springframework.boot.version>1.4.1.RELEASE</org.springframework.boot.version>
 		<com.fasterxml.jackson.core.version>2.8.3</com.fasterxml.jackson.core.version>
 		<org.apache.logging.log4j.version>2.7</org.apache.logging.log4j.version>
+		<org.apache.tomcat.maven.version>2.2</org.apache.tomcat.maven.version>
 	</properties>
 
 	<modules>

@@ -4,6 +4,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +26,29 @@ import com.promise.common.exception.NoDBInstanceException;
 
 @Component
 @Scope("singleton")
-public class UserServiceImpl implements UserServiceInterface, InitializingBean
+public class UserServiceImpl implements UserServiceInterface//, InitializingBean
 {
     @Autowired
     private UserDatabaseInterface userDatabase;
 
     private static Logger log = Logger.getLogger(UserServiceImpl.class);
+    
+    @PostConstruct
+    private void postConstruct()
+    {
+        if (!userDatabase.isUsernameExist("Administrator"))
+        {
+            final CreateUserRequest userDto = new CreateUserRequest();
+            userDto.setUsername("Administrator");
+            userDto.setPassword("admin".toCharArray());
+            createUser(userDto);
+            log.warn("User Administrator is created.");
+        }
+        else
+        {
+            log.info("User Administrator already exist.");
+        }        
+    }
 
     @Override
     public CreateUserResponse createUser(CreateUserRequest userDto)
@@ -106,24 +125,6 @@ public class UserServiceImpl implements UserServiceInterface, InitializingBean
         ret.setScopeUri(input.getScopeUri());
         ret.setId(input.getId());
         return ret;
-    }
-
-    @Override
-    public void afterPropertiesSet()
-            throws Exception
-    {
-        if (userDatabase.isUsernameExist("Administrator"))
-        {
-            final CreateUserRequest userDto = new CreateUserRequest();
-            userDto.setUsername("Administrator");
-            userDto.setPassword("admin".toCharArray());
-            createUser(userDto);
-            log.warn("Administrator is created.");
-        }
-        else
-        {
-            log.info("Administrator already exist.");
-        }
     }
 
 }

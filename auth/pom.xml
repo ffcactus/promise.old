@@ -7,11 +7,11 @@
 	<artifactId>auth</artifactId>
 	<packaging>war</packaging>
 
-    <parent>
-    	<groupId>com.promise</groupId>
-    	<artifactId>promise</artifactId>
-    	<version>1.0</version>
-    </parent>	
+	<parent>
+		<groupId>com.promise</groupId>
+		<artifactId>promise</artifactId>
+		<version>1.0</version>
+	</parent>
 
 	<dependencies>
 		<dependency>
@@ -42,14 +42,23 @@
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
+				<version>${org.apache.tomcat.maven.version}</version>
 				<configuration>
-                    <!-- 139.129.234.210 -->
-                    <!-- 100.100.216.251 -->
+					<!-- 139.129.234.210 -->
+					<!-- 100.100.216.251 -->
 					<url>http://${server_ip}:8080/manager/text</url>
 					<server>Promise0</server>
 					<path>/auth</path>
 				</configuration>
+				<executions>
+					<execution>
+						<id>deploy</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
