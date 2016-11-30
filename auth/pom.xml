@@ -3,43 +3,39 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.promise</groupId>
+	<groupId>com.promise.module</groupId>
 	<artifactId>auth</artifactId>
-	<version>0.1.0</version>
 	<packaging>war</packaging>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.1.RELEASE</version>
-	</parent>
+    <parent>
+    	<groupId>com.promise</groupId>
+    	<artifactId>promise</artifactId>
+    	<version>1.0</version>
+    </parent>	
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<version>${org.springframework.boot.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<version>${org.springframework.boot.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.promise</groupId>
+			<groupId>com.promise.module</groupId>
 			<artifactId>common</artifactId>
-			<version>0.1.0</version>
+			<version>${com.promise.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.promise</groupId>
+			<groupId>com.promise.module</groupId>
 			<artifactId>auth-sdk</artifactId>
-			<version>0.1.0</version>
+			<version>${com.promise.version}</version>
 		</dependency>
 	</dependencies>
-
-	<properties>
-		<java.version>1.8</java.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
 
 	<build>
 		<plugins>
@@ -50,7 +46,7 @@
 				<configuration>
                     <!-- 139.129.234.210 -->
                     <!-- 100.100.216.251 -->
-					<url>http://139.129.234.210:8080/manager/text</url>
+					<url>http://${server_ip}:8080/manager/text</url>
 					<server>Promise0</server>
 					<path>/auth</path>
 				</configuration>
