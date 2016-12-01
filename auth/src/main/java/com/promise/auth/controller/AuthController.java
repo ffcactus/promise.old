@@ -61,7 +61,7 @@ public class AuthController
     }
 
     @PostMapping("/login")
-    @PromisePublicInterface
+    //@PromisePublicInterface
     public PostLoginResponse getLoginSession(@RequestBody PostLoginRequest request)
             throws InternelErrorException, LoginFailureException
     {

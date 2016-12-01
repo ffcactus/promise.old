@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class PromiseAuthAspect
 {
-    @Before("@annotation(com.promise.auth.aspect.PromisePublicInterface")
+    //@Before("@annotation(com.promise.auth.aspect.PromisePublicInterface")
+    @Before("execution(* com.promise.auth.controller.AuthController.getLoginSession(..))")
     public void printAdvice()
     {
         System.out.println("In printAdvice()");

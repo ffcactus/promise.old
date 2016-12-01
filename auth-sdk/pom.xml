@@ -13,15 +13,19 @@
 	<artifactId>auth-sdk</artifactId>
 
 	<dependencies>
-	
+
 		<!-- json -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>${com.fasterxml.jackson.core.version}</version>
 		</dependency>
-		
+
 		<!-- AspectJ -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
@@ -33,14 +37,14 @@
 			<artifactId>aspectjtools</artifactId>
 			<version>${org.aspectj.version}</version>
 		</dependency>
-		
+
 		<!-- promise -->
 		<dependency>
 			<groupId>com.promise.module</groupId>
 			<artifactId>common</artifactId>
 			<version>${com.promise.version}</version>
 		</dependency>
-		
+
 	</dependencies>
 
 </project>

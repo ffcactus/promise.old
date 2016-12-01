@@ -14,13 +14,25 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<java.version>1.8</java.version>
 		<com.promise.version>1.0</com.promise.version>
-		<org.springframework.version>4.0.3.RELEASE</org.springframework.version>
-		<org.springframework.boot.version>1.4.1.RELEASE</org.springframework.boot.version>
+		<org.springframework.version>4.3.4.RELEASE</org.springframework.version>
+		<org.springframework.boot.version>1.4.2.RELEASE</org.springframework.boot.version>
 		<com.fasterxml.jackson.core.version>2.8.3</com.fasterxml.jackson.core.version>
 		<org.apache.logging.log4j.version>2.7</org.apache.logging.log4j.version>
 		<org.apache.tomcat.maven.version>2.2</org.apache.tomcat.maven.version>
 		<org.aspectj.version>1.8.9</org.aspectj.version>
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-framework-bom</artifactId>
+				<version>${org.springframework.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<modules>
 		<module>common</module>

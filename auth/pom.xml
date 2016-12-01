@@ -26,7 +26,7 @@
 			<version>${org.springframework.boot.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		<!--  AspectJ -->
+		<!-- Spring AOP and AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
