@@ -1,4 +1,4 @@
-package com.promise.auth.aspect;
+package com.promise.auth.sdk.aspect;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

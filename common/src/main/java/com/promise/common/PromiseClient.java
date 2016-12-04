@@ -22,10 +22,17 @@ public class PromiseClient
 
     public static Map<String, String> makeHeader(PromiseToken token, PromiseAccessPoint accessPoint)
     {
-        final Map<String, String> ret = new HashMap<String, String>();
-        ret.put("promise-token", token.getValue());
-        ret.put("promise-accesspoint-type", accessPoint.getType());
-        ret.put("promise-accesspoint-value", accessPoint.getValue());
+        final Map<String, String> ret = new HashMap<>();
+        if (token != null)
+        {
+            ret.put("promise-token", token.getValue());
+        }
+        if (accessPoint != null)
+        {
+            ret.put("promise-accesspoint-type", accessPoint.getType());
+            ret.put("promise-accesspoint-value", accessPoint.getValue());
+        }
+
         return ret;
     }
 
@@ -102,7 +109,7 @@ public class PromiseClient
                     }
                     br.close();
                     final ObjectMapper mapper = new ObjectMapper();
-                    return new ResponseEntity<T>(mapper.readValue(sb.toString(), responseClass), HttpStatus.valueOf(status));
+                    return new ResponseEntity<>(mapper.readValue(sb.toString(), responseClass), HttpStatus.valueOf(status));
             }
         }
         catch (final MalformedURLException ex)
@@ -166,9 +173,9 @@ public class PromiseClient
                     }
                     br.close();
                     final ObjectMapper mapper = new ObjectMapper();
-                    return new ResponseEntity<T>(mapper.readValue(sb.toString(), responseClass), HttpStatus.valueOf(status));
+                    return new ResponseEntity<>(mapper.readValue(sb.toString(), responseClass), HttpStatus.valueOf(status));
                 case HttpURLConnection.HTTP_NOT_FOUND:
-                    return new ResponseEntity<T>((T) null, HttpStatus.valueOf(status));
+                    return new ResponseEntity<>((T) null, HttpStatus.valueOf(status));
             }
         }
         catch (final MalformedURLException ex)
@@ -232,9 +239,9 @@ public class PromiseClient
                         sb.append(line + "\n");
                     }
                     br.close();
-                    return new ResponseEntity<String>(sb.toString(), HttpStatus.valueOf(status));
+                    return new ResponseEntity<>(sb.toString(), HttpStatus.valueOf(status));
                 case HttpURLConnection.HTTP_NOT_FOUND:
-                    return new ResponseEntity<String>((String) null, HttpStatus.valueOf(status));
+                    return new ResponseEntity<>((String) null, HttpStatus.valueOf(status));
             }
         }
         catch (final MalformedURLException ex)
