@@ -1,12 +1,24 @@
 package com.promise.auth.service;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+
+import javax.annotation.PostConstruct;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.promise.auth.sdk.client.AuthClient;
 import com.promise.auth.sdk.dto.PostAuthResponse;
 import com.promise.auth.sdk.dto.PostLoginRequest;
 import com.promise.auth.sdk.dto.PostLoginResponse;
@@ -22,6 +34,7 @@ import com.promise.common.exception.NoDBInstanceException;
 @Scope("singleton")
 public class AuthServiceImpl implements AuthServiceInterface
 {
+    private static final Logger log = Logger.getLogger(AuthServiceImpl.class);
 
     @Autowired
     private UserServiceInterface userService;
@@ -29,7 +42,23 @@ public class AuthServiceImpl implements AuthServiceInterface
     @Autowired
     private TokenServiceInterface tokenService;
 
-    private static Logger log = Logger.getLogger(AuthServiceImpl.class);
+    private static PromiseToken localToken;
+
+    @PostConstruct
+    private void postConstruct()
+    {
+        try
+        {
+            localToken = new PromiseToken(UUID.randomUUID().toString());
+            final Path file = Paths.get(AuthClient.LOCAL_TOKEN_FILE);
+            final List<String> lines = Arrays.asList(localToken.getValue());
+            Files.write(file, lines, Charset.forName("UTF-8"), StandardOpenOption.CREATE);
+        }
+        catch (final IOException e)
+        {
+            log.fatal("Failed to create a local token");
+        }
+    }
 
     @Override
     public PostLoginResponse login(PostLoginRequest request)
@@ -61,8 +90,23 @@ public class AuthServiceImpl implements AuthServiceInterface
     @Override
     public PostAuthResponse auth(PromiseToken token, PromiseAccessPoint accessPoint)
     {
-        // TODO Auto-generated method stub
-        return null;
+        final PostAuthResponse response = new PostAuthResponse();
+        if (localToken.equals(token.getLocalToken()))
+        {
+            response.setAuthorizationResult(PostAuthResponse.ACCEPT);
+            response.setAuthenticationResult(PostAuthResponse.ACCEPT);
+        }
+        else if (tokenService.getUser(token) != null)
+        {
+            response.setAuthorizationResult(PostAuthResponse.ACCEPT);
+            response.setAuthenticationResult(PostAuthResponse.ACCEPT);
+        }
+        else
+        {
+            response.setAuthorizationResult(PostAuthResponse.FORBIDDEN);
+            response.setAuthenticationResult(PostAuthResponse.FORBIDDEN);
+        }
+        return response;
     }
 
 }

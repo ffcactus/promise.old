@@ -7,8 +7,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -26,13 +26,14 @@ import com.promise.common.exception.NoDBInstanceException;
 
 @Component
 @Scope("singleton")
+@DependsOn("authServiceImpl")
 public class UserServiceImpl implements UserServiceInterface//, InitializingBean
 {
     @Autowired
     private UserDatabaseInterface userDatabase;
 
     private static Logger log = Logger.getLogger(UserServiceImpl.class);
-    
+
     @PostConstruct
     private void postConstruct()
     {
@@ -47,7 +48,7 @@ public class UserServiceImpl implements UserServiceInterface//, InitializingBean
         else
         {
             log.info("User Administrator already exist.");
-        }        
+        }
     }
 
     @Override

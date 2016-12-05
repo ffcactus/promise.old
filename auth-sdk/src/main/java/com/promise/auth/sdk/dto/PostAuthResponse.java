@@ -2,6 +2,8 @@ package com.promise.auth.sdk.dto;
 
 public class PostAuthResponse
 {
+    public static final String ACCEPT = "accept";
+    public static final String FORBIDDEN = "forbid";
     private String authenticationResult;
     private String authorizationResult;
 
