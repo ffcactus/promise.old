@@ -43,7 +43,7 @@ public class AuthClient
     public static ResponseEntity<PostAuthResponse> aa(PromiseToken token, PromiseAccessPoint accessPoint)
     {
         return PromiseClient.httpPost(
-                URL_HEAD + "/rest/auth",
+                URL_HEAD + "/rest/private/auth",
                 null,
                 PromiseClient.makeHeader(token, accessPoint),
                 PostAuthResponse.class);

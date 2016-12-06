@@ -93,18 +93,18 @@ public class AuthServiceImpl implements AuthServiceInterface
         final PostAuthResponse response = new PostAuthResponse();
         if (localToken.equals(token.getLocalToken()))
         {
-            response.setAuthorizationResult(PostAuthResponse.ACCEPT);
-            response.setAuthenticationResult(PostAuthResponse.ACCEPT);
+            response.setAuthenticated(true);
+            response.setAuthorized(true);
         }
         else if (tokenService.getUser(token) != null)
         {
-            response.setAuthorizationResult(PostAuthResponse.ACCEPT);
-            response.setAuthenticationResult(PostAuthResponse.ACCEPT);
+            response.setAuthenticated(true);
+            response.setAuthorized(true);
         }
         else
         {
-            response.setAuthorizationResult(PostAuthResponse.FORBIDDEN);
-            response.setAuthenticationResult(PostAuthResponse.FORBIDDEN);
+            response.setAuthenticated(false);
+            response.setAuthorized(false);
         }
         return response;
     }

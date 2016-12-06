@@ -29,14 +29,12 @@ import com.promise.auth.sdk.dto.GetScopeListResponse;
 import com.promise.auth.sdk.dto.GetScopeResponse;
 import com.promise.auth.sdk.dto.GetUserListResponse;
 import com.promise.auth.sdk.dto.GetUserResponse;
-import com.promise.auth.sdk.dto.PostAuthResponse;
 import com.promise.auth.sdk.dto.PostLoginRequest;
 import com.promise.auth.sdk.dto.PostLoginResponse;
 import com.promise.auth.service.AuthServiceInterface;
 import com.promise.auth.service.ScopeServiceInterface;
 import com.promise.auth.service.UserServiceInterface;
 import com.promise.common.PromiseAccessPoint;
-import com.promise.common.PromiseClient;
 import com.promise.common.PromiseErrorResponse;
 import com.promise.common.PromiseToken;
 import com.promise.common.constant.PromiseCategory;
@@ -48,7 +46,7 @@ import com.promise.common.exception.PromiseException;
 
 @RestController
 @RequestMapping("/rest")
-public class AuthController
+public class AuthPublicController
 {
 
     @Autowired
@@ -60,7 +58,7 @@ public class AuthController
     @Autowired
     private ScopeServiceInterface scopeService;
 
-    private final Logger log = Logger.getLogger(AuthController.class);
+    private final Logger log = Logger.getLogger(AuthPublicController.class);
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<PromiseErrorResponse> exceptionHandler(HttpServletRequest req, Exception ex)
@@ -91,14 +89,6 @@ public class AuthController
             throws InternelErrorException, LoginFailureException
     {
         return authService.login(request);
-    }
-
-    @PostMapping("/auth")
-    public PostAuthResponse auth(@RequestHeader Map<String, String> header)
-    {
-        final PromiseToken token = PromiseClient.getToken(header);
-        final PromiseAccessPoint accessPoint = PromiseClient.getAccessPoint(header);
-        return authService.auth(token, accessPoint);
     }
 
     /*

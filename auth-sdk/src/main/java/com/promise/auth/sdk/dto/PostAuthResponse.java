@@ -2,33 +2,38 @@ package com.promise.auth.sdk.dto;
 
 public class PostAuthResponse
 {
-    public static final String ACCEPT = "accept";
-    public static final String FORBIDDEN = "forbid";
-    private String authenticationResult;
-    private String authorizationResult;
+    private boolean authenticated;
+    private boolean authorized;
 
     public PostAuthResponse()
     {
 
     }
 
-    public String getAuthenticationResult()
+    public PostAuthResponse(boolean authenticated, boolean authorized)
     {
-        return authenticationResult;
+        this.authenticated = authenticated;
+        this.authorized = authorized;
     }
 
-    public void setAuthenticationResult(String authenticationResult)
+    public boolean isAuthenticated()
     {
-        this.authenticationResult = authenticationResult;
+        return authenticated;
     }
 
-    public String getAuthorizationResult()
+    public void setAuthenticated(boolean authenticated)
     {
-        return authorizationResult;
+        this.authenticated = authenticated;
     }
 
-    public void setAuthorizationResult(String authorizationResult)
+    public boolean isAuthorized()
     {
-        this.authorizationResult = authorizationResult;
+        return authorized;
     }
+
+    public void setAuthorized(boolean authorized)
+    {
+        this.authorized = authorized;
+    }
+
 }
