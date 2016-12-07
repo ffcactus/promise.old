@@ -10,23 +10,29 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.promise.auth.sdk.dto.CreateScopeRequest;
 import com.promise.auth.sdk.dto.CreateScopeResponse;
 import com.promise.auth.sdk.dto.GetScopeListResponse;
 import com.promise.auth.sdk.dto.GetScopeResponse;
+import com.promise.auth.sdk.dto.PostLoginRequest;
+import com.promise.auth.sdk.dto.PostLoginResponse;
 import com.promise.common.PromiseAccessPoint;
+import com.promise.common.PromiseToken;
 import com.promise.integrationtest.util.CommonTestUtil;
 import com.promise.integrationtest.util.HttpJsonClient;
 
 public class ScopeTest
 {
-    private static final String URI_HEAD = "http://139.129.234.210/rest/scope";
+    private static final String hostname = "http://192.168.116.130";
+    private static final String URI_HEAD = hostname + "/rest/scope";
     private static final CreateScopeRequest createRequest0;
     private static final CreateScopeRequest createRequest1;
     private static final List<PromiseAccessPoint> accessPointList0;
     private static final List<PromiseAccessPoint> accessPointList1;
+    private static PromiseToken token;
 
     static
     {
@@ -52,6 +58,23 @@ public class ScopeTest
     public static void setUpBeforeClass()
             throws Exception
     {
+        final PostLoginRequest request = new PostLoginRequest();
+        request.setUserName("Administrator");
+        request.setPassword("admin");
+        request.setDomain("local");
+        final ResponseEntity<PostLoginResponse> response = HttpJsonClient.httpPost(
+                hostname + "/rest/login",
+                null,
+                request,
+                PostLoginResponse.class);
+        if (response.getStatusCode() == HttpStatus.OK)
+        {
+            token = new PromiseToken(response.getBody().getToken());
+        }
+        else
+        {
+            throw new Exception("Failed to login.");
+        }
     }
 
     @AfterClass
@@ -76,7 +99,7 @@ public class ScopeTest
     public void testCreateScope()
     {
         final ResponseEntity<CreateScopeResponse> postRet = HttpJsonClient
-                .httpPost(URI_HEAD, createRequest0, CreateScopeResponse.class);
+                .httpPost(URI_HEAD, token, createRequest0, CreateScopeResponse.class);
         final CreateScopeResponse postResponse = postRet.getBody();
         Assert.assertEquals(HttpURLConnection.HTTP_CREATED, postRet.getStatusCodeValue());
         CommonTestUtil.assertPromiseResource(postResponse);
@@ -87,7 +110,7 @@ public class ScopeTest
 
         // Clean up.
         final ResponseEntity<String> deleteRet = HttpJsonClient
-                .httpDelete(URI_HEAD + "/" + postResponse.getId());
+                .httpDelete(URI_HEAD + "/" + postResponse.getId(), token);
         Assert.assertEquals(HttpURLConnection.HTTP_ACCEPTED, deleteRet.getStatusCodeValue());
     }
 
@@ -95,7 +118,7 @@ public class ScopeTest
     public void testDeleteExistScope()
     {
         final ResponseEntity<CreateScopeResponse> postRet = HttpJsonClient
-                .httpPost(URI_HEAD, createRequest0, CreateScopeResponse.class);
+                .httpPost(URI_HEAD, token, createRequest0, CreateScopeResponse.class);
         final CreateScopeResponse postResponse = postRet.getBody();
         Assert.assertEquals(HttpURLConnection.HTTP_CREATED, postRet.getStatusCodeValue());
         Assert.assertEquals(createRequest0.getName(), postResponse.getName());
@@ -104,7 +127,7 @@ public class ScopeTest
         Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest0.getAccessPointList(), postResponse.getAccessPointList()));
 
         final ResponseEntity<String> deleteRet = HttpJsonClient
-                .httpDelete(URI_HEAD + "/" + postResponse.getId());
+                .httpDelete(URI_HEAD + "/" + postResponse.getId(), token);
         Assert.assertEquals(HttpURLConnection.HTTP_ACCEPTED, deleteRet.getStatusCodeValue());
     }
 
@@ -112,7 +135,7 @@ public class ScopeTest
     public void testDeleteNoneExistScope()
     {
         final ResponseEntity<String> deleteRet = HttpJsonClient
-                .httpDelete(URI_HEAD + "/xxxx");
+                .httpDelete(URI_HEAD + "/xxxx", token);
         Assert.assertEquals(HttpURLConnection.HTTP_NOT_FOUND, deleteRet.getStatusCodeValue());
     }
 
@@ -120,7 +143,7 @@ public class ScopeTest
     public void testGetScope()
     {
         final ResponseEntity<CreateScopeResponse> postScopeRet = HttpJsonClient
-                .httpPost(URI_HEAD, createRequest0, CreateScopeResponse.class);
+                .httpPost(URI_HEAD, token, createRequest0, CreateScopeResponse.class);
         final CreateScopeResponse postResponse = postScopeRet.getBody();
 
         Assert.assertEquals(HttpURLConnection.HTTP_CREATED, postScopeRet.getStatusCodeValue());
@@ -130,7 +153,7 @@ public class ScopeTest
         Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest0.getAccessPointList(), postResponse.getAccessPointList()));
 
         final ResponseEntity<GetScopeResponse> getScopeRet = HttpJsonClient
-                .httpGet(URI_HEAD + "/" + postResponse.getId(), GetScopeResponse.class);
+                .httpGet(URI_HEAD + "/" + postResponse.getId(), token, GetScopeResponse.class);
         final GetScopeResponse getResponse = getScopeRet.getBody();
 
         Assert.assertEquals(HttpURLConnection.HTTP_OK, getScopeRet.getStatusCodeValue());
@@ -142,7 +165,7 @@ public class ScopeTest
 
         // Clean up.
         final ResponseEntity<String> deleteRet = HttpJsonClient
-                .httpDelete(URI_HEAD + "/" + postResponse.getId());
+                .httpDelete(URI_HEAD + "/" + postResponse.getId(), token);
         Assert.assertEquals(HttpURLConnection.HTTP_ACCEPTED, deleteRet.getStatusCodeValue());
     }
 
@@ -150,11 +173,11 @@ public class ScopeTest
     public void testGetScopeList()
     {
         final ResponseEntity<CreateScopeResponse> postScopeRet0 = HttpJsonClient
-                .httpPost(URI_HEAD, createRequest0, CreateScopeResponse.class);
+                .httpPost(URI_HEAD, token, createRequest0, CreateScopeResponse.class);
         final CreateScopeResponse postResponse0 = postScopeRet0.getBody();
 
         final ResponseEntity<CreateScopeResponse> postScopeRet1 = HttpJsonClient
-                .httpPost(URI_HEAD, createRequest1, CreateScopeResponse.class);
+                .httpPost(URI_HEAD, token, createRequest1, CreateScopeResponse.class);
         final CreateScopeResponse postResponse1 = postScopeRet1.getBody();
 
         Assert.assertEquals(HttpURLConnection.HTTP_CREATED, postScopeRet0.getStatusCodeValue());
@@ -170,7 +193,7 @@ public class ScopeTest
         Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest1.getAccessPointList(), postResponse1.getAccessPointList()));
 
         final ResponseEntity<GetScopeListResponse> getScopeListRet = HttpJsonClient
-                .httpGet(URI_HEAD, GetScopeListResponse.class);
+                .httpGet(URI_HEAD, token, GetScopeListResponse.class);
         final GetScopeListResponse getScopeListResponse = getScopeListRet.getBody();
 
         Assert.assertEquals(HttpURLConnection.HTTP_OK, getScopeListRet.getStatusCodeValue());
@@ -213,11 +236,11 @@ public class ScopeTest
 
         // Clean up.
         final ResponseEntity<String> deleteRet0 = HttpJsonClient
-                .httpDelete(URI_HEAD + "/" + postResponse0.getId());
+                .httpDelete(URI_HEAD + "/" + postResponse0.getId(), token);
         Assert.assertEquals(HttpURLConnection.HTTP_ACCEPTED, deleteRet0.getStatusCodeValue());
 
         final ResponseEntity<String> deleteRet1 = HttpJsonClient
-                .httpDelete(URI_HEAD + "/" + postResponse1.getId());
+                .httpDelete(URI_HEAD + "/" + postResponse1.getId(), token);
         Assert.assertEquals(HttpURLConnection.HTTP_ACCEPTED, deleteRet1.getStatusCodeValue());
     }
 

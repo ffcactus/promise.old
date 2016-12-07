@@ -12,13 +12,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.promise.common.PromiseToken;
 
 public class HttpJsonClient
 {
     public static final int CONNECTION_TIMEOUT = 1000;
     public static final int READ_TIMEOUT = 1000;
 
-    public static <T, E> ResponseEntity<T> httpPost(String url, E request, Class<T> responseClass)
+    public static <T, E> ResponseEntity<T> httpPost(String url, PromiseToken token, E request, Class<T> responseClass)
     {
         HttpURLConnection c = null;
         try
@@ -32,6 +33,10 @@ public class HttpJsonClient
             c.setDoOutput(true);
             c.setRequestProperty("Content-Type", "application/json");
             c.setRequestProperty("Accept", "application/json");
+            if (token != null)
+            {
+                c.setRequestProperty("promise-token", token.getValue());
+            }
             c.setUseCaches(false);
             c.setAllowUserInteraction(false);
             final OutputStream os = c.getOutputStream();
@@ -80,7 +85,7 @@ public class HttpJsonClient
         return null;
     }
 
-    public static <T> ResponseEntity<T> httpGet(String url, Class<T> responseClass)
+    public static <T> ResponseEntity<T> httpGet(String url, PromiseToken token, Class<T> responseClass)
     {
         HttpURLConnection c = null;
         try
@@ -93,6 +98,10 @@ public class HttpJsonClient
             c.setDoInput(true);
             c.setRequestProperty("Content-Type", "application/json");
             c.setRequestProperty("Accept", "application/json");
+            if (token != null)
+            {
+                c.setRequestProperty("promise-token", token.getValue());
+            }
             c.setUseCaches(false);
             c.setAllowUserInteraction(false);
             c.connect();
@@ -139,7 +148,7 @@ public class HttpJsonClient
         return null;
     }
 
-    public static ResponseEntity<String> httpDelete(String url)
+    public static ResponseEntity<String> httpDelete(String url, PromiseToken token)
     {
         HttpURLConnection c = null;
         try
@@ -153,6 +162,10 @@ public class HttpJsonClient
             c.setDoOutput(true);
             c.setRequestProperty("Content-Type", "application/json");
             c.setRequestProperty("Accept", "application/json");
+            if (token != null)
+            {
+                c.setRequestProperty("promise-token", token.getValue());
+            }
             c.setUseCaches(false);
             c.setAllowUserInteraction(false);
             c.connect();

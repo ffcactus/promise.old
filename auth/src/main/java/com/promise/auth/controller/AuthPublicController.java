@@ -124,7 +124,9 @@ public class AuthPublicController
 
     @PromisePublicInterface
     @GetMapping("/user/{id}")
-    GetUserResponse getUser(@PathVariable String id)
+    GetUserResponse getUser(
+            @RequestHeader Map<String, String> header,
+            @PathVariable String id)
     {
         AuthClient.aa(new PromiseToken("token"), new PromiseAccessPoint());
         return null;
@@ -135,7 +137,9 @@ public class AuthPublicController
      */
     @PromisePublicInterface
     @PostMapping("/scope")
-    public ResponseEntity<CreateScopeResponse> createScope(@RequestBody CreateScopeRequest scope)
+    public ResponseEntity<CreateScopeResponse> createScope(
+            @RequestHeader Map<String, String> header,
+            @RequestBody CreateScopeRequest scope)
             throws InvalidRequestBodyException
     {
         log.info("HTTP POST /rest/scope " + scope.toDebugString());
@@ -149,6 +153,7 @@ public class AuthPublicController
     @PromisePublicInterface
     @GetMapping("/scope")
     public ResponseEntity<GetScopeListResponse> getScopeList(
+            @RequestHeader Map<String, String> header,
             @RequestParam(value = "start", defaultValue = "0") int start,
             @RequestParam(value = "count", defaultValue = "0") int count)
             throws InvalidRequestBodyException
@@ -164,7 +169,9 @@ public class AuthPublicController
 
     @PromisePublicInterface
     @GetMapping("/scope/{id}")
-    public ResponseEntity<GetScopeResponse> getScope(@PathVariable String id)
+    public ResponseEntity<GetScopeResponse> getScope(
+            @RequestHeader Map<String, String> header,
+            @PathVariable String id)
     {
         log.info("HTTP GET /rest/scope/" + id);
         try
@@ -179,7 +186,9 @@ public class AuthPublicController
 
     @PromisePublicInterface
     @DeleteMapping("/scope/{id}")
-    public ResponseEntity<String> deleteScope(@PathVariable String id)
+    public ResponseEntity<String> deleteScope(
+            @RequestHeader Map<String, String> header,
+            @PathVariable String id)
     {
         log.info("HTTP DELETE /rest/scope/" + id);
         try
