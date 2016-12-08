@@ -96,7 +96,9 @@ public class AuthPublicController
      */
     @PromisePublicInterface
     @PostMapping("/user")
-    ResponseEntity<CreateUserResponse> createUser(@RequestBody CreateUserRequest dto)
+    ResponseEntity<CreateUserResponse> createUser(
+            @RequestHeader Map<String, String> header,
+            @RequestBody CreateUserRequest dto)
             throws InvalidRequestBodyException
     {
         if (!dto.isValidRequest())
@@ -124,12 +126,29 @@ public class AuthPublicController
 
     @PromisePublicInterface
     @GetMapping("/user/{id}")
-    GetUserResponse getUser(
+    ResponseEntity<GetUserResponse> getUser(
             @RequestHeader Map<String, String> header,
             @PathVariable String id)
     {
         AuthClient.aa(new PromiseToken("token"), new PromiseAccessPoint());
-        return null;
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    @PromisePublicInterface
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<String> deleteUser(
+            @RequestHeader Map<String, String> header,
+            @PathVariable String id)
+    {
+        try
+        {
+            userService.deleteUser(id);
+            return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
+        }
+        catch (final NoDBInstanceException e)
+        {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
     /*
@@ -142,7 +161,6 @@ public class AuthPublicController
             @RequestBody CreateScopeRequest scope)
             throws InvalidRequestBodyException
     {
-        log.info("HTTP POST /rest/scope " + scope.toDebugString());
         if (!scope.isValidRequest())
         {
             throw new InvalidRequestBodyException(null, PromiseCategory.SCOPE);
@@ -158,7 +176,6 @@ public class AuthPublicController
             @RequestParam(value = "count", defaultValue = "0") int count)
             throws InvalidRequestBodyException
     {
-        log.info("HTTP GET /rest/scope");
         if (start < 0 || count < 0)
         {
             // TODO Invalid URL?
@@ -173,7 +190,6 @@ public class AuthPublicController
             @RequestHeader Map<String, String> header,
             @PathVariable String id)
     {
-        log.info("HTTP GET /rest/scope/" + id);
         try
         {
             return new ResponseEntity<>(scopeService.getScope(id), HttpStatus.OK);
@@ -190,7 +206,6 @@ public class AuthPublicController
             @RequestHeader Map<String, String> header,
             @PathVariable String id)
     {
-        log.info("HTTP DELETE /rest/scope/" + id);
         try
         {
             scopeService.deleteScope(id);

@@ -105,7 +105,6 @@ public class ScopeTest
         CommonTestUtil.assertPromiseResource(postResponse);
         Assert.assertEquals(createRequest0.getName(), postResponse.getName());
         Assert.assertEquals(createRequest0.getDescription(), postResponse.getDescription());
-        Assert.assertNotNull(postResponse.getId());
         Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest0.getAccessPointList(), postResponse.getAccessPointList()));
 
         // Clean up.
@@ -123,7 +122,7 @@ public class ScopeTest
         Assert.assertEquals(HttpURLConnection.HTTP_CREATED, postRet.getStatusCodeValue());
         Assert.assertEquals(createRequest0.getName(), postResponse.getName());
         Assert.assertEquals(createRequest0.getDescription(), postResponse.getDescription());
-        Assert.assertNotNull(postResponse.getId());
+        CommonTestUtil.assertPromiseResource(postResponse);
         Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest0.getAccessPointList(), postResponse.getAccessPointList()));
 
         final ResponseEntity<String> deleteRet = HttpJsonClient
@@ -149,7 +148,7 @@ public class ScopeTest
         Assert.assertEquals(HttpURLConnection.HTTP_CREATED, postScopeRet.getStatusCodeValue());
         Assert.assertEquals(createRequest0.getName(), postResponse.getName());
         Assert.assertEquals(createRequest0.getDescription(), postResponse.getDescription());
-        Assert.assertNotNull(postResponse.getId());
+        CommonTestUtil.assertPromiseResource(postResponse);
         Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest0.getAccessPointList(), postResponse.getAccessPointList()));
 
         final ResponseEntity<GetScopeResponse> getScopeRet = HttpJsonClient
@@ -160,7 +159,7 @@ public class ScopeTest
         CommonTestUtil.assertPromiseResource(postResponse);
         Assert.assertEquals(createRequest0.getName(), getResponse.getName());
         Assert.assertEquals(createRequest0.getDescription(), getResponse.getDescription());
-        Assert.assertNotNull(getResponse.getId());
+        CommonTestUtil.assertPromiseResource(postResponse);
         Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest0.getAccessPointList(), getResponse.getAccessPointList()));
 
         // Clean up.
@@ -183,13 +182,13 @@ public class ScopeTest
         Assert.assertEquals(HttpURLConnection.HTTP_CREATED, postScopeRet0.getStatusCodeValue());
         Assert.assertEquals(createRequest0.getName(), postResponse0.getName());
         Assert.assertEquals(createRequest0.getDescription(), postResponse0.getDescription());
-        Assert.assertNotNull(postResponse0.getId());
+        CommonTestUtil.assertPromiseResource(postResponse0);
         Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest0.getAccessPointList(), postResponse0.getAccessPointList()));
 
         Assert.assertEquals(HttpURLConnection.HTTP_CREATED, postScopeRet1.getStatusCodeValue());
         Assert.assertEquals(createRequest1.getName(), postResponse1.getName());
         Assert.assertEquals(createRequest1.getDescription(), postResponse1.getDescription());
-        Assert.assertNotNull(postResponse1.getId());
+        CommonTestUtil.assertPromiseResource(postResponse1);
         Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest1.getAccessPointList(), postResponse1.getAccessPointList()));
 
         final ResponseEntity<GetScopeListResponse> getScopeListRet = HttpJsonClient
@@ -207,14 +206,14 @@ public class ScopeTest
             CommonTestUtil.assertPromiseResource(t0);
             Assert.assertEquals(createRequest0.getName(), t0.getName());
             Assert.assertEquals(createRequest0.getDescription(), t0.getDescription());
-            Assert.assertNotNull(t0.getId());
+            CommonTestUtil.assertPromiseResource(t0);
             Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest0.getAccessPointList(), t0.getAccessPointList()));
 
             final GetScopeResponse t1 = getScopeListResponse.getMemberList().get(1);
             CommonTestUtil.assertPromiseResource(t1);
             Assert.assertEquals(createRequest1.getName(), t1.getName());
             Assert.assertEquals(createRequest1.getDescription(), t1.getDescription());
-            Assert.assertNotNull(t1.getId());
+            CommonTestUtil.assertPromiseResource(t1);
             Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest1.getAccessPointList(), t1.getAccessPointList()));
         }
         else
@@ -223,14 +222,14 @@ public class ScopeTest
             CommonTestUtil.assertPromiseResource(t0);
             Assert.assertEquals(createRequest1.getName(), t0.getName());
             Assert.assertEquals(createRequest1.getDescription(), t0.getDescription());
-            Assert.assertNotNull(t0.getId());
+            CommonTestUtil.assertPromiseResource(t0);
             Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest1.getAccessPointList(), t0.getAccessPointList()));
 
             final GetScopeResponse t1 = getScopeListResponse.getMemberList().get(1);
             CommonTestUtil.assertPromiseResource(t1);
             Assert.assertEquals(createRequest0.getName(), t1.getName());
             Assert.assertEquals(createRequest0.getDescription(), t1.getDescription());
-            Assert.assertNotNull(t1.getId());
+            CommonTestUtil.assertPromiseResource(t1);
             Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest0.getAccessPointList(), t1.getAccessPointList()));
         }
 

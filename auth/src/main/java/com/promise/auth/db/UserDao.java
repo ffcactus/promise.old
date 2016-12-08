@@ -68,11 +68,9 @@ public class UserDao extends PromiseResource
     {
         final CreateUserResponse ret = new CreateUserResponse();
 
-        ret.setId(dao.getId());
-        ret.setUri(dao.getUri());
-        ret.setCategory(dao.getCategory());
+        PromiseResource.attributeCopy(ret, dao);
 
-        ret.setUsername(ret.getUsername());
+        ret.setUsername(dao.getUsername());
         ret.setEmail(dao.getEmail());
         ret.setScopeUri(dao.getScopeUri());
 

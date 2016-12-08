@@ -46,7 +46,7 @@ public class HttpJsonClient
             final int status = c.getResponseCode();
             switch (status)
             {
-                case 200:
+                case HttpURLConnection.HTTP_OK:
                 case HttpURLConnection.HTTP_CREATED:
                     final BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
                     final StringBuilder sb = new StringBuilder();
@@ -58,6 +58,8 @@ public class HttpJsonClient
                     br.close();
                     final ObjectMapper mapper = new ObjectMapper();
                     return new ResponseEntity<>(mapper.readValue(sb.toString(), responseClass), HttpStatus.valueOf(status));
+                default:
+                    return new ResponseEntity<>(null, HttpStatus.valueOf(status));
             }
         }
         catch (final MalformedURLException ex)

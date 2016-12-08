@@ -61,4 +61,13 @@ public interface UserServiceInterface
      * @return
      */
     public GetUserListResponse getUserList(int start, int count);
+
+    /**
+     * Delete User by ID.
+     *
+     * @param id The id of the user to delete.
+     * @throws NoDBInstanceException If the scope is unable to find.
+     */
+    public void deleteUser(String id)
+            throws NoDBInstanceException;
 }

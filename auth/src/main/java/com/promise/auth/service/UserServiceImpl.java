@@ -111,6 +111,13 @@ public class UserServiceImpl implements UserServiceInterface//, InitializingBean
         return ret;
     }
 
+    @Override
+    public void deleteUser(String id)
+            throws NoDBInstanceException
+    {
+        userDatabase.deleteUser(id);
+    }
+
     /**
      * Convert DAO to GetUserResponseDto.
      *

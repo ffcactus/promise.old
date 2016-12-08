@@ -30,7 +30,7 @@ public interface ScopeServiceInterface
     /**
      * Delete Scope by ID.
      *
-     * @param id THe id of the scope to delete.
+     * @param id The id of the scope to delete.
      * @throws NoDBInstanceException If the scope is unable to find.
      */
     public void deleteScope(String id)

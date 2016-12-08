@@ -61,4 +61,19 @@ public class RamUserDataBaseImpl implements UserDatabaseInterface
         throw new NoDBInstanceException(PromiseCategory.USER);
     }
 
+    @Override
+    public void deleteUser(String id)
+            throws NoDBInstanceException
+    {
+        if (ramDB.containsKey(id))
+        {
+            ramDB.remove(id);
+        }
+        else
+        {
+            throw new NoDBInstanceException(PromiseCategory.USER);
+        }
+
+    }
+
 }
