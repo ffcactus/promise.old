@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.UUID;
 
 import com.promise.auth.sdk.dto.CreateUserRequest;
-import com.promise.auth.sdk.dto.CreateUserResponse;
 import com.promise.auth.util.PasswordUtil;
 import com.promise.auth.util.PasswordUtil.HashResult;
 import com.promise.common.PromiseResource;
+import com.promise.common.PromiseUser;
 import com.promise.common.constant.PromiseCategory;
 
 /**
@@ -64,9 +64,9 @@ public class UserDao extends PromiseResource
         return ret;
     }
 
-    public static CreateUserResponse toDto(UserDao dao)
+    public static PromiseUser toPromiseUser(UserDao dao)
     {
-        final CreateUserResponse ret = new CreateUserResponse();
+        final PromiseUser ret = new PromiseUser();
 
         PromiseResource.attributeCopy(ret, dao);
 

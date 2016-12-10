@@ -2,9 +2,8 @@ package com.promise.common;
 
 import java.util.List;
 
-public class PromiseUser
+public class PromiseUser extends PromiseResource
 {
-    private String id;
     private String username;
     private String email;
     private List<String> scopeUri;
@@ -12,16 +11,6 @@ public class PromiseUser
     public PromiseUser()
     {
 
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public void setId(String id)
-    {
-        this.id = id;
     }
 
     public String getUsername()

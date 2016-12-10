@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserServiceInterface//, InitializingBean
         try
         {
             final UserDao userDao = userDatabase.createUser(UserDao.makeInstance(userDto));
-            return UserDao.toDto(userDao);
+            return CreateUserResponse.makeInstance(UserDao.toPromiseUser(userDao));
         }
         catch (final NoSuchAlgorithmException e)
         {
@@ -70,8 +70,10 @@ public class UserServiceImpl implements UserServiceInterface//, InitializingBean
 
     @Override
     public GetUserResponse getUser(String id)
+            throws NoDBInstanceException
     {
-        return null;
+        final UserDao userDao = userDatabase.getUser(id);
+        return GetUserResponse.makeInstance(UserDao.toPromiseUser(userDao));
     }
 
     @Override
@@ -101,10 +103,16 @@ public class UserServiceImpl implements UserServiceInterface//, InitializingBean
         final List<GetUserResponse> memberList = new ArrayList<>();
         for (final UserDao each : userDaoList)
         {
-            final GetUserResponse t = getUser(each.getId());
-            if (t != null)
+            GetUserResponse t;
+            try
             {
+                t = getUser(each.getId());
                 memberList.add(t);
+            }
+            catch (final NoDBInstanceException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
         }
         ret.setMemberList(memberList);

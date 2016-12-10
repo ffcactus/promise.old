@@ -110,7 +110,7 @@ public class ScopeTest
         // Clean up.
         final ResponseEntity<String> deleteRet = HttpJsonClient
                 .httpDelete(URI_HEAD + "/" + postResponse.getId(), token);
-        Assert.assertEquals(HttpURLConnection.HTTP_ACCEPTED, deleteRet.getStatusCodeValue());
+        Assert.assertEquals(HttpStatus.ACCEPTED, deleteRet.getStatusCode());
     }
 
     @Test
@@ -127,7 +127,7 @@ public class ScopeTest
 
         final ResponseEntity<String> deleteRet = HttpJsonClient
                 .httpDelete(URI_HEAD + "/" + postResponse.getId(), token);
-        Assert.assertEquals(HttpURLConnection.HTTP_ACCEPTED, deleteRet.getStatusCodeValue());
+        Assert.assertEquals(HttpStatus.ACCEPTED, deleteRet.getStatusCode());
     }
 
     @Test
@@ -135,7 +135,7 @@ public class ScopeTest
     {
         final ResponseEntity<String> deleteRet = HttpJsonClient
                 .httpDelete(URI_HEAD + "/xxxx", token);
-        Assert.assertEquals(HttpURLConnection.HTTP_NOT_FOUND, deleteRet.getStatusCodeValue());
+        Assert.assertEquals(HttpStatus.NOT_FOUND, deleteRet.getStatusCode());
     }
 
     @Test
@@ -155,7 +155,7 @@ public class ScopeTest
                 .httpGet(URI_HEAD + "/" + postResponse.getId(), token, GetScopeResponse.class);
         final GetScopeResponse getResponse = getScopeRet.getBody();
 
-        Assert.assertEquals(HttpURLConnection.HTTP_OK, getScopeRet.getStatusCodeValue());
+        Assert.assertEquals(HttpStatus.OK, getScopeRet.getStatusCode());
         CommonTestUtil.assertPromiseResource(postResponse);
         Assert.assertEquals(createRequest0.getName(), getResponse.getName());
         Assert.assertEquals(createRequest0.getDescription(), getResponse.getDescription());
@@ -165,7 +165,7 @@ public class ScopeTest
         // Clean up.
         final ResponseEntity<String> deleteRet = HttpJsonClient
                 .httpDelete(URI_HEAD + "/" + postResponse.getId(), token);
-        Assert.assertEquals(HttpURLConnection.HTTP_ACCEPTED, deleteRet.getStatusCodeValue());
+        Assert.assertEquals(HttpStatus.ACCEPTED, deleteRet.getStatusCode());
     }
 
     @Test
@@ -195,7 +195,7 @@ public class ScopeTest
                 .httpGet(URI_HEAD, token, GetScopeListResponse.class);
         final GetScopeListResponse getScopeListResponse = getScopeListRet.getBody();
 
-        Assert.assertEquals(HttpURLConnection.HTTP_OK, getScopeListRet.getStatusCodeValue());
+        Assert.assertEquals(HttpStatus.OK, getScopeListRet.getStatusCode());
         Assert.assertEquals(0, getScopeListResponse.getStart());
         Assert.assertEquals(2, getScopeListResponse.getCount());
         Assert.assertEquals(2, getScopeListResponse.getMemberList().size());
@@ -236,11 +236,11 @@ public class ScopeTest
         // Clean up.
         final ResponseEntity<String> deleteRet0 = HttpJsonClient
                 .httpDelete(URI_HEAD + "/" + postResponse0.getId(), token);
-        Assert.assertEquals(HttpURLConnection.HTTP_ACCEPTED, deleteRet0.getStatusCodeValue());
+        Assert.assertEquals(HttpStatus.ACCEPTED, deleteRet0.getStatusCode());
 
         final ResponseEntity<String> deleteRet1 = HttpJsonClient
                 .httpDelete(URI_HEAD + "/" + postResponse1.getId(), token);
-        Assert.assertEquals(HttpURLConnection.HTTP_ACCEPTED, deleteRet1.getStatusCodeValue());
+        Assert.assertEquals(HttpStatus.ACCEPTED, deleteRet1.getStatusCode());
     }
 
 }

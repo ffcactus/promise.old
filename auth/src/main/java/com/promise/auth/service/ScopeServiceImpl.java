@@ -83,6 +83,7 @@ public class ScopeServiceImpl implements ScopeServiceInterface
             }
             catch (final NoDBInstanceException e)
             {
+                // TODO
                 System.out.println("Failed to get scope by ID.");
             }
         }

@@ -41,6 +41,20 @@ public class RamUserDataBaseImpl implements UserDatabaseInterface
     }
 
     @Override
+    public UserDao getUser(String id)
+            throws NoDBInstanceException
+    {
+        if (ramDB.containsKey(id))
+        {
+            return ramDB.get(id);
+        }
+        else
+        {
+            throw new NoDBInstanceException(PromiseCategory.USER);
+        }
+    }
+
+    @Override
     public List<UserDao> getUser(int start, int count)
     {
         final List<UserDao> ret = new ArrayList<>(ramDB.values());

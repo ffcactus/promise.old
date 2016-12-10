@@ -15,6 +15,9 @@ public interface UserDatabaseInterface
     public UserDao getUser(String username, HashResult hashResult)
             throws NoDBInstanceException;
 
+    public UserDao getUser(String id)
+            throws NoDBInstanceException;
+
     public List<UserDao> getUser(int start, int count);
 
     public void deleteUser(String id)

@@ -131,7 +131,14 @@ public class AuthPublicController
             @PathVariable String id)
     {
         AuthClient.aa(new PromiseToken("token"), new PromiseAccessPoint());
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        try
+        {
+            return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
+        }
+        catch (final NoDBInstanceException e)
+        {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
     @PromisePublicInterface

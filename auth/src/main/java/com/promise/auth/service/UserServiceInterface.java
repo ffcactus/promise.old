@@ -27,7 +27,8 @@ public interface UserServiceInterface
      * @param id the ID of the user.
      * @return The DTO that represents the user or null if it can't be found.
      */
-    public GetUserResponse getUser(String id);
+    public GetUserResponse getUser(String id)
+            throws NoDBInstanceException;
 
     /**
      * Get user by token.
@@ -36,7 +37,8 @@ public interface UserServiceInterface
      *        The token that can retrieve the user.
      * @return The UserDto.
      */
-    public GetUserResponse getUser(PromiseToken token);
+    public GetUserResponse getUser(PromiseToken token)
+            throws NoDBInstanceException;
 
     /**
      * Get user by username and password.
