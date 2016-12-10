@@ -38,6 +38,9 @@
 		<module>common</module>
 		<module>auth-sdk</module>
 		<module>auth</module>
+        <module>task-sdk</module>
+        <module>task</module>
+        
 	</modules>
 
 </project>

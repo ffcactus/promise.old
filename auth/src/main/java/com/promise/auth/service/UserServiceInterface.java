@@ -1,6 +1,7 @@
 package com.promise.auth.service;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Optional;
 
 import com.promise.auth.sdk.dto.CreateUserRequest;
 import com.promise.auth.sdk.dto.CreateUserResponse;
@@ -8,7 +9,7 @@ import com.promise.auth.sdk.dto.GetUserListResponse;
 import com.promise.auth.sdk.dto.GetUserResponse;
 import com.promise.common.PromiseToken;
 import com.promise.common.PromiseUser;
-import com.promise.common.exception.NoDBInstanceException;
+import com.promise.common.exception.NoDbInstanceException;
 
 public interface UserServiceInterface
 {
@@ -24,11 +25,12 @@ public interface UserServiceInterface
     /**
      * Get user by ID.
      *
-     * @param id the ID of the user.
-     * @return The DTO that represents the user or null if it can't be found.
+     * @param id The ID of the user.
+     * @return The DTO that represents the user.
+     * @throws NoDbInstanceException If the user can't be found.
      */
     public GetUserResponse getUser(String id)
-            throws NoDBInstanceException;
+            throws NoDbInstanceException;
 
     /**
      * Get user by token.
@@ -36,9 +38,10 @@ public interface UserServiceInterface
      * @param token
      *        The token that can retrieve the user.
      * @return The UserDto.
+     * @throws NoDbInstanceException If the user can't be found.
      */
     public GetUserResponse getUser(PromiseToken token)
-            throws NoDBInstanceException;
+            throws NoDbInstanceException;
 
     /**
      * Get user by username and password.
@@ -49,11 +52,11 @@ public interface UserServiceInterface
      *        The password of the user.
      * @return
      * @throws NoSuchAlgorithmException
-     * @throws NoDBInstanceException
+     * @throws NoDbInstanceException If the user can't be found.
      */
     public PromiseUser getUser(String username, char[] password)
             throws NoSuchAlgorithmException,
-            NoDBInstanceException;
+            NoDbInstanceException;
 
     /**
      * Get user list.
@@ -62,14 +65,14 @@ public interface UserServiceInterface
      * @param count
      * @return
      */
-    public GetUserListResponse getUserList(int start, int count);
+    public GetUserListResponse getUserList(Optional<Integer> start, Optional<Integer> count);
 
     /**
      * Delete User by ID.
      *
      * @param id The id of the user to delete.
-     * @throws NoDBInstanceException If the scope is unable to find.
+     * @throws NoDbInstanceException If the user can't be found.
      */
     public void deleteUser(String id)
-            throws NoDBInstanceException;
+            throws NoDbInstanceException;
 }

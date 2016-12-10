@@ -7,7 +7,7 @@ import java.util.UUID;
 import com.promise.common.PromiseToken;
 import com.promise.common.PromiseUser;
 
-public class TokenDatabaseImpl implements TokenDatabaseInterface
+public class TokenDbImpl implements TokenDbInterface
 {
     
     private static List<SimpleEntry<PromiseToken, PromiseUser>> db;

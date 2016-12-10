@@ -1,10 +1,12 @@
 package com.promise.auth.service;
 
+import java.util.Optional;
+
 import com.promise.auth.sdk.dto.CreateScopeRequest;
 import com.promise.auth.sdk.dto.CreateScopeResponse;
 import com.promise.auth.sdk.dto.GetScopeListResponse;
 import com.promise.auth.sdk.dto.GetScopeResponse;
-import com.promise.common.exception.NoDBInstanceException;
+import com.promise.common.exception.NoDbInstanceException;
 
 public interface ScopeServiceInterface
 {
@@ -22,19 +24,19 @@ public interface ScopeServiceInterface
      *
      * @param id The id of the scope to return.
      * @return The object that represents the scope returned.
-     * @throws NoDBInstanceException If the scope is unable to find.
+     * @throws NoDbInstanceException If the scope is unable to find.
      */
     public GetScopeResponse getScope(String id)
-            throws NoDBInstanceException;
+            throws NoDbInstanceException;
 
     /**
      * Delete Scope by ID.
      *
      * @param id The id of the scope to delete.
-     * @throws NoDBInstanceException If the scope is unable to find.
+     * @throws NoDbInstanceException If the scope is unable to find.
      */
     public void deleteScope(String id)
-            throws NoDBInstanceException;
+            throws NoDbInstanceException;
 
     /**
      * Get a certain number of scopes from the some point.
@@ -43,7 +45,7 @@ public interface ScopeServiceInterface
      * @param count The count that is expected to return.
      * @return The object that represents the scope list returned.
      */
-    public GetScopeListResponse getScopeList(int start, int count);
+    public GetScopeListResponse getScopeList(Optional<Integer> start, Optional<Integer> count);
 
     public void updateScope(String id, CreateScopeRequest dto);
 }

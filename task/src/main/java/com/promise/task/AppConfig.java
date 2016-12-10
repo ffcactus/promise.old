@@ -1,4 +1,4 @@
-package com.promise.auth;
+package com.promise.task;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;

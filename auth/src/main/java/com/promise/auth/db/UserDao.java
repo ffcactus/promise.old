@@ -29,7 +29,7 @@ public class UserDao extends PromiseResource
     }
 
     /**
-     * Make an instance of ScopeDao in which the ID, category and URI already
+     * Make an instance of UserDao in which the ID, category and URI already
      * set.
      *
      * @return
@@ -64,6 +64,12 @@ public class UserDao extends PromiseResource
         return ret;
     }
 
+    /**
+     * Convert to PromiseUser.
+     *
+     * @param dao The DAO object.
+     * @return PromiseUser object.
+     */
     public static PromiseUser toPromiseUser(UserDao dao)
     {
         final PromiseUser ret = new PromiseUser();

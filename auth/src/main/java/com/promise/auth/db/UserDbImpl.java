@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 
 import com.promise.auth.util.PasswordUtil.HashResult;
 import com.promise.common.constant.PromiseCategory;
-import com.promise.common.exception.NoDBInstanceException;
+import com.promise.common.exception.NoDbInstanceException;
 
 @Component
 @Scope("singleton")
-public class RamUserDataBaseImpl implements UserDatabaseInterface
+public class UserDbImpl implements UserDbInterface
 {
 
     Map<String, UserDao> ramDB = new HashMap<>();
@@ -42,7 +42,7 @@ public class RamUserDataBaseImpl implements UserDatabaseInterface
 
     @Override
     public UserDao getUser(String id)
-            throws NoDBInstanceException
+            throws NoDbInstanceException
     {
         if (ramDB.containsKey(id))
         {
@@ -50,7 +50,7 @@ public class RamUserDataBaseImpl implements UserDatabaseInterface
         }
         else
         {
-            throw new NoDBInstanceException(PromiseCategory.USER);
+            throw new NoDbInstanceException(PromiseCategory.USER);
         }
     }
 
@@ -63,7 +63,7 @@ public class RamUserDataBaseImpl implements UserDatabaseInterface
 
     @Override
     public UserDao getUser(String username, HashResult hashResult)
-            throws NoDBInstanceException
+            throws NoDbInstanceException
     {
         for (final UserDao user : ramDB.values())
         {
@@ -72,12 +72,12 @@ public class RamUserDataBaseImpl implements UserDatabaseInterface
                 return user;
             }
         }
-        throw new NoDBInstanceException(PromiseCategory.USER);
+        throw new NoDbInstanceException(PromiseCategory.USER);
     }
 
     @Override
     public void deleteUser(String id)
-            throws NoDBInstanceException
+            throws NoDbInstanceException
     {
         if (ramDB.containsKey(id))
         {
@@ -85,7 +85,7 @@ public class RamUserDataBaseImpl implements UserDatabaseInterface
         }
         else
         {
-            throw new NoDBInstanceException(PromiseCategory.USER);
+            throw new NoDbInstanceException(PromiseCategory.USER);
         }
 
     }

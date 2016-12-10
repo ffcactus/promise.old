@@ -2,14 +2,19 @@ package com.promise.auth.sdk.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * The object that represent the input to create a user.
  */
 public class CreateUserRequest
 {
+    @JsonProperty(required = true)
     private String username;
+    @JsonProperty(required = true)
     private char[] password;
     private String email;
+    @JsonProperty(required = true)
     private List<String> scopeUri;
 
     public CreateUserRequest()
@@ -55,22 +60,5 @@ public class CreateUserRequest
     public void setScopeUri(List<String> scopeUri)
     {
         this.scopeUri = scopeUri;
-    }
-
-    public boolean isValidRequest()
-    {
-        if (scopeUri == null || username == null || !isValidPassword(password))
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-
-    private boolean isValidPassword(char[] password)
-    {
-        return true;
     }
 }

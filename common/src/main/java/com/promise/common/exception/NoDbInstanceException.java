@@ -2,7 +2,7 @@ package com.promise.common.exception;
 
 import com.promise.common.constant.PromiseCategory;
 
-public class NoDBInstanceException extends PromiseException
+public class NoDbInstanceException extends PromiseException
 {
 
     /**
@@ -10,7 +10,7 @@ public class NoDBInstanceException extends PromiseException
      */
     private static final long serialVersionUID = 6875358611678749969L;
 
-    public NoDBInstanceException(PromiseCategory category)
+    public NoDbInstanceException(PromiseCategory category)
     {
         super();
         this.setCategory(category);

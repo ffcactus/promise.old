@@ -3,38 +3,79 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.promise</groupId>
+    <groupId>com.promise.module</groupId>
     <artifactId>task</artifactId>
-    <version>0.1.0</version>
+    <packaging>war</packaging>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.4.1.RELEASE</version>
+        <groupId>com.promise</groupId>
+        <artifactId>promise</artifactId>
+        <version>1.0</version>
     </parent>
 
     <dependencies>
+        <!-- Spring -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <version>${org.springframework.boot.version}</version>
         </dependency>
-        
         <dependency>
-            <groupId>com.promise</groupId>
-            <artifactId>com.promise.common</artifactId>
-            <version>0.1.0</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <version>${org.springframework.boot.version}</version>
+            <scope>provided</scope>
         </dependency>
+        <!-- Spring AOP and AspectJ -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${org.aspectj.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjtools</artifactId>
+            <version>${org.aspectj.version}</version>
+        </dependency>
+        <!-- Promise -->
+        <dependency>
+            <groupId>com.promise.module</groupId>
+            <artifactId>common</artifactId>
+            <version>${com.promise.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.promise.module</groupId>
+            <artifactId>task-sdk</artifactId>
+            <version>${com.promise.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.promise.module</groupId>
+            <artifactId>auth-sdk</artifactId>
+            <version>${com.promise.version}</version>
+        </dependency>        
     </dependencies>
-
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
 
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>${org.apache.tomcat.maven.version}</version>
+                <configuration>
+                    <url>http://${server_ip}:8080/manager/text</url>
+                    <server>Promise0</server>
+                    <path>/task</path>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>deploy</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

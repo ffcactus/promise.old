@@ -3,6 +3,7 @@ package com.promise.auth.service;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
@@ -13,7 +14,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.promise.auth.db.UserDao;
-import com.promise.auth.db.UserDatabaseInterface;
+import com.promise.auth.db.UserDbInterface;
 import com.promise.auth.sdk.dto.CreateUserRequest;
 import com.promise.auth.sdk.dto.CreateUserResponse;
 import com.promise.auth.sdk.dto.GetUserListResponse;
@@ -22,7 +23,7 @@ import com.promise.auth.util.PasswordUtil;
 import com.promise.auth.util.PasswordUtil.HashResult;
 import com.promise.common.PromiseToken;
 import com.promise.common.PromiseUser;
-import com.promise.common.exception.NoDBInstanceException;
+import com.promise.common.exception.NoDbInstanceException;
 
 @Component
 @Scope("singleton")
@@ -30,7 +31,7 @@ import com.promise.common.exception.NoDBInstanceException;
 public class UserServiceImpl implements UserServiceInterface//, InitializingBean
 {
     @Autowired
-    private UserDatabaseInterface userDatabase;
+    private UserDbInterface userDatabase;
 
     private static Logger log = Logger.getLogger(UserServiceImpl.class);
 
@@ -70,7 +71,7 @@ public class UserServiceImpl implements UserServiceInterface//, InitializingBean
 
     @Override
     public GetUserResponse getUser(String id)
-            throws NoDBInstanceException
+            throws NoDbInstanceException
     {
         final UserDao userDao = userDatabase.getUser(id);
         return GetUserResponse.makeInstance(UserDao.toPromiseUser(userDao));
@@ -84,7 +85,7 @@ public class UserServiceImpl implements UserServiceInterface//, InitializingBean
 
     @Override
     public PromiseUser getUser(String username, char[] password)
-            throws NoSuchAlgorithmException, NoDBInstanceException
+            throws NoSuchAlgorithmException, NoDbInstanceException
     {
         final HashResult hashResult = PasswordUtil.hashPassword(password);
         final UserDao userDao = userDatabase.getUser(username, hashResult);
@@ -92,13 +93,15 @@ public class UserServiceImpl implements UserServiceInterface//, InitializingBean
     }
 
     @Override
-    public GetUserListResponse getUserList(int start, int count)
+    public GetUserListResponse getUserList(Optional<Integer> start, Optional<Integer> count)
     {
-        final List<UserDao> userDaoList = userDatabase.getUser(start, count);
+        final List<UserDao> userDaoList = userDatabase.getUser(
+                start.isPresent() ? start.get() : 0,
+                count.isPresent() ? count.get() : 0);
         final GetUserListResponse ret = new GetUserListResponse();
 
         // The start point should follow the start point in the request?
-        ret.setStart(start);
+        ret.setStart(start.isPresent() ? start.get() : 0);
         ret.setCount(userDaoList.size());
         final List<GetUserResponse> memberList = new ArrayList<>();
         for (final UserDao each : userDaoList)
@@ -109,7 +112,7 @@ public class UserServiceImpl implements UserServiceInterface//, InitializingBean
                 t = getUser(each.getId());
                 memberList.add(t);
             }
-            catch (final NoDBInstanceException e)
+            catch (final NoDbInstanceException e)
             {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -121,7 +124,7 @@ public class UserServiceImpl implements UserServiceInterface//, InitializingBean
 
     @Override
     public void deleteUser(String id)
-            throws NoDBInstanceException
+            throws NoDbInstanceException
     {
         userDatabase.deleteUser(id);
     }

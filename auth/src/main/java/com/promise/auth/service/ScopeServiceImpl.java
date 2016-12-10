@@ -2,6 +2,7 @@ package com.promise.auth.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.promise.auth.db.AccessPointDao;
 import com.promise.auth.db.ScopeDao;
-import com.promise.auth.db.ScopeDatabaseInterface;
+import com.promise.auth.db.ScopeDbInterface;
 import com.promise.auth.sdk.dto.CreateScopeRequest;
 import com.promise.auth.sdk.dto.CreateScopeResponse;
 import com.promise.auth.sdk.dto.GetScopeListResponse;
@@ -17,7 +18,7 @@ import com.promise.auth.sdk.dto.GetScopeResponse;
 import com.promise.common.PromiseAccessPoint;
 import com.promise.common.PromiseResource;
 import com.promise.common.constant.PromiseCategory;
-import com.promise.common.exception.NoDBInstanceException;
+import com.promise.common.exception.NoDbInstanceException;
 
 @Component
 @Scope("singleton")
@@ -25,7 +26,7 @@ public class ScopeServiceImpl implements ScopeServiceInterface
 {
 
     @Autowired
-    private ScopeDatabaseInterface db;
+    private ScopeDbInterface db;
 
     @Override
     public CreateScopeResponse createScope(CreateScopeRequest dto)
@@ -51,7 +52,7 @@ public class ScopeServiceImpl implements ScopeServiceInterface
 
     @Override
     public GetScopeResponse getScope(String id)
-            throws NoDBInstanceException
+            throws NoDbInstanceException
     {
         final ScopeDao scopeDao = db.getScope(id);
         final List<AccessPointDao> accessPointDaoList = db.getScopeAccessPointList(id);
@@ -60,19 +61,21 @@ public class ScopeServiceImpl implements ScopeServiceInterface
 
     @Override
     public void deleteScope(String id)
-            throws NoDBInstanceException
+            throws NoDbInstanceException
     {
         db.deleteScope(id);
     }
 
     @Override
-    public GetScopeListResponse getScopeList(int start, int count)
+    public GetScopeListResponse getScopeList(Optional<Integer> start, Optional<Integer> count)
     {
-        final List<ScopeDao> scopeDaoList = db.getScopeList(start, count);
+        final List<ScopeDao> scopeDaoList = db.getScopeList(
+                start.isPresent() ? start.get() : 0,
+                count.isPresent() ? count.get() : 0);
         final GetScopeListResponse ret = new GetScopeListResponse();
 
         // The start point should follow the start point in the request?
-        ret.setStart(start);
+        ret.setStart(start.isPresent() ? start.get() : 0);
         ret.setCount(scopeDaoList.size());
         final List<GetScopeResponse> memberList = new ArrayList<>();
         for (final ScopeDao each : scopeDaoList)
@@ -81,7 +84,7 @@ public class ScopeServiceImpl implements ScopeServiceInterface
             {
                 memberList.add(getScope(each.getId()));
             }
-            catch (final NoDBInstanceException e)
+            catch (final NoDbInstanceException e)
             {
                 // TODO
                 System.out.println("Failed to get scope by ID.");

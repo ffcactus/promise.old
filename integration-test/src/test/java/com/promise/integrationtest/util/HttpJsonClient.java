@@ -19,7 +19,7 @@ public class HttpJsonClient
     public static final int CONNECTION_TIMEOUT = 1000;
     public static final int READ_TIMEOUT = 1000;
 
-    public static <T, E> ResponseEntity<T> httpPost(String url, PromiseToken token, E request, Class<T> responseClass)
+    public static <T, E> ResponseEntity<T> post(String url, PromiseToken token, E request, Class<T> responseClass)
     {
         HttpURLConnection c = null;
         try
@@ -87,7 +87,7 @@ public class HttpJsonClient
         return null;
     }
 
-    public static <T> ResponseEntity<T> httpGet(String url, PromiseToken token, Class<T> responseClass)
+    public static <T> ResponseEntity<T> get(String url, PromiseToken token, Class<T> responseClass)
     {
         HttpURLConnection c = null;
         try
@@ -150,7 +150,7 @@ public class HttpJsonClient
         return null;
     }
 
-    public static ResponseEntity<String> httpDelete(String url, PromiseToken token)
+    public static ResponseEntity<String> delete(String url, PromiseToken token)
     {
         HttpURLConnection c = null;
         try

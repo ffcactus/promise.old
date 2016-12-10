@@ -12,11 +12,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.promise.common.constant.PromiseCategory;
-import com.promise.common.exception.NoDBInstanceException;
+import com.promise.common.exception.NoDbInstanceException;
 
 @Component
 @Scope("singleton")
-public class ScopeDatabaseImpl implements ScopeDatabaseInterface
+public class ScopeDbImpl implements ScopeDbInterface
 {
 
     private static Map<String, ScopeDao> scopeDB = new HashMap<>();
@@ -32,7 +32,7 @@ public class ScopeDatabaseImpl implements ScopeDatabaseInterface
 
     @Override
     public ScopeDao getScope(String id)
-            throws NoDBInstanceException
+            throws NoDbInstanceException
     {
         if (scopeDB.containsKey(id))
         {
@@ -40,7 +40,7 @@ public class ScopeDatabaseImpl implements ScopeDatabaseInterface
         }
         else
         {
-            throw new NoDBInstanceException(PromiseCategory.SCOPE);
+            throw new NoDbInstanceException(PromiseCategory.SCOPE);
         }
     }
 
@@ -53,7 +53,7 @@ public class ScopeDatabaseImpl implements ScopeDatabaseInterface
 
     @Override
     public void deleteScope(String id)
-            throws NoDBInstanceException
+            throws NoDbInstanceException
     {
         if (scopeDB.containsKey(id))
         {
@@ -61,13 +61,13 @@ public class ScopeDatabaseImpl implements ScopeDatabaseInterface
         }
         else
         {
-            throw new NoDBInstanceException(PromiseCategory.SCOPE);
+            throw new NoDbInstanceException(PromiseCategory.SCOPE);
         }
     }
 
     @Override
     public ScopeDao updateScope(String id, ScopeDao scopeDao)
-            throws NoDBInstanceException
+            throws NoDbInstanceException
     {
         if (scopeDB.containsKey(id))
         {
@@ -75,7 +75,7 @@ public class ScopeDatabaseImpl implements ScopeDatabaseInterface
         }
         else
         {
-            throw new NoDBInstanceException(PromiseCategory.SCOPE);
+            throw new NoDbInstanceException(PromiseCategory.SCOPE);
         }
     }
 
@@ -102,7 +102,7 @@ public class ScopeDatabaseImpl implements ScopeDatabaseInterface
 
     @Override
     public void removeAccessPoint(String id)
-            throws NoDBInstanceException
+            throws NoDbInstanceException
     {
         if (accessPointDB.containsKey(id))
         {
@@ -110,7 +110,7 @@ public class ScopeDatabaseImpl implements ScopeDatabaseInterface
         }
         else
         {
-            throw new NoDBInstanceException(PromiseCategory.SCOPE);
+            throw new NoDbInstanceException(PromiseCategory.SCOPE);
         }
     }
 

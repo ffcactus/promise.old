@@ -2,14 +2,15 @@ package com.promise.auth.sdk.dto;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.promise.common.PromiseAccessPoint;
-import com.promise.common.PromiseHttpRequest;
 
-public class CreateScopeRequest extends PromiseHttpRequest
+public class CreateScopeRequest
 {
+    @JsonProperty(required = true)
     private String name;
     private String description;
+    @JsonProperty(required = true)
     private List<PromiseAccessPoint> accessPointList;
 
     public CreateScopeRequest()
@@ -44,26 +45,6 @@ public class CreateScopeRequest extends PromiseHttpRequest
     public void setDescription(String description)
     {
         this.description = description;
-    }
-
-    @Override
-    @JsonIgnore
-    public boolean isValidRequest()
-    {
-        if (accessPointList == null || name == null)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-
-    @JsonIgnore
-    public String toDebugString()
-    {
-        return "name = " + name;
     }
 
 }

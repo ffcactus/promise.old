@@ -62,7 +62,7 @@ public class ScopeTest
         request.setUserName("Administrator");
         request.setPassword("admin");
         request.setDomain("local");
-        final ResponseEntity<PostLoginResponse> response = HttpJsonClient.httpPost(
+        final ResponseEntity<PostLoginResponse> response = HttpJsonClient.post(
                 hostname + "/rest/login",
                 null,
                 request,
@@ -99,7 +99,7 @@ public class ScopeTest
     public void testCreateScope()
     {
         final ResponseEntity<CreateScopeResponse> postRet = HttpJsonClient
-                .httpPost(URI_HEAD, token, createRequest0, CreateScopeResponse.class);
+                .post(URI_HEAD, token, createRequest0, CreateScopeResponse.class);
         final CreateScopeResponse postResponse = postRet.getBody();
         Assert.assertEquals(HttpURLConnection.HTTP_CREATED, postRet.getStatusCodeValue());
         CommonTestUtil.assertPromiseResource(postResponse);
@@ -109,7 +109,7 @@ public class ScopeTest
 
         // Clean up.
         final ResponseEntity<String> deleteRet = HttpJsonClient
-                .httpDelete(URI_HEAD + "/" + postResponse.getId(), token);
+                .delete(URI_HEAD + "/" + postResponse.getId(), token);
         Assert.assertEquals(HttpStatus.ACCEPTED, deleteRet.getStatusCode());
     }
 
@@ -117,7 +117,7 @@ public class ScopeTest
     public void testDeleteExistScope()
     {
         final ResponseEntity<CreateScopeResponse> postRet = HttpJsonClient
-                .httpPost(URI_HEAD, token, createRequest0, CreateScopeResponse.class);
+                .post(URI_HEAD, token, createRequest0, CreateScopeResponse.class);
         final CreateScopeResponse postResponse = postRet.getBody();
         Assert.assertEquals(HttpURLConnection.HTTP_CREATED, postRet.getStatusCodeValue());
         Assert.assertEquals(createRequest0.getName(), postResponse.getName());
@@ -126,7 +126,7 @@ public class ScopeTest
         Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest0.getAccessPointList(), postResponse.getAccessPointList()));
 
         final ResponseEntity<String> deleteRet = HttpJsonClient
-                .httpDelete(URI_HEAD + "/" + postResponse.getId(), token);
+                .delete(URI_HEAD + "/" + postResponse.getId(), token);
         Assert.assertEquals(HttpStatus.ACCEPTED, deleteRet.getStatusCode());
     }
 
@@ -134,7 +134,7 @@ public class ScopeTest
     public void testDeleteNoneExistScope()
     {
         final ResponseEntity<String> deleteRet = HttpJsonClient
-                .httpDelete(URI_HEAD + "/xxxx", token);
+                .delete(URI_HEAD + "/xxxx", token);
         Assert.assertEquals(HttpStatus.NOT_FOUND, deleteRet.getStatusCode());
     }
 
@@ -142,7 +142,7 @@ public class ScopeTest
     public void testGetScope()
     {
         final ResponseEntity<CreateScopeResponse> postScopeRet = HttpJsonClient
-                .httpPost(URI_HEAD, token, createRequest0, CreateScopeResponse.class);
+                .post(URI_HEAD, token, createRequest0, CreateScopeResponse.class);
         final CreateScopeResponse postResponse = postScopeRet.getBody();
 
         Assert.assertEquals(HttpURLConnection.HTTP_CREATED, postScopeRet.getStatusCodeValue());
@@ -152,7 +152,7 @@ public class ScopeTest
         Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest0.getAccessPointList(), postResponse.getAccessPointList()));
 
         final ResponseEntity<GetScopeResponse> getScopeRet = HttpJsonClient
-                .httpGet(URI_HEAD + "/" + postResponse.getId(), token, GetScopeResponse.class);
+                .get(URI_HEAD + "/" + postResponse.getId(), token, GetScopeResponse.class);
         final GetScopeResponse getResponse = getScopeRet.getBody();
 
         Assert.assertEquals(HttpStatus.OK, getScopeRet.getStatusCode());
@@ -164,7 +164,7 @@ public class ScopeTest
 
         // Clean up.
         final ResponseEntity<String> deleteRet = HttpJsonClient
-                .httpDelete(URI_HEAD + "/" + postResponse.getId(), token);
+                .delete(URI_HEAD + "/" + postResponse.getId(), token);
         Assert.assertEquals(HttpStatus.ACCEPTED, deleteRet.getStatusCode());
     }
 
@@ -172,11 +172,11 @@ public class ScopeTest
     public void testGetScopeList()
     {
         final ResponseEntity<CreateScopeResponse> postScopeRet0 = HttpJsonClient
-                .httpPost(URI_HEAD, token, createRequest0, CreateScopeResponse.class);
+                .post(URI_HEAD, token, createRequest0, CreateScopeResponse.class);
         final CreateScopeResponse postResponse0 = postScopeRet0.getBody();
 
         final ResponseEntity<CreateScopeResponse> postScopeRet1 = HttpJsonClient
-                .httpPost(URI_HEAD, token, createRequest1, CreateScopeResponse.class);
+                .post(URI_HEAD, token, createRequest1, CreateScopeResponse.class);
         final CreateScopeResponse postResponse1 = postScopeRet1.getBody();
 
         Assert.assertEquals(HttpURLConnection.HTTP_CREATED, postScopeRet0.getStatusCodeValue());
@@ -192,7 +192,7 @@ public class ScopeTest
         Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest1.getAccessPointList(), postResponse1.getAccessPointList()));
 
         final ResponseEntity<GetScopeListResponse> getScopeListRet = HttpJsonClient
-                .httpGet(URI_HEAD, token, GetScopeListResponse.class);
+                .get(URI_HEAD, token, GetScopeListResponse.class);
         final GetScopeListResponse getScopeListResponse = getScopeListRet.getBody();
 
         Assert.assertEquals(HttpStatus.OK, getScopeListRet.getStatusCode());
@@ -235,11 +235,11 @@ public class ScopeTest
 
         // Clean up.
         final ResponseEntity<String> deleteRet0 = HttpJsonClient
-                .httpDelete(URI_HEAD + "/" + postResponse0.getId(), token);
+                .delete(URI_HEAD + "/" + postResponse0.getId(), token);
         Assert.assertEquals(HttpStatus.ACCEPTED, deleteRet0.getStatusCode());
 
         final ResponseEntity<String> deleteRet1 = HttpJsonClient
-                .httpDelete(URI_HEAD + "/" + postResponse1.getId(), token);
+                .delete(URI_HEAD + "/" + postResponse1.getId(), token);
         Assert.assertEquals(HttpStatus.ACCEPTED, deleteRet1.getStatusCode());
     }
 

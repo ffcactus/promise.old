@@ -8,7 +8,7 @@
         <artifactId>promise</artifactId>
         <version>1.0</version>
     </parent>
-    
+
     <groupId>com.promise.module</groupId>
     <artifactId>integration-test</artifactId>
 
@@ -18,7 +18,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${org.springframework.boot.version}</version>
             <scope>test</scope>
-        </dependency>        
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -29,7 +29,12 @@
             <groupId>com.promise.module</groupId>
             <artifactId>auth-sdk</artifactId>
             <version>${com.promise.version}</version>
-        </dependency>        
+        </dependency>
+        <dependency>
+            <groupId>com.promise.module</groupId>
+            <artifactId>task-sdk</artifactId>
+            <version>${com.promise.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

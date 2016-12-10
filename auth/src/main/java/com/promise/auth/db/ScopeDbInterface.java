@@ -2,30 +2,30 @@ package com.promise.auth.db;
 
 import java.util.List;
 
-import com.promise.common.exception.NoDBInstanceException;
+import com.promise.common.exception.NoDbInstanceException;
 
-public interface ScopeDatabaseInterface
+public interface ScopeDbInterface
 {
 
     public ScopeDao createScope(ScopeDao scopeDao);
 
     public ScopeDao getScope(String id)
-            throws NoDBInstanceException;
+            throws NoDbInstanceException;
 
     public List<ScopeDao> getScopeList(int start, int count);
 
     public void deleteScope(String id)
-            throws NoDBInstanceException;
+            throws NoDbInstanceException;
 
     public ScopeDao updateScope(String id, ScopeDao scopeDao)
-            throws NoDBInstanceException;
+            throws NoDbInstanceException;
 
     public AccessPointDao createAccessPoint(AccessPointDao accessPoint);
 
     public List<AccessPointDao> getScopeAccessPointList(String scopeId);
 
     public void removeAccessPoint(String id)
-            throws NoDBInstanceException;
+            throws NoDbInstanceException;
 
     public void bindAccessPointToScope(String accessPointId, String scopeId);
 

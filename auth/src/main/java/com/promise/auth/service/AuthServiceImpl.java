@@ -28,7 +28,7 @@ import com.promise.common.PromiseUser;
 import com.promise.common.constant.PromiseCategory;
 import com.promise.common.exception.InternelErrorException;
 import com.promise.common.exception.LoginFailureException;
-import com.promise.common.exception.NoDBInstanceException;
+import com.promise.common.exception.NoDbInstanceException;
 
 @Component
 @Scope("singleton")
@@ -80,7 +80,7 @@ public class AuthServiceImpl implements AuthServiceInterface
             log.error("Failed to find a algorithm.");
             throw new InternelErrorException(PromiseCategory.AA);
         }
-        catch (final NoDBInstanceException e)
+        catch (final NoDbInstanceException e)
         {
             log.info("Failed to login. Invalied username or password.");
             throw new LoginFailureException();
