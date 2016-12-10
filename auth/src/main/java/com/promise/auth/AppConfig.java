@@ -8,7 +8,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
-@ComponentScan("com.promise")
+@ComponentScan("com.promise.auth")
 @EnableWebMvc
 @EnableAspectJAutoProxy
 public class AppConfig
