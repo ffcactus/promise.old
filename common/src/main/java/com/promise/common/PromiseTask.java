@@ -19,6 +19,7 @@ public class PromiseTask extends PromiseResource
     private PromiseExecutionState state;
     private String createdByUri;
     private int expectedExcutionMs;
+    private int percentage;
     private String createdTime;
     private String lastUpdatedTime;
     private String terminatedTime;
@@ -32,6 +33,7 @@ public class PromiseTask extends PromiseResource
         createdTime = sdf.format(new Date());
         lastUpdatedTime = createdTime;
         expectedExcutionMs = 0;
+        setPercentage(0);
         state = PromiseExecutionState.READY;
         stepList = new ArrayList<>();
         subTaskUriList = new ArrayList<>();
@@ -46,6 +48,7 @@ public class PromiseTask extends PromiseResource
         this.setState(other.getState());
         this.setCreatedByUri(other.getCreatedByUri());
         this.setExpectedExcutionMs(other.getExpectedExcutionMs());
+        this.setPercentage(other.getPercentage());
         this.setCreatedTime(other.getCreatedTime());
         this.setLastUpdatedTime(other.getLastUpdatedTime());
         this.setTerminatedTime(other.getTerminatedTime());
@@ -102,6 +105,16 @@ public class PromiseTask extends PromiseResource
     public void setExpectedExcutionMs(int expectedExcutionMs)
     {
         this.expectedExcutionMs = expectedExcutionMs;
+    }
+
+    public int getPercentage()
+    {
+        return percentage;
+    }
+
+    public void setPercentage(int percentage)
+    {
+        this.percentage = percentage;
     }
 
     public String getCreatedTime()

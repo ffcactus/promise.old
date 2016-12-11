@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.promise.build</groupId>
+        <artifactId>promise-rpm</artifactId>
+        <version>1.0</version>      
+    </parent>
+
+    <groupId>com.promise.build</groupId>
+    <artifactId>task-package</artifactId>
+    <packaging>rpm</packaging>
+    <description>Package task project.</description>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <artifactId>rpm-maven-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <extensions>true</extensions>
+                <configuration>
+                    <group>Applications/Internet</group>
+                    <provides>
+                        <provide>task-package</provide>
+                    </provides>
+                    <release>${promise.version}</release>
+                    <requires>
+                        <require>promis-env</require>
+                    </requires>
+                    <mappings>
+                        <mapping>
+                            <!-- Must have one mapping -->
+                            <directory>/tmp</directory>
+                            <filemode>1777</filemode>
+                            <username>root</username>
+                            <groupname>root</groupname>
+                        </mapping>
+                    </mappings>
+                    <preinstallScriptlet>
+                        <scriptFile>src/main/bin/preinstall.sh</scriptFile>
+                    </preinstallScriptlet>
+                    <postinstallScriptlet>
+                        <scriptFile>src/main/bin/postinstall.sh</scriptFile>
+                    </postinstallScriptlet>
+                    <postremoveScriptlet>
+                        <scriptFile>src/main/bin/postremove.sh</scriptFile>
+                    </postremoveScriptlet>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+

@@ -50,6 +50,7 @@ public class TaskDao extends PromiseTask
                 step.setState(PromiseExecutionState.READY);
                 step.setExpectedExcutionMs(each.getExpectedExcutionMs());
                 step.setResult(new PromiseExecutionResult());
+                stepList.add(step);
             }
             ret.setStepList(stepList);
         }

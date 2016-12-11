@@ -16,7 +16,6 @@ public class PostTaskRequest
     private String description;
     private String createdByUri;
     private int expectedExcutionMs;
-    private int timeoutMs;
     private List<PostTaskStepRequest> stepList;
 
     public PostTaskRequest()
@@ -62,16 +61,6 @@ public class PostTaskRequest
     public void setExpectedExcutionMs(int expectedExcutionMs)
     {
         this.expectedExcutionMs = expectedExcutionMs;
-    }
-
-    public int getTimeoutMs()
-    {
-        return timeoutMs;
-    }
-
-    public void setTimeoutMs(int timeoutMs)
-    {
-        this.timeoutMs = timeoutMs;
     }
 
     public List<PostTaskStepRequest> getStepList()

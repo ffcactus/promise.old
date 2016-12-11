@@ -11,6 +11,7 @@ public class PromiseTaskStep
     private String description;
     private PromiseExecutionState state;
     private int expectedExcutionMs;
+    private int percentage;
     private Data createdTime;
     private Data lastUpdatedTime;
     private Data terminatedTime;
@@ -59,6 +60,16 @@ public class PromiseTaskStep
     public void setExpectedExcutionMs(int expectedExcutionMs)
     {
         this.expectedExcutionMs = expectedExcutionMs;
+    }
+
+    public int getPercentage()
+    {
+        return percentage;
+    }
+
+    public void setPercentage(int percentage)
+    {
+        this.percentage = percentage;
     }
 
     public Data getCreatedTime()
