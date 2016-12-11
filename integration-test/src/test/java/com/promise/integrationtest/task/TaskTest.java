@@ -41,7 +41,7 @@ public class TaskTest extends PromisePublicInterfaceTest
         Assert.assertEquals(0, postResponse.getExpectedExcutionMs());
         Assert.assertEquals(PromiseExecutionState.READY, postResponse.getState());
         Assert.assertEquals(0, postResponse.getStepList().size());
-        Assert.assertEquals(0, postResponse.getSubTaskList());
+        Assert.assertEquals(0, postResponse.getSubTaskUriList().size());
         Assert.assertEquals(PromiseExecutionResultState.UNKNOWN, postResponse.getResult().getState());
         Assert.assertEquals(0, postResponse.getResult().getReason().size());
         Assert.assertEquals(0, postResponse.getResult().getSolution().size());

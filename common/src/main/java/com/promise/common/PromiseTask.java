@@ -23,7 +23,7 @@ public class PromiseTask extends PromiseResource
     private String lastUpdatedTime;
     private String terminatedTime;
     private List<PromiseTaskStep> stepList;
-    private List<PromiseTask> subTaskList;
+    private List<String> subTaskUriList;
     private PromiseExecutionResult result;
 
     public PromiseTask()
@@ -34,8 +34,24 @@ public class PromiseTask extends PromiseResource
         expectedExcutionMs = 0;
         state = PromiseExecutionState.READY;
         stepList = new ArrayList<>();
-        subTaskList = new ArrayList<>();
+        subTaskUriList = new ArrayList<>();
         result = new PromiseExecutionResult();
+    }
+
+    public PromiseTask(PromiseTask other)
+    {
+        PromiseResource.attributeCopy(this, other);
+        this.setName(other.getName());
+        this.setDescription(other.getDescription());
+        this.setState(other.getState());
+        this.setCreatedByUri(other.getCreatedByUri());
+        this.setExpectedExcutionMs(other.getExpectedExcutionMs());
+        this.setCreatedTime(other.getCreatedTime());
+        this.setLastUpdatedTime(other.getLastUpdatedTime());
+        this.setTerminatedTime(other.getTerminatedTime());
+        this.setStepList(other.getStepList());
+        this.setSubTaskUriList(other.getSubTaskUriList());
+        this.setResult(other.getResult());
     }
 
     public String getName()
@@ -128,14 +144,14 @@ public class PromiseTask extends PromiseResource
         this.stepList = stepList;
     }
 
-    public List<PromiseTask> getSubTaskList()
+    public List<String> getSubTaskUriList()
     {
-        return subTaskList;
+        return subTaskUriList;
     }
 
-    public void setSubTaskList(List<PromiseTask> subTaskList)
+    public void setSubTaskUriList(List<String> subTaskUriList)
     {
-        this.subTaskList = subTaskList;
+        this.subTaskUriList = subTaskUriList;
     }
 
     public PromiseExecutionResult getResult()

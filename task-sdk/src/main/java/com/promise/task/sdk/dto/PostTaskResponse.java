@@ -11,4 +11,9 @@ public class PostTaskResponse extends PromiseTask
     {
 
     }
+
+    public PostTaskResponse(PromiseTask other)
+    {
+        super(other);
+    }
 }

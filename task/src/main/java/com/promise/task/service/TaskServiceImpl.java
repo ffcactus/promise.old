@@ -1,9 +1,12 @@
 package com.promise.task.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.promise.common.exception.NoDbInstanceException;
+import com.promise.task.db.TaskDao;
+import com.promise.task.db.TaskDbInterface;
 import com.promise.task.sdk.dto.GetTaskResponse;
 import com.promise.task.sdk.dto.PostTaskRequest;
 import com.promise.task.sdk.dto.PostTaskResponse;
@@ -15,11 +18,14 @@ import com.promise.task.sdk.dto.UpdateTaskResponse;
 public class TaskServiceImpl implements TaskServiceInterface
 {
 
+    @Autowired
+    private TaskDbInterface taskDb;
+
     @Override
     public PostTaskResponse postTask(PostTaskRequest request)
     {
-        // TODO Auto-generated method stub
-        return null;
+        final TaskDao taskDao = TaskDao.makeInstance(request);
+        return new PostTaskResponse(TaskDao.toPromiseTask(taskDb.postTask(taskDao)));
     }
 
     @Override

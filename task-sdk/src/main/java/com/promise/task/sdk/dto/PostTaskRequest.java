@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class PostTaskRequest
 {
+    // The default value of int type is 0 if it's missing in the input.
+
     @JsonProperty(required = true)
     private String name;
     private String description;
