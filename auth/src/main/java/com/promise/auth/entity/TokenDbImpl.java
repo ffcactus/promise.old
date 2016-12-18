@@ -1,4 +1,4 @@
-package com.promise.auth.db;
+package com.promise.auth.entity;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;

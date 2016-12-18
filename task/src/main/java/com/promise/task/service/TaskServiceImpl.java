@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.promise.common.exception.NoDbInstanceException;
-import com.promise.task.db.TaskDao;
+import com.promise.task.db.TaskEntity;
 import com.promise.task.db.TaskDbInterface;
 import com.promise.task.sdk.dto.GetTaskResponse;
 import com.promise.task.sdk.dto.PostTaskRequest;
@@ -24,8 +24,8 @@ public class TaskServiceImpl implements TaskServiceInterface
     @Override
     public PostTaskResponse postTask(PostTaskRequest request)
     {
-        final TaskDao taskDao = TaskDao.makeInstance(request);
-        return new PostTaskResponse(TaskDao.toPromiseTask(taskDb.postTask(taskDao)));
+        final TaskEntity taskDao = TaskEntity.makeInstance(request);
+        return new PostTaskResponse(TaskEntity.toPromiseTask(taskDb.postTask(taskDao)));
     }
 
     @Override

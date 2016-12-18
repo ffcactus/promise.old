@@ -14,17 +14,17 @@ import com.promise.task.sdk.dto.UpdateTaskRequest;
 @Scope("singleton")
 public class TaskDbImpl implements TaskDbInterface
 {
-    private static Map<String, TaskDao> db = new HashMap<>();
+    private static Map<String, TaskEntity> db = new HashMap<>();
 
     @Override
-    public TaskDao postTask(TaskDao task)
+    public TaskEntity postTask(TaskEntity task)
     {
         db.put(task.getId(), task);
         return task;
     }
 
     @Override
-    public TaskDao getTask(String id)
+    public TaskEntity getTask(String id)
             throws NoDbInstanceException
     {
         if (db.containsKey(id))
@@ -38,12 +38,12 @@ public class TaskDbImpl implements TaskDbInterface
     }
 
     @Override
-    public TaskDao updateTask(String id, UpdateTaskRequest request)
+    public TaskEntity updateTask(String id, UpdateTaskRequest request)
             throws NoDbInstanceException
     {
         if (db.containsKey(id))
         {
-            final TaskDao updated = TaskDao.updateFrom(db.get(id), request);
+            final TaskEntity updated = TaskEntity.updateFrom(db.get(id), request);
             db.put(id, updated);
             return updated;
         }

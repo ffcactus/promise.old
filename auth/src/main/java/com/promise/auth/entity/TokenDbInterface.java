@@ -1,4 +1,4 @@
-package com.promise.auth.db;
+package com.promise.auth.entity;
 
 import com.promise.common.PromiseToken;
 import com.promise.common.PromiseUser;

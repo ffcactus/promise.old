@@ -12,7 +12,7 @@ public interface TaskDbInterface
      * @param request The DAO that represents the task to create.
      * @return The DAO that represents the task created.
      */
-    public TaskDao postTask(TaskDao task);
+    public TaskEntity postTask(TaskEntity task);
 
     /**
      * Get a task.
@@ -21,7 +21,7 @@ public interface TaskDbInterface
      * @return The DAO that represents the task get.
      * @throws NoDbInstanceException If the task can't be found by the ID.
      */
-    public TaskDao getTask(String id)
+    public TaskEntity getTask(String id)
             throws NoDbInstanceException;
 
     /**
@@ -32,7 +32,7 @@ public interface TaskDbInterface
      * @return The DAO that represents the current task.
      * @throws NoDbInstanceException If the task can't be found by the ID.
      */
-    public TaskDao updateTask(String id, UpdateTaskRequest request)
+    public TaskEntity updateTask(String id, UpdateTaskRequest request)
             throws NoDbInstanceException;
 
     /**

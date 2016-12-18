@@ -1,0 +1,1 @@
+create table employee(id uuid PRIMARY KEY, "name" varchar(255) not null);

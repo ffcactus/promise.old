@@ -1,37 +1,25 @@
-package com.promise.auth.db;
+package com.promise.auth.entity;
 
 import java.util.UUID;
 
-public class AccessPointDao
+public class AccessPointEntity
 {
 
-    private String id;
+    private UUID id;
     private String type;
     private String value;
 
-    public AccessPointDao()
+    public AccessPointEntity()
     {
 
     }
 
-    /**
-     * Make an instance that the ID is set.
-     * 
-     * @return
-     */
-    public AccessPointDao makeInstance()
-    {
-        final AccessPointDao ret = new AccessPointDao();
-        ret.setId(UUID.randomUUID().toString());
-        return ret;
-    }
-
-    public String getId()
+    public UUID getId()
     {
         return id;
     }
 
-    public void setId(String id)
+    public void setId(UUID id)
     {
         this.id = id;
     }

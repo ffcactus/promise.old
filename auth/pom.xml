@@ -20,6 +20,14 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 			<version>${org.springframework.boot.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
@@ -38,6 +46,12 @@
 			<artifactId>aspectjtools</artifactId>
 			<version>${org.aspectj.version}</version>
 		</dependency>
+        <!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${org.hibernate.version}</version>
+        </dependency>        
 		<!-- Promise -->
 		<dependency>
 			<groupId>com.promise.module</groupId>

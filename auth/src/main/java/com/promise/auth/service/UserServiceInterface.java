@@ -7,7 +7,6 @@ import com.promise.auth.sdk.dto.CreateUserRequest;
 import com.promise.auth.sdk.dto.CreateUserResponse;
 import com.promise.auth.sdk.dto.GetUserListResponse;
 import com.promise.auth.sdk.dto.GetUserResponse;
-import com.promise.common.PromiseToken;
 import com.promise.common.PromiseUser;
 import com.promise.common.exception.NoDbInstanceException;
 
@@ -40,8 +39,8 @@ public interface UserServiceInterface
      * @return The UserDto.
      * @throws NoDbInstanceException If the user can't be found.
      */
-    public GetUserResponse getUser(PromiseToken token)
-            throws NoDbInstanceException;
+    //    public GetUserResponse getUser(PromiseToken token)
+    //            throws NoDbInstanceException;
 
     /**
      * Get user by username and password.

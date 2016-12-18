@@ -11,9 +11,12 @@ public class CreateUserRequest
 {
     @JsonProperty(required = true)
     private String username;
+
     @JsonProperty(required = true)
     private char[] password;
+
     private String email;
+
     @JsonProperty(required = true)
     private List<String> scopeUri;
 

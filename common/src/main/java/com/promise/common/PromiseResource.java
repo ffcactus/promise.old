@@ -2,51 +2,51 @@ package com.promise.common;
 
 import com.promise.common.constant.PromiseCategory;
 
-/**
- * Represent the common object. These objects will contain URI and category
- * attributes.
- *
- */
-public class PromiseResource
+public class PromiseResource implements PromiseResourceInterface
 {
-
     private String id;
-    private PromiseCategory category;
     private String uri;
+    private PromiseCategory category;
 
     public PromiseResource()
     {
 
     }
 
+    @Override
     public String getId()
     {
         return id;
     }
 
+    @Override
     public void setId(String id)
     {
         this.id = id;
     }
 
+    @Override
     public String getUri()
     {
         return uri;
     }
 
+    @Override
+    public void setUri(String uri)
+    {
+        this.uri = uri;
+    }
+
+    @Override
     public PromiseCategory getCategory()
     {
         return category;
     }
 
+    @Override
     public void setCategory(PromiseCategory category)
     {
         this.category = category;
-    }
-
-    public void setUri(String uri)
-    {
-        this.uri = uri;
     }
 
     /**
@@ -55,11 +55,11 @@ public class PromiseResource
      * @param to
      * @param from
      */
-    public static void attributeCopy(PromiseResource to, PromiseResource from)
+    public static void attributeCopy(PromiseResourceInterface to, PromiseResourceInterface from)
     {
-        to.id = from.id;
-        to.category = from.category;
-        to.uri = from.uri;
+        to.setId(from.getId());
+        to.setCategory(from.getCategory());
+        to.setUri(from.getUri());
     }
 
     /**
@@ -67,9 +67,9 @@ public class PromiseResource
      *
      * @param r
      */
-    public static void makeUri(PromiseResource r)
+    public static void makeUri(PromiseResourceInterface r)
     {
-        r.uri = "/rest/" + r.category.getValue() + "/" + r.id;
+        r.setUri("/rest/" + r.getCategory().getValue() + "/" + r.getId());
     }
 
 }

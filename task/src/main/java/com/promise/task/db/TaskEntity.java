@@ -15,7 +15,7 @@ import com.promise.task.sdk.dto.PostTaskStepRequest;
 import com.promise.task.sdk.dto.UpdateTaskRequest;
 import com.promise.util.PromiseUtil;
 
-public class TaskDao extends PromiseTask
+public class TaskEntity extends PromiseTask
 {
     /**
      * Make an instance of TaskDao in which the ID, category and URI already
@@ -23,19 +23,19 @@ public class TaskDao extends PromiseTask
      *
      * @return
      */
-    public static TaskDao makeInstance()
+    public static TaskEntity makeInstance()
     {
-        final TaskDao ret = new TaskDao();
+        final TaskEntity ret = new TaskEntity();
         ret.setId(UUID.randomUUID().toString());
         ret.setCategory(PromiseCategory.TASK);
         PromiseResource.makeUri(ret);
         return ret;
     }
 
-    public static TaskDao makeInstance(PostTaskRequest dto)
+    public static TaskEntity makeInstance(PostTaskRequest dto)
     {
         // User should not add sub task directly.
-        final TaskDao ret = makeInstance();
+        final TaskEntity ret = makeInstance();
         ret.setName(dto.getName());
         ret.setDescription(PromiseUtil.avoidNull(dto.getDescription()));
         ret.setExpectedExcutionMs(dto.getExpectedExcutionMs());
@@ -57,7 +57,7 @@ public class TaskDao extends PromiseTask
         return ret;
     }
 
-    public static PromiseTask toPromiseTask(TaskDao dao)
+    public static PromiseTask toPromiseTask(TaskEntity dao)
     {
         return new PromiseTask(dao);
     }
@@ -69,7 +69,7 @@ public class TaskDao extends PromiseTask
      * @param request The update content.
      * @return The updated DAO.
      */
-    public static TaskDao updateFrom(TaskDao current, UpdateTaskRequest request)
+    public static TaskEntity updateFrom(TaskEntity current, UpdateTaskRequest request)
     {
         // TODO
         return current;
