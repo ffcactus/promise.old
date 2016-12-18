@@ -1,5 +1,7 @@
 package com.promise.employee.dao;
 
+import java.util.UUID;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +42,7 @@ public class EmployeeDaoImpl implements EmployeeDaoInterface
     public GetEmployeeResponse getEmployee(String id)
             throws NoDbInstanceException
     {
-        final EmployeeEntity entity = getSession().get(EmployeeEntity.class, id);
+        final EmployeeEntity entity = getSession().get(EmployeeEntity.class, UUID.fromString(id));
         if (entity == null)
         {
             throw new NoDbInstanceException(PromiseCategory.USER);

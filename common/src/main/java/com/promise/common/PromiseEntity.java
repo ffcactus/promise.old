@@ -8,13 +8,17 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
 import com.promise.common.constant.PromiseCategory;
 
 public class PromiseEntity
 {
     @Id
-    @GeneratedValue
-    @Column(name = "id")
+    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
+    @GeneratedValue(generator = "uuid-gen")
+    @Type(type = "pg-uuid")
     private UUID id;
 
     @Column(name = "uri")

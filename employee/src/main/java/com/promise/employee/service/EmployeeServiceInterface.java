@@ -21,7 +21,7 @@ public interface EmployeeServiceInterface
      *
      * @param id The ID of the employee.
      * @return The DTO that represents the employee get.
-     * @throws NoDbInstanceException If the task can't be found by the ID.
+     * @throws NoDbInstanceException If the employee can't be found by the ID.
      */
     public GetEmployeeResponse getEmployee(String id)
             throws NoDbInstanceException;

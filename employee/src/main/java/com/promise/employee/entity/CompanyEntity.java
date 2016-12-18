@@ -1,17 +1,20 @@
 package com.promise.employee.entity;
 
+import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-@Entity(name = "employee")
-@Table(name = "employee")
-public class EmployeeEntity
+@Entity(name = "company")
+@Table(name = "company")
+public class CompanyEntity
 {
     @javax.persistence.Id
     @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
@@ -22,7 +25,10 @@ public class EmployeeEntity
     @Column(name = "\"name\"")
     private String name;
 
-    public EmployeeEntity()
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EmployeeEntity> employeeList;
+
+    public CompanyEntity()
     {
 
     }
@@ -30,6 +36,11 @@ public class EmployeeEntity
     public UUID getId()
     {
         return id;
+    }
+
+    public void setId(UUID id)
+    {
+        this.id = id;
     }
 
     public String getName()
@@ -40,5 +51,15 @@ public class EmployeeEntity
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    public List<EmployeeEntity> getEmployeeList()
+    {
+        return employeeList;
+    }
+
+    public void setEmployeeList(List<EmployeeEntity> employeeList)
+    {
+        this.employeeList = employeeList;
     }
 }
