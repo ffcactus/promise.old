@@ -1,8 +1,10 @@
 package com.promise.employee.entity;
 
+import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Table;
@@ -19,8 +21,11 @@ public class EmployeeEntity
     @org.hibernate.annotations.Type(type = "pg-uuid")
     private UUID id;
 
-    @Column(name = "\"name\"")
-    private String name;
+    @Embedded
+    private Name name;
+
+    @ElementCollection
+    private List<Telephone> telephoneList;
 
     public EmployeeEntity()
     {
@@ -32,12 +37,12 @@ public class EmployeeEntity
         return id;
     }
 
-    public String getName()
+    public Name getName()
     {
         return name;
     }
 
-    public void setName(String name)
+    public void setName(Name name)
     {
         this.name = name;
     }

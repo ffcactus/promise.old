@@ -13,6 +13,7 @@ import com.promise.employee.dto.GetEmployeeResponse;
 import com.promise.employee.dto.PostEmployeeRequest;
 import com.promise.employee.dto.PostEmployeeResponse;
 import com.promise.employee.entity.EmployeeEntity;
+import com.promise.employee.entity.Name;
 
 @Repository("employeeDao")
 public class EmployeeDaoImpl implements EmployeeDaoInterface
@@ -30,11 +31,11 @@ public class EmployeeDaoImpl implements EmployeeDaoInterface
     public PostEmployeeResponse postEmployee(PostEmployeeRequest request)
     {
         final EmployeeEntity entity = new EmployeeEntity();
-        entity.setName(request.getName());
+        entity.setName(new Name(request.getName()));
         getSession().persist(entity);
         final PostEmployeeResponse response = new PostEmployeeResponse();
         response.setId(entity.getId().toString());
-        response.setName(entity.getName());
+        response.setName(entity.getName().toString());
         return response;
     }
 
@@ -51,7 +52,7 @@ public class EmployeeDaoImpl implements EmployeeDaoInterface
         {
             final GetEmployeeResponse response = new GetEmployeeResponse();
             response.setId(entity.getId().toString());
-            response.setName(entity.getName());
+            response.setName(entity.getName().toString());
             return response;
         }
     }
