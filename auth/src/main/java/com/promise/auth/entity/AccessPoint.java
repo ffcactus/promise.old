@@ -1,27 +1,20 @@
 package com.promise.auth.entity;
 
-import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
-public class AccessPointEntity
+@Embeddable
+public class AccessPoint
 {
-
-    private UUID id;
+    @Column(name = "type")
     private String type;
+
+    @Column(name = "\"value\"")
     private String value;
 
-    public AccessPointEntity()
+    public AccessPoint()
     {
 
-    }
-
-    public UUID getId()
-    {
-        return id;
-    }
-
-    public void setId(UUID id)
-    {
-        this.id = id;
     }
 
     public String getType()

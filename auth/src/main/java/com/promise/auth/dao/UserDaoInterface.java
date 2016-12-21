@@ -16,7 +16,7 @@ public interface UserDaoInterface
     public boolean isUsernameExist(String username);
 
     public CreateUserResponse createUser(CreateUserRequest createUserRequest)
-            throws NoSuchAlgorithmException;
+            throws NoSuchAlgorithmException, NoDbInstanceException;
 
     public GetUserResponse getUser(String id)
             throws NoDbInstanceException;

@@ -1,11 +1,18 @@
 package com.promise.auth.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 
 import com.promise.common.PromiseEntity;
 
 @Entity(name = "promise_scope")
+@Table(name = "promise_scope")
 public class ScopeEntity extends PromiseEntity
 {
 
@@ -13,7 +20,11 @@ public class ScopeEntity extends PromiseEntity
     private String name;
 
     @Column(name = "description")
+    @Type(type = "text")
     private String description;
+
+    @ElementCollection
+    private List<AccessPoint> accessPointList;
 
     public ScopeEntity()
     {
@@ -38,6 +49,16 @@ public class ScopeEntity extends PromiseEntity
     public void setDescription(String description)
     {
         this.description = description;
+    }
+
+    public List<AccessPoint> getAccessPointList()
+    {
+        return accessPointList;
+    }
+
+    public void setAccessPointList(List<AccessPoint> accessPointList)
+    {
+        this.accessPointList = accessPointList;
     }
 
 }

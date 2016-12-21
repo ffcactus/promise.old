@@ -18,7 +18,7 @@ public class CreateUserRequest
     private String email;
 
     @JsonProperty(required = true)
-    private List<String> scopeUri;
+    private List<String> scopeUriList;
 
     public CreateUserRequest()
     {
@@ -55,13 +55,13 @@ public class CreateUserRequest
         this.email = email;
     }
 
-    public List<String> getScopeUri()
+    public List<String> getScopeUriList()
     {
-        return scopeUri;
+        return scopeUriList;
     }
 
-    public void setScopeUri(List<String> scopeUri)
+    public void setScopeUriList(List<String> scopeUriList)
     {
-        this.scopeUri = scopeUri;
+        this.scopeUriList = scopeUriList;
     }
 }

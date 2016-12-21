@@ -41,7 +41,20 @@ public class UserServiceImpl implements UserServiceInterface//, InitializingBean
             final CreateUserRequest userDto = new CreateUserRequest();
             userDto.setUsername("Administrator");
             userDto.setPassword("admin".toCharArray());
-            createUser(userDto);
+            try
+            {
+                createUser(userDto);
+            }
+            catch (final NoDbInstanceException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            catch (final NoSuchAlgorithmException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             log.warn("User Administrator is created.");
         }
         else
@@ -52,17 +65,9 @@ public class UserServiceImpl implements UserServiceInterface//, InitializingBean
 
     @Override
     public CreateUserResponse createUser(CreateUserRequest createUserRequest)
+            throws NoDbInstanceException, NoSuchAlgorithmException
     {
-        try
-        {
-            return userDao.createUser(createUserRequest);
-        }
-        catch (final NoSuchAlgorithmException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return null;
+        return userDao.createUser(createUserRequest);
 
     }
 

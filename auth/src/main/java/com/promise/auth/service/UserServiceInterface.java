@@ -18,8 +18,11 @@ public interface UserServiceInterface
      *
      * @param user The DTO that represents the user to create.
      * @return The DTO that represents the user created.
+     * @throws NoDbInstanceException
+     * @throws NoSuchAlgorithmException
      */
-    public CreateUserResponse createUser(CreateUserRequest user);
+    public CreateUserResponse createUser(CreateUserRequest user)
+            throws NoDbInstanceException, NoSuchAlgorithmException;
 
     /**
      * Get user by ID.

@@ -2,8 +2,10 @@ package com.promise.auth.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -32,7 +34,8 @@ public class UserEntity extends PromiseEntity
     @Type(type = "BinaryType")
     private byte[] salt;
 
-    private List<String> scopeUri;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ScopeEntity> scopeList;
 
     public UserEntity()
     {
@@ -79,13 +82,13 @@ public class UserEntity extends PromiseEntity
         this.salt = salt;
     }
 
-    public List<String> getScopeUri()
+    public List<ScopeEntity> getScopeList()
     {
-        return scopeUri;
+        return scopeList;
     }
 
-    public void setScopeUri(List<String> scopeUri)
+    public void setScopeList(List<ScopeEntity> scopeList)
     {
-        this.scopeUri = scopeUri;
+        this.scopeList = scopeList;
     }
 }

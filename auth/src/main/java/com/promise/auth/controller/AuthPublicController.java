@@ -1,5 +1,6 @@
 package com.promise.auth.controller;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 import java.util.Optional;
 
@@ -109,13 +110,15 @@ public class AuthPublicController
      * @param request The HTTP request.
      * @return The HTTP response that represents the user created.
      * @throws InvalidRequestBodyException If the request is invalid.
+     * @throws NoSuchAlgorithmException
+     * @throws NoDbInstanceException
      */
     @PromisePublicInterface
     @PostMapping("/user")
     ResponseEntity<CreateUserResponse> createUser(
             @RequestHeader Map<String, String> header,
             @RequestBody CreateUserRequest request)
-            throws InvalidRequestBodyException
+            throws InvalidRequestBodyException, NoDbInstanceException, NoSuchAlgorithmException
     {
         return new ResponseEntity<>(userService.createUser(request), HttpStatus.CREATED);
     }
@@ -196,7 +199,6 @@ public class AuthPublicController
     public ResponseEntity<CreateScopeResponse> createScope(
             @RequestHeader Map<String, String> header,
             @RequestBody CreateScopeRequest scope)
-            throws InvalidRequestBodyException
     {
         return new ResponseEntity<>(scopeService.createScope(scope), HttpStatus.CREATED);
     }
