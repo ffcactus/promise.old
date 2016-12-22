@@ -107,7 +107,7 @@ public class UserTest
         createUserRequest.setUsername("baibin");
         createUserRequest.setEmail("baibin@email.com");
         createUserRequest.setPassword("iforgot".toCharArray());
-        createUserRequest.setScopeUri(scopeUriList);
+        createUserRequest.setScopeUriList(scopeUriList);
 
         final ResponseEntity<CreateUserResponse> responseEntity = HttpJsonClient
                 .post(HOSTNAME + "/rest/user", token, createUserRequest, CreateUserResponse.class);
@@ -133,7 +133,7 @@ public class UserTest
         createUserRequest.setUsername("baibin");
         createUserRequest.setEmail("baibin@email.com");
         createUserRequest.setPassword("iforgot".toCharArray());
-        createUserRequest.setScopeUri(scopeUriList);
+        createUserRequest.setScopeUriList(scopeUriList);
         final ResponseEntity<CreateUserResponse> createUserResponseEntity = HttpJsonClient
                 .post(HOSTNAME + "/rest/user", token, createUserRequest, CreateUserResponse.class);
         final String userUri = createUserResponseEntity.getBody().getUri();
@@ -172,7 +172,7 @@ public class UserTest
         createUserRequest.setUsername("baibin");
         createUserRequest.setEmail("baibin@email.com");
         createUserRequest.setPassword("iforgot".toCharArray());
-        createUserRequest.setScopeUri(scopeUriList);
+        createUserRequest.setScopeUriList(scopeUriList);
         final ResponseEntity<CreateUserResponse> createUserResponseEntity = HttpJsonClient
                 .post(HOSTNAME + "/rest/user", token, createUserRequest, CreateUserResponse.class);
         final String userUri = createUserResponseEntity.getBody().getUri();
@@ -201,7 +201,7 @@ public class UserTest
         createUserRequest.setUsername("baibin");
         createUserRequest.setEmail("baibin@email.com");
         createUserRequest.setPassword("iforgot".toCharArray());
-        createUserRequest.setScopeUri(scopeUriList);
+        createUserRequest.setScopeUriList(scopeUriList);
         final ResponseEntity<CreateUserResponse> createUserResponseEntity = HttpJsonClient
                 .post(HOSTNAME + "/rest/user", token, createUserRequest, CreateUserResponse.class);
         final String userUri = createUserResponseEntity.getBody().getUri();

@@ -21,6 +21,7 @@
 		<org.apache.tomcat.maven.version>2.2</org.apache.tomcat.maven.version>
 		<org.aspectj.version>1.8.9</org.aspectj.version>
         <org.hibernate.version>5.2.5.Final</org.hibernate.version>
+        <org.postgresql.version>9.4.1207.jre7</org.postgresql.version>
 	</properties>
 
 	<dependencyManagement>

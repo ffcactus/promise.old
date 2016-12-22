@@ -1,50 +1,47 @@
-package com.promise.task.service;
+package com.promise.task.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.promise.common.exception.NoDbInstanceException;
-import com.promise.task.dao.TaskDaoInterface;
 import com.promise.task.sdk.dto.GetTaskResponse;
 import com.promise.task.sdk.dto.PostTaskRequest;
 import com.promise.task.sdk.dto.PostTaskResponse;
 import com.promise.task.sdk.dto.UpdateTaskRequest;
 import com.promise.task.sdk.dto.UpdateTaskResponse;
 
-@Component
-@Scope("singleton")
-public class TaskServiceImpl implements TaskServiceInterface
+@Repository("TaskDao")
+public class TaskDaoImpl implements TaskDaoInterface
 {
-
-    @Autowired
-    private TaskDaoInterface taskDao;
 
     @Override
     public PostTaskResponse postTask(PostTaskRequest request)
     {
-        return taskDao.postTask(request);
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
     public GetTaskResponse getTask(String id)
             throws NoDbInstanceException
     {
-        return taskDao.getTask(id);
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
     public UpdateTaskResponse updateTask(String id, UpdateTaskRequest request)
             throws NoDbInstanceException
     {
-        return taskDao.updateTask(id, request);
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
     public void deleteTask(String id)
             throws NoDbInstanceException
     {
-        taskDao.deleteTask(id);
+        // TODO Auto-generated method stub
+
     }
 
 }
