@@ -1,6 +1,6 @@
 package com.promise.common;
 
-import javax.xml.crypto.Data;
+import java.util.Date;
 
 /**
  * PromiseTaskStep represents the steps in a PromiseTask.
@@ -12,9 +12,9 @@ public class PromiseTaskStep
     private PromiseExecutionState state;
     private int expectedExcutionMs;
     private int percentage;
-    private Data createdTime;
-    private Data lastUpdatedTime;
-    private Data terminatedTime;
+    private Date createdTime;
+    private Date lastUpdatedTime;
+    private Date terminatedTime;
     private PromiseExecutionResult result;
 
     public PromiseTaskStep()
@@ -72,32 +72,32 @@ public class PromiseTaskStep
         this.percentage = percentage;
     }
 
-    public Data getCreatedTime()
+    public Date getCreatedTime()
     {
         return createdTime;
     }
 
-    public void setCreatedTime(Data createdTime)
+    public void setCreatedTime(Date createdTime)
     {
         this.createdTime = createdTime;
     }
 
-    public Data getLastUpdatedTime()
+    public Date getLastUpdatedTime()
     {
         return lastUpdatedTime;
     }
 
-    public void setLastUpdatedTime(Data lastUpdatedTime)
+    public void setLastUpdatedTime(Date lastUpdatedTime)
     {
         this.lastUpdatedTime = lastUpdatedTime;
     }
 
-    public Data getTerminatedTime()
+    public Date getTerminatedTime()
     {
         return terminatedTime;
     }
 
-    public void setTerminatedTime(Data terminatedTime)
+    public void setTerminatedTime(Date terminatedTime)
     {
         this.terminatedTime = terminatedTime;
     }

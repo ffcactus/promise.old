@@ -1,9 +1,15 @@
 package com.promise.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class PromiseUtil
 {
+    public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss z");
+
     public static String avoidNull(String input)
     {
         if (input == null)
@@ -27,5 +33,23 @@ public class PromiseUtil
         {
             return null;
         }
+    }
+
+    public static <T> List<T> emptyIfNull(List<T> other)
+    {
+        return other == null ? Collections.emptyList() : other;
+    }
+
+    public static String dateToString(Date date)
+    {
+        if (date == null)
+        {
+            return null;
+        }
+        else
+        {
+            return sdf.format(date);
+        }
+
     }
 }

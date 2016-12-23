@@ -1,8 +1,8 @@
 package com.promise.task.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.task.dao.TaskDaoInterface;
@@ -12,8 +12,8 @@ import com.promise.task.sdk.dto.PostTaskResponse;
 import com.promise.task.sdk.dto.UpdateTaskRequest;
 import com.promise.task.sdk.dto.UpdateTaskResponse;
 
-@Component
-@Scope("singleton")
+@Service("taskService")
+@Transactional
 public class TaskServiceImpl implements TaskServiceInterface
 {
 
