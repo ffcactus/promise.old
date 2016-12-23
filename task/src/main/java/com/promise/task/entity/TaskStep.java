@@ -1,24 +1,38 @@
 package com.promise.task.entity;
 
 import java.util.Date;
+import java.util.UUID;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.promise.common.PromiseExecutionState;
 
-@Embeddable
+@Entity(name = "taskstep")
+@Table(name = "taskstep")
 public class TaskStep
 {
+    @Id
+    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
+    @GeneratedValue(generator = "uuid-gen")
+    @Type(type = "pg-uuid")
+    private UUID id;
+
     @Column(name = "\"name\"")
     private String name;
 
@@ -49,6 +63,10 @@ public class TaskStep
     private Date terminatedTime;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "description", column = @Column(name = "execution_result_description")),
+            @AttributeOverride(name = "state", column = @Column(name = "execution_result_state"))
+    })
     private ExecutionResult result;
 
     public TaskStep()

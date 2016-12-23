@@ -3,9 +3,10 @@ package com.promise.task.entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -21,8 +22,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.promise.common.PromiseEntity;
 import com.promise.common.PromiseExecutionState;
 
-@Entity(name = "promise-task")
-@Table(name = "promise-task")
+@Entity(name = "task")
+@Table(name = "task")
 public class TaskEntity extends PromiseEntity
 {
 
@@ -57,13 +58,17 @@ public class TaskEntity extends PromiseEntity
     @Temporal(TemporalType.TIMESTAMP)
     private Date terminatedTime;
 
-    @ElementCollection
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TaskStep> stepList;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TaskEntity> subTaskList;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "description", column = @Column(name = "execution_result_description")),
+            @AttributeOverride(name = "state", column = @Column(name = "execution_result_state"))
+    })
     private ExecutionResult result;
 
     public TaskEntity()
