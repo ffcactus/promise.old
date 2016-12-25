@@ -47,7 +47,14 @@ public class PromiseEntity
 
     public String getUri()
     {
-        return uri;
+        if (uri == null)
+        {
+            return "/rest/" + category.getValue() + "/" + id.toString();
+        }
+        else
+        {
+            return uri;
+        }
     }
 
     public void setUri(String uri)

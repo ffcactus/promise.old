@@ -23,6 +23,6 @@ public class CommonTestUtil
         Assert.assertNotNull(r.getId());
         Assert.assertNotNull(r.getUri());
         Assert.assertNotNull(r.getCategory());
-        Assert.assertEquals(r.getUri(), "/rest/" + r.getCategory().getValue() + "/" + r.getId());
+        Assert.assertEquals("/rest/" + r.getCategory().getValue() + "/" + r.getId(), r.getUri());
     }
 }

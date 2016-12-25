@@ -2,6 +2,7 @@ package com.promise.task.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,6 +13,7 @@ import com.promise.common.PromiseExecutionResult;
 import com.promise.common.PromiseExecutionResultState;
 import com.promise.common.PromiseExecutionState;
 import com.promise.common.PromiseTaskStep;
+import com.promise.common.constant.PromiseCategory;
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.task.entity.ExecutionResult;
 import com.promise.task.entity.TaskEntity;
@@ -46,6 +48,7 @@ public class TaskDaoImpl implements TaskDaoInterface
         entity.setExpectedExcutionMs(request.getExpectedExcutionMs());
 
         // Set default value.
+        entity.setCategory(PromiseCategory.TASK);
         entity.setState(PromiseExecutionState.READY);
         entity.setPercentage(0);
         final ExecutionResult preResult = new ExecutionResult();
@@ -74,6 +77,9 @@ public class TaskDaoImpl implements TaskDaoInterface
         getSession().flush();
 
         final PostTaskResponse response = new PostTaskResponse();
+        response.setId(entity.getId().toString());
+        response.setCategory(entity.getCategory());
+        response.setUri(entity.getUri());
         response.setName(entity.getName());
         response.setDescription(entity.getDescription());
         response.setState(entity.getState());
@@ -119,8 +125,61 @@ public class TaskDaoImpl implements TaskDaoInterface
     public GetTaskResponse getTask(String id)
             throws NoDbInstanceException
     {
-        // TODO Auto-generated method stub
-        return null;
+        TaskEntity entity;
+        try
+        {
+            entity = getSession().get(TaskEntity.class, UUID.fromString(id));
+        }
+        catch (final IllegalArgumentException e)
+        {
+            throw new NoDbInstanceException(PromiseCategory.TASK);
+        }
+
+        if (entity == null)
+        {
+            throw new NoDbInstanceException(PromiseCategory.TASK);
+        }
+
+        final GetTaskResponse response = new GetTaskResponse();
+        response.setName(entity.getName());
+        response.setDescription(entity.getDescription());
+        response.setState(entity.getState());
+        response.setCreatedByUri(entity.getCreatedByUri());
+        response.setExpectedExcutionMs(entity.getExpectedExcutionMs());
+        response.setPercentage(entity.getPercentage());
+        response.setCreatedTime(PromiseUtil.dateToString(entity.getCreatedTime()));
+        response.setLastUpdatedTime(PromiseUtil.dateToString(entity.getLastUpdatedTime()));
+        response.setTerminatedTime(PromiseUtil.dateToString(entity.getTerminatedTime()));
+        final List<PromiseTaskStep> taskStepList = new ArrayList<>();
+        for (final TaskStep each : PromiseUtil.emptyIfNull(entity.getStepList()))
+        {
+            final PromiseTaskStep taskStep = new PromiseTaskStep();
+            taskStep.setName(each.getName());
+            taskStep.setDescription(each.getDescription());
+            taskStep.setState(each.getState());
+            taskStep.setExpectedExcutionMs(each.getExpectedExcutionMs());
+            taskStep.setPercentage(each.getPercentage());
+            taskStep.setCreatedTime(each.getCreatedTime());
+            taskStep.setLastUpdatedTime(each.getLastUpdatedTime());
+            taskStep.setTerminatedTime(each.getTerminatedTime());
+            final PromiseExecutionResult result = new PromiseExecutionResult();
+            result.setState(each.getResult().getState());
+            result.setDescription(each.getResult().getDescription());
+            result.setReason(each.getResult().getReason());
+            result.setSolution(each.getResult().getSolution());
+            taskStep.setResult(result);
+
+            taskStepList.add(taskStep);
+        }
+        response.setStepList(taskStepList);
+
+        final List<String> subTaskUriList = new ArrayList<>();
+        for (final TaskEntity each : PromiseUtil.emptyIfNull(entity.getSubTaskList()))
+        {
+            subTaskUriList.add(each.getUri());
+        }
+        response.setSubTaskUriList(subTaskUriList);
+        return response;
     }
 
     @Override
@@ -135,8 +194,21 @@ public class TaskDaoImpl implements TaskDaoInterface
     public void deleteTask(String id)
             throws NoDbInstanceException
     {
-        // TODO Auto-generated method stub
+        TaskEntity entity;
+        try
+        {
+            entity = getSession().get(TaskEntity.class, UUID.fromString(id));
+        }
+        catch (final IllegalArgumentException e)
+        {
+            throw new NoDbInstanceException(PromiseCategory.TASK);
+        }
 
+        if (entity == null)
+        {
+            throw new NoDbInstanceException(PromiseCategory.TASK);
+        }
+        getSession().delete(entity);
     }
 
 }

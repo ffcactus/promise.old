@@ -77,6 +77,11 @@ public class TaskTest extends PromisePublicInterfaceTest
         Assert.assertEquals(PromiseExecutionResultState.UNKNOWN, postResponse.getResult().getState());
         Assert.assertEquals(0, postResponse.getResult().getReason().size());
         Assert.assertEquals(0, postResponse.getResult().getSolution().size());
+
+        // Clean up.
+        final ResponseEntity<String> deleteRet = HttpJsonClient
+                .delete(HOSTNAME + "/rest/task/" + postResponse.getId(), token);
+        Assert.assertEquals(HttpStatus.ACCEPTED, deleteRet.getStatusCode());
     }
 
     @Test
@@ -95,8 +100,6 @@ public class TaskTest extends PromisePublicInterfaceTest
         {
             Assert.assertEquals(PromiseExecutionState.READY, each.getState());
             Assert.assertEquals(0, each.getPercentage());
-            Assert.assertNull(each.getCreatedTime());
-            Assert.assertNull(each.getLastUpdatedTime());
             Assert.assertNull(each.getTerminatedTime());
             Assert.assertEquals(PromiseExecutionResultState.UNKNOWN, each.getResult().getState());
         }
@@ -104,5 +107,18 @@ public class TaskTest extends PromisePublicInterfaceTest
         Assert.assertEquals(PromiseExecutionResultState.UNKNOWN, postResponse.getResult().getState());
         Assert.assertEquals(0, postResponse.getResult().getReason().size());
         Assert.assertEquals(0, postResponse.getResult().getSolution().size());
+
+        // Clean up.
+        final ResponseEntity<String> deleteRet = HttpJsonClient
+                .delete(HOSTNAME + "/rest/task/" + postResponse.getId(), token);
+        Assert.assertEquals(HttpStatus.ACCEPTED, deleteRet.getStatusCode());
+    }
+
+    @Test
+    public void testDeleteNoneExistTask()
+    {
+        final ResponseEntity<String> deleteRet = HttpJsonClient
+                .delete(HOSTNAME + "/rest/task/" + "xxxx", token);
+        Assert.assertEquals(HttpStatus.NOT_FOUND, deleteRet.getStatusCode());
     }
 }
