@@ -6,9 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.task.dao.TaskDaoInterface;
+import com.promise.task.sdk.dto.CreateTaskRequest;
 import com.promise.task.sdk.dto.GetTaskResponse;
-import com.promise.task.sdk.dto.PostTaskRequest;
-import com.promise.task.sdk.dto.PostTaskResponse;
 import com.promise.task.sdk.dto.UpdateTaskRequest;
 import com.promise.task.sdk.dto.UpdateTaskResponse;
 
@@ -21,16 +20,16 @@ public class TaskServiceImpl implements TaskServiceInterface
     private TaskDaoInterface taskDao;
 
     @Override
-    public PostTaskResponse postTask(PostTaskRequest request)
+    public GetTaskResponse postTask(CreateTaskRequest request)
     {
-        return taskDao.postTask(request);
+        return taskDao.create(request);
     }
 
     @Override
     public GetTaskResponse getTask(String id)
             throws NoDbInstanceException
     {
-        return taskDao.getTask(id);
+        return taskDao.get(id);
     }
 
     @Override
@@ -44,7 +43,7 @@ public class TaskServiceImpl implements TaskServiceInterface
     public void deleteTask(String id)
             throws NoDbInstanceException
     {
-        taskDao.deleteTask(id);
+        taskDao.delete(id);
     }
 
 }

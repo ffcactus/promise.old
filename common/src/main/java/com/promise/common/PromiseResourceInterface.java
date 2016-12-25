@@ -19,5 +19,5 @@ public interface PromiseResourceInterface
     public PromiseCategory getCategory();
 
     public void setCategory(PromiseCategory category);
-    
+
 }

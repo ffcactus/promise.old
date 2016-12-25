@@ -14,24 +14,24 @@ import com.promise.common.PromiseTaskStep;
 import com.promise.integrationtest.PromisePublicInterfaceTest;
 import com.promise.integrationtest.util.CommonTestUtil;
 import com.promise.integrationtest.util.HttpJsonClient;
-import com.promise.task.sdk.dto.PostTaskRequest;
+import com.promise.task.sdk.dto.CreateTaskRequest;
 import com.promise.task.sdk.dto.PostTaskResponse;
 import com.promise.task.sdk.dto.PostTaskStepRequest;
 
 public class TaskTest extends PromisePublicInterfaceTest
 {
-    private static final PostTaskRequest postDefaultTaskRequest;
-    private static final PostTaskRequest postFullTaskRequest;
+    private static final CreateTaskRequest postDefaultTaskRequest;
+    private static final CreateTaskRequest postFullTaskRequest;
     private static final PostTaskStepRequest step0;
     private static final PostTaskStepRequest step1;
     private static final List<PostTaskStepRequest> stepList;
 
     static
     {
-        postDefaultTaskRequest = new PostTaskRequest();
+        postDefaultTaskRequest = new CreateTaskRequest();
         postDefaultTaskRequest.setName("Default task name");
 
-        postFullTaskRequest = new PostTaskRequest();
+        postFullTaskRequest = new CreateTaskRequest();
         postFullTaskRequest.setName("Full task name");
         postFullTaskRequest.setDescription("Full task description");
         postFullTaskRequest.setExpectedExcutionMs(60 * 1000);

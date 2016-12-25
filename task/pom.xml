@@ -89,7 +89,7 @@
                 <executions>
                     <execution>
                         <id>deploy</id>
-                        <phase>pre-integration-test</phase>
+                        <phase>deploy</phase>
                         <goals>
                             <goal>deploy</goal>
                         </goals>

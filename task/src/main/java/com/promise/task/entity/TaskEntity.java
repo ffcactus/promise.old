@@ -21,6 +21,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.promise.common.PromiseEntity;
 import com.promise.common.PromiseExecutionState;
+import com.promise.common.constant.PromiseCategory;
 
 @Entity(name = "task")
 @Table(name = "task")
@@ -73,7 +74,7 @@ public class TaskEntity extends PromiseEntity
 
     public TaskEntity()
     {
-
+        setCategory(PromiseCategory.TASK);
     }
 
     public String getName()

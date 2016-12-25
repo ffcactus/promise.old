@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * PostTaskRequest represents the JSON representation of POST a task request.
  */
-public class PostTaskRequest
+public class CreateTaskRequest
 {
     // The default value of int type is 0 if it's missing in the input.
 
@@ -18,7 +18,7 @@ public class PostTaskRequest
     private int expectedExcutionMs;
     private List<PostTaskStepRequest> stepList;
 
-    public PostTaskRequest()
+    public CreateTaskRequest()
     {
 
     }

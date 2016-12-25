@@ -1,9 +1,8 @@
 package com.promise.task.service;
 
 import com.promise.common.exception.NoDbInstanceException;
+import com.promise.task.sdk.dto.CreateTaskRequest;
 import com.promise.task.sdk.dto.GetTaskResponse;
-import com.promise.task.sdk.dto.PostTaskRequest;
-import com.promise.task.sdk.dto.PostTaskResponse;
 import com.promise.task.sdk.dto.UpdateTaskRequest;
 import com.promise.task.sdk.dto.UpdateTaskResponse;
 
@@ -16,7 +15,7 @@ public interface TaskServiceInterface
      * @param request The DTO that represents the task to create.
      * @return The DTO that represents the task created.
      */
-    public PostTaskResponse postTask(PostTaskRequest request);
+    public GetTaskResponse postTask(CreateTaskRequest request);
 
     /**
      * Get a task.
@@ -41,7 +40,7 @@ public interface TaskServiceInterface
 
     /**
      * Delete a task.
-     * 
+     *
      * @param id The ID of the task.
      * @throws NoDbInstanceException If the task can't be found by the ID.
      */

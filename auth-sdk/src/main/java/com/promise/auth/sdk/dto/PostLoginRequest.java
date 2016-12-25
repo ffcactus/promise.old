@@ -1,6 +1,7 @@
 package com.promise.auth.sdk.dto;
 
-public class PostLoginRequest {
+public class PostLoginRequest
+{
 
     private String userName;
     private String password;

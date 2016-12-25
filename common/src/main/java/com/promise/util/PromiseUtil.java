@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.promise.common.PromiseEntity;
+import com.promise.common.PromiseResource;
+
 public class PromiseUtil
 {
     public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss z");
@@ -50,6 +53,13 @@ public class PromiseUtil
         {
             return sdf.format(date);
         }
-
     }
+
+    public static void copyAttributeFromEntityToResource(PromiseResource to, PromiseEntity from)
+    {
+        to.setId(from.getId().toString());
+        to.setCategory(from.getCategory());
+        to.setUri(from.getUri());
+    }
+
 }

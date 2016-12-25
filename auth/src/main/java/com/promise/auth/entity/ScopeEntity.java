@@ -10,9 +10,10 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 
 import com.promise.common.PromiseEntity;
+import com.promise.common.constant.PromiseCategory;
 
-@Entity(name = "promise_scope")
-@Table(name = "promise_scope")
+@Entity(name = "scope")
+@Table(name = "scope")
 public class ScopeEntity extends PromiseEntity
 {
 
@@ -28,7 +29,7 @@ public class ScopeEntity extends PromiseEntity
 
     public ScopeEntity()
     {
-
+        setCategory(PromiseCategory.SCOPE);
     }
 
     public String getName()

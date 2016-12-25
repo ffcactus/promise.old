@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.promise.auth.sdk.aspect.PromisePublicInterface;
 import com.promise.auth.sdk.client.AuthClient;
 import com.promise.auth.sdk.dto.CreateScopeRequest;
-import com.promise.auth.sdk.dto.CreateScopeResponse;
 import com.promise.auth.sdk.dto.CreateUserRequest;
 import com.promise.auth.sdk.dto.CreateUserResponse;
 import com.promise.auth.sdk.dto.GetScopeListResponse;
@@ -196,7 +195,7 @@ public class AuthPublicController
      */
     @PromisePublicInterface
     @PostMapping("/scope")
-    public ResponseEntity<CreateScopeResponse> createScope(
+    public ResponseEntity<GetScopeResponse> createScope(
             @RequestHeader Map<String, String> header,
             @RequestBody CreateScopeRequest scope)
     {

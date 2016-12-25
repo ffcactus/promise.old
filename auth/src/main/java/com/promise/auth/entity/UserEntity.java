@@ -16,8 +16,8 @@ import com.promise.common.PromiseEntity;
  * Represent the User information in database.
  *
  */
-@Entity(name = "promise_user")
-@Table(name = "promise_user")
+@Entity(name = "user")
+@Table(name = "user")
 public class UserEntity extends PromiseEntity
 {
     @Column(name = "username")

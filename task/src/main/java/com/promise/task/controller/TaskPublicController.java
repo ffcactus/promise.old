@@ -25,9 +25,8 @@ import com.promise.common.exception.InternelErrorException;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.common.exception.PromiseException;
+import com.promise.task.sdk.dto.CreateTaskRequest;
 import com.promise.task.sdk.dto.GetTaskResponse;
-import com.promise.task.sdk.dto.PostTaskRequest;
-import com.promise.task.sdk.dto.PostTaskResponse;
 import com.promise.task.sdk.dto.UpdateTaskRequest;
 import com.promise.task.sdk.dto.UpdateTaskResponse;
 import com.promise.task.service.TaskServiceInterface;
@@ -82,9 +81,9 @@ public class TaskPublicController
      */
     @PromisePublicInterface
     @PostMapping("/task")
-    public ResponseEntity<PostTaskResponse> postTask(
+    public ResponseEntity<GetTaskResponse> postTask(
             @RequestHeader Map<String, String> header,
-            @RequestBody PostTaskRequest request)
+            @RequestBody CreateTaskRequest request)
             throws InvalidRequestBodyException
     {
         return new ResponseEntity<>(taskService.postTask(request), HttpStatus.CREATED);

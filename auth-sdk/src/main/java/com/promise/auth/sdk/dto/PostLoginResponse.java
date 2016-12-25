@@ -1,20 +1,23 @@
 package com.promise.auth.sdk.dto;
 
-public class PostLoginResponse {
+public class PostLoginResponse
+{
 
-	private String token;
-	
-	public PostLoginResponse()
-	{
-		
-	}
+    private String token;
 
-	public String getToken() {
-		return token;
-	}
+    public PostLoginResponse()
+    {
 
-	public void setToken(String token) {
-		this.token = token;
-	}
-	
+    }
+
+    public String getToken()
+    {
+        return token;
+    }
+
+    public void setToken(String token)
+    {
+        this.token = token;
+    }
+
 }
