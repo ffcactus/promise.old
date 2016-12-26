@@ -2,90 +2,82 @@ package com.promise.auth.dao;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Example;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Repository;
 
 import com.promise.auth.entity.ScopeEntity;
 import com.promise.auth.entity.UserEntity;
 import com.promise.auth.sdk.dto.CreateUserRequest;
-import com.promise.auth.sdk.dto.CreateUserResponse;
 import com.promise.auth.sdk.dto.GetUserListResponse;
 import com.promise.auth.sdk.dto.GetUserResponse;
 import com.promise.auth.util.PasswordUtil;
 import com.promise.auth.util.PasswordUtil.HashResult;
+import com.promise.common.PromiseDao;
 import com.promise.common.PromiseEntity;
 import com.promise.common.PromiseUser;
 import com.promise.common.constant.PromiseCategory;
+import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.util.PromiseUtil;
 
-@Component
-@Scope("singleton")
-public class UserDaoImpl implements UserDaoInterface
+@Repository("userDao")
+public class UserDaoImpl extends PromiseDao<UserEntity, CreateUserRequest, GetUserResponse> implements UserDaoInterface
 {
-    @Autowired
-    private SessionFactory sessionFactory;
 
-    private Session getSession()
+    public UserDaoImpl()
     {
-        return sessionFactory.getCurrentSession();
+        super(PromiseCategory.AA);
     }
 
     @Override
-    public boolean isUsernameExist(String username)
-    {
-        return !getSession().createQuery("from promise_user", UserEntity.class).getResultList().isEmpty();
-    }
-
-    @Override
-    public CreateUserResponse createUser(CreateUserRequest createUserRequest)
-            throws NoSuchAlgorithmException, NoDbInstanceException
+    public UserEntity fromCreateRequestToEntity(CreateUserRequest request)
+            throws DbOperationException
     {
         final UserEntity entity = new UserEntity();
-        entity.setUsername(createUserRequest.getUsername());
-        entity.setEmail(createUserRequest.getEmail());
-        final HashResult hashResult = PasswordUtil.hashPassword(createUserRequest.getPassword());
+        entity.setUsername(request.getUsername());
+        entity.setEmail(request.getEmail());
+        HashResult hashResult;
+        try
+        {
+            hashResult = PasswordUtil.hashPassword(request.getPassword());
+        }
+        catch (final NoSuchAlgorithmException e)
+        {
+            throw new DbOperationException();
+        }
         entity.setHash(hashResult.getHash());
         entity.setSalt(hashResult.getSalt());
         final List<ScopeEntity> scopeList = new ArrayList<>();
-        for (final String uri : createUserRequest.getScopeUriList())
+        for (final String uri : PromiseUtil.emptyIfNull(request.getScopeUriList()))
         {
-            final UUID id = PromiseUtil.getIdFromUri(uri);
-            final ScopeEntity scopeEntity = getSession().get(ScopeEntity.class, id);
+            final ScopeEntity scopeEntity = getSession().get(ScopeEntity.class, PromiseUtil.getIdFromUri(uri));
             if (scopeEntity == null)
             {
-                throw new NoDbInstanceException(PromiseCategory.SCOPE);
+                throw new DbOperationException();
             }
             else
             {
                 scopeList.add(scopeEntity);
             }
-
         }
         entity.setScopeList(scopeList);
-        getSession().persist(entity);
-        return null;
+        return entity;
     }
 
     @Override
-    public GetUserResponse getUser(String id)
-            throws NoDbInstanceException
+    public GetUserResponse fromEntityToGetResponse(UserEntity entity)
     {
-        final UserEntity entity = getSession().get(UserEntity.class, UUID.fromString(id));
         final GetUserResponse response = new GetUserResponse();
         PromiseEntity.copyAttribute(response, entity);
         response.setUsername(entity.getUsername());
         response.setEmail(entity.getEmail());
         final List<ScopeEntity> scopeEntityList = entity.getScopeList();
         final List<String> scopeUriList = new ArrayList<>();
-        for (final ScopeEntity each : scopeEntityList)
+        for (final ScopeEntity each : PromiseUtil.emptyIfNull(scopeEntityList))
         {
             scopeUriList.add(each.getUri());
         }
@@ -94,15 +86,55 @@ public class UserDaoImpl implements UserDaoInterface
     }
 
     @Override
+    public boolean isUsernameExist(String username)
+    {
+        final Query query = getSession().createQuery("from promise_user where username = :username");
+        query.setParameter("username", username);
+        try
+        {
+            query.getSingleResult();
+            return true;
+        }
+        catch (final Exception e)
+        {
+            // TODO
+            return false;
+        }
+    }
+
+    @Override
     public PromiseUser getUser(String username, HashResult hashResult)
             throws NoDbInstanceException
     {
-        final UserEntity exampleEntity = new UserEntity();
-        exampleEntity.setHash(hashResult.getHash());
-        exampleEntity.setSalt(hashResult.getSalt());
-        getSession().createCriteria(UserEntity.class).add(Example.create(exampleEntity)).list();
-        getSession().getCriteriaBuilder().construct(UserEntity.class);
-        return null;
+        final Query query = getSession().createQuery("from promise_user where username = :username");
+        query.setParameter("username", username);
+        try
+        {
+            final UserEntity entity = (UserEntity) query.getSingleResult();
+            if (Arrays.equals(entity.getHashcode(), hashResult.getHash()) && Arrays.equals(entity.getSalt(), hashResult.getSalt()))
+            {
+                final PromiseUser user = new PromiseUser();
+                PromiseUtil.copyAttributeFromEntityToResource(user, entity);
+                user.setEmail(entity.getEmail());
+                user.setUsername(entity.getUsername());
+                final List<String> uriList = new ArrayList<>();
+                for (final ScopeEntity each : PromiseUtil.emptyIfNull(entity.getScopeList()))
+                {
+                    uriList.add(each.getUri());
+                }
+                user.setScopeUri(uriList);
+                return user;
+            }
+            else
+            {
+                throw new NoDbInstanceException(PromiseCategory.AA);
+            }
+        }
+        catch (final Exception e)
+        {
+            // TODO
+            throw new NoDbInstanceException(PromiseCategory.AA);
+        }
     }
 
     @Override
@@ -110,13 +142,6 @@ public class UserDaoImpl implements UserDaoInterface
     {
         // TODO Auto-generated method stub
         return null;
-    }
-
-    @Override
-    public void deleteUser(String id)
-    {
-        // TODO Auto-generated method stub
-
     }
 
 }

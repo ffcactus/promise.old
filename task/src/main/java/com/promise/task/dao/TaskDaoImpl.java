@@ -28,7 +28,7 @@ public class TaskDaoImpl extends PromiseDao<TaskEntity, CreateTaskRequest, GetTa
 
     public TaskDaoImpl()
     {
-        super(TaskEntity.class, PromiseCategory.TASK);
+        super(PromiseCategory.TASK);
     }
 
     @Override

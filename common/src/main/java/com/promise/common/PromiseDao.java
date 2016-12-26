@@ -1,5 +1,6 @@
 package com.promise.common;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.UUID;
 
 import org.hibernate.Session;
@@ -7,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.promise.common.constant.PromiseCategory;
+import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.NoDbInstanceException;
 
 public abstract class PromiseDao<E, C, G> implements PromiseDaoInterface<C, G>
@@ -17,9 +19,10 @@ public abstract class PromiseDao<E, C, G> implements PromiseDaoInterface<C, G>
     @Autowired
     protected SessionFactory sessionFactory;
 
-    public PromiseDao(Class<E> entityType, PromiseCategory category)
+    @SuppressWarnings("unchecked")
+    public PromiseDao(PromiseCategory category)
     {
-        this.entityType = entityType;
+        this.entityType = (Class<E>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         this.category = category;
     }
 
@@ -28,12 +31,14 @@ public abstract class PromiseDao<E, C, G> implements PromiseDaoInterface<C, G>
         return sessionFactory.getCurrentSession();
     }
 
-    public abstract E fromCreateRequestToEntity(C request);
+    public abstract E fromCreateRequestToEntity(C request)
+            throws DbOperationException;
 
     public abstract G fromEntityToGetResponse(E entity);
 
     @Override
     public G create(C request)
+            throws DbOperationException
     {
         final E entity = fromCreateRequestToEntity(request);
         getSession().save(entity);

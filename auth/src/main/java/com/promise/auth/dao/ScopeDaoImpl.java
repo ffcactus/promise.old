@@ -21,7 +21,7 @@ public class ScopeDaoImpl extends PromiseDao<ScopeEntity, CreateScopeRequest, Ge
 
     public ScopeDaoImpl()
     {
-        super(ScopeEntity.class, PromiseCategory.SCOPE);
+        super(PromiseCategory.SCOPE);
     }
 
     @Override
@@ -70,6 +70,7 @@ public class ScopeDaoImpl extends PromiseDao<ScopeEntity, CreateScopeRequest, Ge
         final GetScopeResponse response = new GetScopeResponse();
         PromiseUtil.copyAttributeFromEntityToResource(response, entity);
         response.setName(entity.getName());
+        response.setDescription(entity.getDescription());
         final List<PromiseAccessPoint> accessPointList = new ArrayList<>();
         for (final AccessPoint each : entity.getAccessPointList())
         {

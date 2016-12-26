@@ -77,7 +77,7 @@ public class TaskPublicController
      * @param header The header of the HTTP request.
      * @param request The HTTP request.
      * @return The HTTP response that represents the task created.
-     * @throws InvalidRequestBodyException If the request is invalid.
+     * @throws Exception
      */
     @PromisePublicInterface
     @PostMapping("/task")
@@ -86,7 +86,7 @@ public class TaskPublicController
             @RequestBody CreateTaskRequest request)
             throws InvalidRequestBodyException
     {
-        return new ResponseEntity<>(taskService.postTask(request), HttpStatus.CREATED);
+        return new ResponseEntity<>(taskService.createTask(request), HttpStatus.CREATED);
     }
 
     /**

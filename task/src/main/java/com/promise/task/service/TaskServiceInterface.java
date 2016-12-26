@@ -1,5 +1,6 @@
 package com.promise.task.service;
 
+import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.task.sdk.dto.CreateTaskRequest;
 import com.promise.task.sdk.dto.GetTaskResponse;
@@ -14,8 +15,10 @@ public interface TaskServiceInterface
      *
      * @param request The DTO that represents the task to create.
      * @return The DTO that represents the task created.
+     * @throws Exception
      */
-    public GetTaskResponse postTask(CreateTaskRequest request);
+    public GetTaskResponse createTask(CreateTaskRequest request)
+            throws InvalidRequestBodyException;
 
     /**
      * Get a task.

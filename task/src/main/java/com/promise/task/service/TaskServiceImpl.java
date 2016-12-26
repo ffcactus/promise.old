@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.promise.common.constant.PromiseCategory;
+import com.promise.common.exception.DbOperationException;
+import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.task.dao.TaskDaoInterface;
 import com.promise.task.sdk.dto.CreateTaskRequest;
@@ -19,10 +22,21 @@ public class TaskServiceImpl implements TaskServiceInterface
     @Autowired
     private TaskDaoInterface taskDao;
 
+    @Autowired
+    private TestServiceInterface testDao;
+
     @Override
-    public GetTaskResponse postTask(CreateTaskRequest request)
+    public GetTaskResponse createTask(CreateTaskRequest request)
+            throws InvalidRequestBodyException
     {
-        return taskDao.create(request);
+        try
+        {
+            return taskDao.create(request);
+        }
+        catch (final DbOperationException e)
+        {
+            throw new InvalidRequestBodyException(e, PromiseCategory.TASK);
+        }
     }
 
     @Override

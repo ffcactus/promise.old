@@ -4,10 +4,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 import com.promise.auth.sdk.dto.CreateUserRequest;
-import com.promise.auth.sdk.dto.CreateUserResponse;
 import com.promise.auth.sdk.dto.GetUserListResponse;
 import com.promise.auth.sdk.dto.GetUserResponse;
 import com.promise.common.PromiseUser;
+import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
 
 public interface UserServiceInterface
@@ -21,8 +21,8 @@ public interface UserServiceInterface
      * @throws NoDbInstanceException
      * @throws NoSuchAlgorithmException
      */
-    public CreateUserResponse createUser(CreateUserRequest user)
-            throws NoDbInstanceException, NoSuchAlgorithmException;
+    public GetUserResponse createUser(CreateUserRequest user)
+            throws InvalidRequestBodyException;
 
     /**
      * Get user by ID.

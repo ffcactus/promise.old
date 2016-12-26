@@ -8,16 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Type;
-
 import com.promise.common.PromiseEntity;
+import com.promise.common.constant.PromiseCategory;
 
 /**
  * Represent the User information in database.
  *
  */
-@Entity(name = "user")
-@Table(name = "user")
+@Entity(name = "promise_user")
+@Table(name = "promise_user")
 public class UserEntity extends PromiseEntity
 {
     @Column(name = "username")
@@ -27,11 +26,9 @@ public class UserEntity extends PromiseEntity
     private String email;
 
     @Column(name = "hashcode")
-    @Type(type = "BinaryType")
     private byte[] hashcode;
 
     @Column(name = "salt")
-    @Type(type = "BinaryType")
     private byte[] salt;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -39,7 +36,7 @@ public class UserEntity extends PromiseEntity
 
     public UserEntity()
     {
-
+        setCategory(PromiseCategory.USER);
     }
 
     public String getUsername()

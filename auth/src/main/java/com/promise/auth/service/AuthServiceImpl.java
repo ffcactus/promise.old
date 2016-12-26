@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.promise.auth.sdk.client.AuthClient;
 import com.promise.auth.sdk.dto.PostAuthResponse;
@@ -32,6 +33,7 @@ import com.promise.common.exception.NoDbInstanceException;
 
 @Component
 @Scope("singleton")
+@Transactional
 public class AuthServiceImpl implements AuthServiceInterface
 {
     private static final Logger log = Logger.getLogger(AuthServiceImpl.class);

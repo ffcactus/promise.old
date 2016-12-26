@@ -8,6 +8,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import com.promise.auth.sdk.dto.CreateScopeRequest;
 import com.promise.auth.sdk.dto.CreateScopeResponse;
 import com.promise.auth.sdk.dto.CreateUserRequest;
-import com.promise.auth.sdk.dto.CreateUserResponse;
 import com.promise.auth.sdk.dto.GetUserListResponse;
 import com.promise.auth.sdk.dto.GetUserResponse;
 import com.promise.auth.sdk.dto.PostLoginRequest;
@@ -109,10 +109,10 @@ public class UserTest
         createUserRequest.setPassword("iforgot".toCharArray());
         createUserRequest.setScopeUriList(scopeUriList);
 
-        final ResponseEntity<CreateUserResponse> responseEntity = HttpJsonClient
-                .post(HOSTNAME + "/rest/user", token, createUserRequest, CreateUserResponse.class);
+        final ResponseEntity<GetUserResponse> responseEntity = HttpJsonClient
+                .post(HOSTNAME + "/rest/user", token, createUserRequest, GetUserResponse.class);
         Assert.assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-        final CreateUserResponse postResponse = responseEntity.getBody();
+        final GetUserResponse postResponse = responseEntity.getBody();
         CommonTestUtil.assertPromiseResource(postResponse);
         Assert.assertEquals(createUserRequest.getUsername(), postResponse.getUsername());
         Assert.assertEquals(createUserRequest.getEmail(), postResponse.getEmail());
@@ -134,8 +134,8 @@ public class UserTest
         createUserRequest.setEmail("baibin@email.com");
         createUserRequest.setPassword("iforgot".toCharArray());
         createUserRequest.setScopeUriList(scopeUriList);
-        final ResponseEntity<CreateUserResponse> createUserResponseEntity = HttpJsonClient
-                .post(HOSTNAME + "/rest/user", token, createUserRequest, CreateUserResponse.class);
+        final ResponseEntity<GetUserResponse> createUserResponseEntity = HttpJsonClient
+                .post(HOSTNAME + "/rest/user", token, createUserRequest, GetUserResponse.class);
         final String userUri = createUserResponseEntity.getBody().getUri();
 
         // Get the user that is created before.
@@ -173,8 +173,8 @@ public class UserTest
         createUserRequest.setEmail("baibin@email.com");
         createUserRequest.setPassword("iforgot".toCharArray());
         createUserRequest.setScopeUriList(scopeUriList);
-        final ResponseEntity<CreateUserResponse> createUserResponseEntity = HttpJsonClient
-                .post(HOSTNAME + "/rest/user", token, createUserRequest, CreateUserResponse.class);
+        final ResponseEntity<GetUserResponse> createUserResponseEntity = HttpJsonClient
+                .post(HOSTNAME + "/rest/user", token, createUserRequest, GetUserResponse.class);
         final String userUri = createUserResponseEntity.getBody().getUri();
 
         // Delete the user that is created before.
@@ -202,8 +202,8 @@ public class UserTest
         createUserRequest.setEmail("baibin@email.com");
         createUserRequest.setPassword("iforgot".toCharArray());
         createUserRequest.setScopeUriList(scopeUriList);
-        final ResponseEntity<CreateUserResponse> createUserResponseEntity = HttpJsonClient
-                .post(HOSTNAME + "/rest/user", token, createUserRequest, CreateUserResponse.class);
+        final ResponseEntity<GetUserResponse> createUserResponseEntity = HttpJsonClient
+                .post(HOSTNAME + "/rest/user", token, createUserRequest, GetUserResponse.class);
         final String userUri = createUserResponseEntity.getBody().getUri();
 
         // Get the user list.
@@ -240,5 +240,11 @@ public class UserTest
         final ResponseEntity<String> deleteResponseEntity = HttpJsonClient
                 .delete(HOSTNAME + userUri, token);
         Assert.assertEquals(HttpStatus.ACCEPTED, deleteResponseEntity.getStatusCode());
+    }
+
+    @Ignore
+    void testCreateUserExist()
+    {
+
     }
 }

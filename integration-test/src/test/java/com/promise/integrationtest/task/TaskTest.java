@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -120,5 +121,11 @@ public class TaskTest extends PromisePublicInterfaceTest
         final ResponseEntity<String> deleteRet = HttpJsonClient
                 .delete(HOSTNAME + "/rest/task/" + "xxxx", token);
         Assert.assertEquals(HttpStatus.NOT_FOUND, deleteRet.getStatusCode());
+    }
+
+    @Ignore
+    public void testUpdateTask()
+    {
+
     }
 }

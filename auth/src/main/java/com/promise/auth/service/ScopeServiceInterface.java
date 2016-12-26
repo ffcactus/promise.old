@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.promise.auth.sdk.dto.CreateScopeRequest;
 import com.promise.auth.sdk.dto.GetScopeListResponse;
 import com.promise.auth.sdk.dto.GetScopeResponse;
+import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
 
 public interface ScopeServiceInterface
@@ -15,8 +16,10 @@ public interface ScopeServiceInterface
      *
      * @param dto The object that represent the scope to create.
      * @return The object that represents the scope created.
+     * @throws Exception
      */
-    public GetScopeResponse createScope(CreateScopeRequest dto);
+    public GetScopeResponse createScope(CreateScopeRequest dto)
+            throws InvalidRequestBodyException;
 
     /**
      * Get Scope by ID.

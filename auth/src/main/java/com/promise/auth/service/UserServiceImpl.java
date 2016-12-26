@@ -8,66 +8,84 @@ import javax.annotation.PostConstruct;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import com.promise.auth.dao.UserDaoInterface;
 import com.promise.auth.sdk.dto.CreateUserRequest;
-import com.promise.auth.sdk.dto.CreateUserResponse;
 import com.promise.auth.sdk.dto.GetUserListResponse;
 import com.promise.auth.sdk.dto.GetUserResponse;
 import com.promise.auth.util.PasswordUtil;
 import com.promise.auth.util.PasswordUtil.HashResult;
 import com.promise.common.PromiseUser;
+import com.promise.common.constant.PromiseCategory;
+import com.promise.common.exception.DbOperationException;
+import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
 
-@Component
-@Scope("singleton")
+@Service("userService")
 @Transactional
 @DependsOn("authServiceImpl")
-public class UserServiceImpl implements UserServiceInterface//, InitializingBean
+public class UserServiceImpl implements UserServiceInterface
 {
     @Autowired
     private UserDaoInterface userDao;
+
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
     private static Logger log = Logger.getLogger(UserServiceImpl.class);
 
     @PostConstruct
     private void postConstruct()
     {
-        if (!userDao.isUsernameExist("Administrator"))
+        new TransactionTemplate(transactionManager).execute(new TransactionCallback<Object>()
         {
-            final CreateUserRequest userDto = new CreateUserRequest();
-            userDto.setUsername("Administrator");
-            userDto.setPassword("admin".toCharArray());
-            try
+
+            @Override
+            public Object doInTransaction(TransactionStatus transactionStatus)
             {
-                createUser(userDto);
+                if (!userDao.isUsernameExist("Administrator"))
+                {
+                    final CreateUserRequest userDto = new CreateUserRequest();
+                    userDto.setUsername("Administrator");
+                    userDto.setPassword("admin".toCharArray());
+                    try
+                    {
+                        createUser(userDto);
+                    }
+                    catch (final InvalidRequestBodyException e)
+                    {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    log.warn("User Administrator is created.");
+                }
+                else
+                {
+                    log.info("User Administrator already exist.");
+                }
+                return null;
             }
-            catch (final NoDbInstanceException e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            catch (final NoSuchAlgorithmException e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            log.warn("User Administrator is created.");
-        }
-        else
-        {
-            log.info("User Administrator already exist.");
-        }
+        });
     }
 
     @Override
-    public CreateUserResponse createUser(CreateUserRequest createUserRequest)
-            throws NoDbInstanceException, NoSuchAlgorithmException
+    public GetUserResponse createUser(CreateUserRequest createUserRequest)
+            throws InvalidRequestBodyException
     {
-        return userDao.createUser(createUserRequest);
+        try
+        {
+            return userDao.create(createUserRequest);
+        }
+        catch (final DbOperationException e)
+        {
+            throw new InvalidRequestBodyException(e, PromiseCategory.AA);
+        }
 
     }
 
@@ -75,7 +93,7 @@ public class UserServiceImpl implements UserServiceInterface//, InitializingBean
     public GetUserResponse getUser(String id)
             throws NoDbInstanceException
     {
-        return userDao.getUser(id);
+        return userDao.get(id);
     }
 
     @Override
@@ -98,7 +116,7 @@ public class UserServiceImpl implements UserServiceInterface//, InitializingBean
     public void deleteUser(String id)
             throws NoDbInstanceException
     {
-        userDao.deleteUser(id);
+        userDao.delete(id);
     }
 
 }

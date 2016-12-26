@@ -24,7 +24,6 @@ import com.promise.auth.sdk.aspect.PromisePublicInterface;
 import com.promise.auth.sdk.client.AuthClient;
 import com.promise.auth.sdk.dto.CreateScopeRequest;
 import com.promise.auth.sdk.dto.CreateUserRequest;
-import com.promise.auth.sdk.dto.CreateUserResponse;
 import com.promise.auth.sdk.dto.GetScopeListResponse;
 import com.promise.auth.sdk.dto.GetScopeResponse;
 import com.promise.auth.sdk.dto.GetUserListResponse;
@@ -38,6 +37,7 @@ import com.promise.common.PromiseAccessPoint;
 import com.promise.common.PromiseErrorResponse;
 import com.promise.common.PromiseToken;
 import com.promise.common.constant.PromiseCategory;
+import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.InternelErrorException;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.LoginFailureException;
@@ -114,10 +114,10 @@ public class AuthPublicController
      */
     @PromisePublicInterface
     @PostMapping("/user")
-    ResponseEntity<CreateUserResponse> createUser(
+    ResponseEntity<GetUserResponse> createUser(
             @RequestHeader Map<String, String> header,
             @RequestBody CreateUserRequest request)
-            throws InvalidRequestBodyException, NoDbInstanceException, NoSuchAlgorithmException
+            throws InvalidRequestBodyException
     {
         return new ResponseEntity<>(userService.createUser(request), HttpStatus.CREATED);
     }
@@ -191,6 +191,7 @@ public class AuthPublicController
      * @param header The header of the HTTP request.
      * @param request The HTTP request.
      * @return The HTTP response that represents the scope created.
+     * @throws DbOperationException
      * @throws InvalidRequestBodyException If the request is invalid.
      */
     @PromisePublicInterface
@@ -198,6 +199,7 @@ public class AuthPublicController
     public ResponseEntity<GetScopeResponse> createScope(
             @RequestHeader Map<String, String> header,
             @RequestBody CreateScopeRequest scope)
+            throws InvalidRequestBodyException
     {
         return new ResponseEntity<>(scopeService.createScope(scope), HttpStatus.CREATED);
     }
