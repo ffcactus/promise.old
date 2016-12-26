@@ -14,8 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.promise.auth.sdk.dto.CreateScopeRequest;
-import com.promise.auth.sdk.dto.CreateScopeResponse;
 import com.promise.auth.sdk.dto.CreateUserRequest;
+import com.promise.auth.sdk.dto.GetScopeResponse;
 import com.promise.auth.sdk.dto.GetUserListResponse;
 import com.promise.auth.sdk.dto.GetUserResponse;
 import com.promise.auth.sdk.dto.PostLoginRequest;
@@ -68,8 +68,8 @@ public class UserTest
         }
 
         // Create scopes.
-        final ResponseEntity<CreateScopeResponse> createScopeResponse = HttpJsonClient
-                .post(HOSTNAME + "/rest/scope", token, createScopeRequest, CreateScopeResponse.class);
+        final ResponseEntity<GetScopeResponse> createScopeResponse = HttpJsonClient
+                .post(HOSTNAME + "/rest/scope", token, createScopeRequest, GetScopeResponse.class);
         Assert.assertEquals(HttpStatus.CREATED, createScopeResponse.getStatusCode());
         scopeUri = createScopeResponse.getBody().getUri();
         scopeUriList = new ArrayList<>();

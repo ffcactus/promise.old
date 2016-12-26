@@ -28,9 +28,9 @@ public class PromiseUtil
     public static UUID getIdFromUri(String uri)
     {
         final String[] parts = uri.split("/");
-        if (parts.length == 3)
+        if (parts.length == 4)
         {
-            return UUID.fromString(parts[2]);
+            return UUID.fromString(parts[3]);
         }
         else
         {
