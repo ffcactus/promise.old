@@ -16,6 +16,7 @@ import com.promise.task.entity.ExecutionResult;
 import com.promise.task.entity.TaskEntity;
 import com.promise.task.entity.TaskStep;
 import com.promise.task.sdk.dto.CreateTaskRequest;
+import com.promise.task.sdk.dto.GetTaskListResponse;
 import com.promise.task.sdk.dto.GetTaskResponse;
 import com.promise.task.sdk.dto.PostTaskStepRequest;
 import com.promise.task.sdk.dto.UpdateTaskRequest;
@@ -29,6 +30,17 @@ public class TaskDaoImpl extends PromiseDao<TaskEntity, CreateTaskRequest, GetTa
     public TaskDaoImpl()
     {
         super(PromiseCategory.TASK);
+    }
+
+    @Override
+    public GetTaskListResponse getTaskList(int start, int count)
+    {
+        final List<GetTaskResponse> list = list(start, count);
+        final GetTaskListResponse ret = new GetTaskListResponse();
+        ret.setStart(start);
+        ret.setCount(list.size());
+        ret.setMemberList(list);
+        return ret;
     }
 
     @Override

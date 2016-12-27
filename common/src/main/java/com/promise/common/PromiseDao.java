@@ -1,7 +1,14 @@
 package com.promise.common;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.promise.common.constant.PromiseCategory;
 import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.NoDbInstanceException;
+import com.promise.util.PromiseUtil;
 
 public abstract class PromiseDao<E, C, G> implements PromiseDaoInterface<C, G>
 {
@@ -87,7 +95,26 @@ public abstract class PromiseDao<E, C, G> implements PromiseDaoInterface<C, G>
             throw new NoDbInstanceException(category);
         }
         getSession().delete(entity);
+    }
 
+    @Override
+    public List<G> list(int start, int count)
+    {
+        final CriteriaBuilder criteriaBuilder = getSession().getCriteriaBuilder();
+        final CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(entityType);
+        final Root<E> from = criteriaQuery.from(entityType);
+        final CriteriaQuery<E> select = criteriaQuery.select(from);
+        final TypedQuery<E> typedQuery = getSession().createQuery(select);
+        typedQuery.setFirstResult(start);
+        typedQuery.setMaxResults(count);
+        final List<E> entityList = typedQuery.getResultList();
+
+        final List<G> ret = new ArrayList<>();
+        for (final E each : PromiseUtil.emptyIfNull(entityList))
+        {
+            ret.add(fromEntityToGetResponse(each));
+        }
+        return ret;
     }
 
 }

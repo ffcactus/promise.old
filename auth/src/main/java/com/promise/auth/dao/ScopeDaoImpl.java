@@ -42,8 +42,12 @@ public class ScopeDaoImpl extends PromiseDao<ScopeEntity, CreateScopeRequest, Ge
     @Override
     public GetScopeListResponse getScopeList(int start, int count)
     {
-        // TODO Auto-generated method stub
-        return null;
+        final List<GetScopeResponse> list = list(start, count);
+        final GetScopeListResponse ret = new GetScopeListResponse();
+        ret.setStart(start);
+        ret.setCount(list.size());
+        ret.setMemberList(list);
+        return ret;
     }
 
     @Override

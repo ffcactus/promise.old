@@ -2,7 +2,6 @@ package com.promise.auth.entity;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -31,7 +30,7 @@ public class UserEntity extends PromiseEntity
     @Column(name = "salt")
     private byte[] salt;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany
     private List<ScopeEntity> scopeList;
 
     public UserEntity()

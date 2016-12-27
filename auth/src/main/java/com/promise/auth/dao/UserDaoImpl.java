@@ -140,8 +140,12 @@ public class UserDaoImpl extends PromiseDao<UserEntity, CreateUserRequest, GetUs
     @Override
     public GetUserListResponse getUserList(int start, int count)
     {
-        // TODO Auto-generated method stub
-        return null;
+        final List<GetUserResponse> list = list(start, count);
+        final GetUserListResponse ret = new GetUserListResponse();
+        ret.setStart(start);
+        ret.setCount(list.size());
+        ret.setMemberList(list);
+        return ret;
     }
 
 }

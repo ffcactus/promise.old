@@ -128,4 +128,10 @@ public class TaskTest extends PromisePublicInterfaceTest
     {
 
     }
+
+    @Ignore
+    public void testGetTaskList()
+    {
+
+    }
 }
