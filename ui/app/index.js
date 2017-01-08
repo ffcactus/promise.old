@@ -5,11 +5,10 @@ import { browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { AppContainer } from 'react-hot-loader';
 import configureStore from './store/configureStore';
-import Root from './container/Root';
-import './styles/main.scss';
+import Root from './containers/Root';
 
 const store = configureStore();
-const history = syncHistoryWithStore(broswerHistory, store);
+const history = syncHistoryWithStore(browserHistory, store);
 
 render(
     <AppContainer>
@@ -20,10 +19,10 @@ render(
 
 if (module.hot) {
     module.hot.accept('./containers/Root', () => {
-        const Root = require('./containers/Root').default;
+        const NewRoot = require('./containers/Root').default;
         render(
             <AppContainer>
-                <Root store={store} history={history} />
+                <NewRoot store={store} history={history} />
             </AppContainer>,
             document.getElementById('root')
         );

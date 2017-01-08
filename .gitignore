@@ -7,4 +7,4 @@ dist/
 target/
 node_modules/
 build/
-
+.vscode/
