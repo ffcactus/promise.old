@@ -4,7 +4,7 @@ import { footer } from '../styles/footer.scss';
 import { loginBackground } from '../styles/loginBackground.scss';
 
 const App = ({ children }) =>
-    <div id="loginBackground" className={loginBackground}>
+    <div id="loginBackground" className={root}>
         <header className={footer}>
             <Link to="/">Filterable Table</Link>
             <Link to="/about">About</Link>
