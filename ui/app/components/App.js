@@ -6,10 +6,10 @@ import { loginBackground } from '../styles/loginBackground.scss';
 const App = ({ children }) =>
     <div id="loginBackground" className={root}>
         <header className={footer}>
-            <Link to="/">Filterable Table</Link>
+            <Link to="/">Dashboard</Link>
+            <Link to="/table">Filterable Table</Link>
             <Link to="/about">About</Link>
             <Link to="/login">Login</Link>
-            <Link to="/dashboard">Dash Board</Link>
             <Link to="/activity">Activity</Link>
             <Link to="/hardware">Hardware</Link>
         </header>

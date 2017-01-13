@@ -6,14 +6,13 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { AppContainer } from 'react-hot-loader';
 import configureStore from './store/configureStore';
 import Root from './containers/Root';
-import root from './styles/root.scss';
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
 
 render(
     <AppContainer>
-        <Root store={store} history={history} className={root}/>
+        <Root store={store} history={history} />
     </AppContainer>,
     document.getElementById('root')
 );
