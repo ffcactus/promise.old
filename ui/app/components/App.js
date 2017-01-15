@@ -1,17 +1,17 @@
 import React, { PropTypes } from 'react';
+import CSSModules from 'react-css-modules';
 import { Link } from 'react-router';
-import { footer } from '../styles/footer.scss';
-import { loginBackground } from '../styles/loginBackground.scss';
+import styles from '../styles/header.css'
 
 const App = ({ children }) =>
-    <div id="loginBackground" className={root}>
-        <header className={footer}>
-            <Link to="/">Dashboard</Link>
-            <Link to="/table">Filterable Table</Link>
-            <Link to="/about">About</Link>
-            <Link to="/login">Login</Link>
-            <Link to="/activity">Activity</Link>
-            <Link to="/hardware">Hardware</Link>
+    <div>
+        <header styleName='header'>
+            <Link to="/" styleName="item">Dashboard</Link>
+            <Link to="/table" styleName="item">Filterable Table</Link>
+            <Link to="/about" styleName="item">About</Link>
+            <Link to="/login" styleName="item">Login</Link>
+            <Link to="/activity" styleName="item">Activity</Link>
+            <Link to="/hardware" styleName="item">Hardware</Link>
         </header>
         {children}
     </div>;
@@ -20,4 +20,4 @@ App.propTypes = {
     children: PropTypes.object
 };
 
-export default App;
+export default CSSModules(App, styles);
