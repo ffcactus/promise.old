@@ -11,9 +11,20 @@ const filter = (state = '', action) => {
     }
 };
 
+const loginReducer = (state = { loggedIn : false }, action) => {
+    switch(action.type) {
+        case 'login':
+            return { loggedIn : true };
+        case 'logout':
+            return { loggedIn : false };
+        default:
+            return state;
+    }
+};
 
 const rootReducer = combineReducers({
     filter,
+    loginReducer,
     routing
 });
 

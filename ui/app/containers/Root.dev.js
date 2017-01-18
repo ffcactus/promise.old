@@ -9,11 +9,11 @@ import styles from "../styles/main.css";
 class Root extends Component {
     render() {
         const { store, history } = this.props;
+
         return (
             <Provider store={store}>
                 <div id="fullscreen" styleName='rootBackground'>
                     <Router history={history} routes={routes} />
-                    <DevTools />
                 </div>
             </Provider>
         );

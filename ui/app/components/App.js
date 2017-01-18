@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import CSSModules from 'react-css-modules';
-import { Link } from 'react-router';
+import { Link, withRouter } from 'react-router';
 import styles from '../styles/header.css'
 
 const App = ({ children }) =>
@@ -15,6 +15,7 @@ const App = ({ children }) =>
         </header>
         {children}
     </div>;
+
 
 App.propTypes = {
     children: PropTypes.object
