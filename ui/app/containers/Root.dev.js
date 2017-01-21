@@ -2,18 +2,18 @@ import React, { Component, PropTypes } from 'react';
 import { Provider } from 'react-redux';
 import CSSModules from 'react-css-modules';
 import DevTools from './DevTools';
-import { Router } from 'react-router';
-import routes from '../routes';
+import RTRouter from '../RTRouter';
 import styles from "../styles/main.css";
 
 class Root extends Component {
     render() {
         const { store, history } = this.props;
+        const { getState } = store;
 
         return (
             <Provider store={store}>
                 <div id="fullscreen" styleName='rootBackground'>
-                    <Router history={history} routes={routes} />
+                    <RTRouter history={history} getState={getState} />
                 </div>
             </Provider>
         );

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class Login extends Component {
   constructor(props) {
@@ -38,4 +39,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default connect(null, null)(Login);
