@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route, IndexRoute } from 'react-router';
 import App from './components/App';
 import About from './components/About';
-import LoginForm from './components/LoginForm';
+import Login from './components/Login';
 import DashBoard from './components/DashBoard';
 import Activity from './components/Activity';
 import Hardware from './components/Hardware';
@@ -20,7 +20,7 @@ export default class RTRouter extends React.Component {
     this.routes = (
       <Route path="/" component={App}>
         <IndexRoute onEnter={this.requireAuth} component={DashBoard} />
-        <Route path="/login" component={LoginForm} />
+        <Route path="/login" component={Login} />
         <Route onEnter={this.requireAuth} path="/dashboard" component={DashBoard} />
         <Route onEnter={this.requireAuth} path="/activity" component={Activity} />
         <Route onEnter={this.requireAuth} path="/about" component={About} />
@@ -30,7 +30,7 @@ export default class RTRouter extends React.Component {
   }
 
   isLoggedIn(state) {
-    return state.loginReducer.loggedIn;
+    return state.session.state === 'logged';
   }
 
   requireAuth(nextState, replace) {

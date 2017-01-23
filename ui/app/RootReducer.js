@@ -11,12 +11,34 @@ const filter = (state = '', action) => {
     }
 };
 
-const loginReducer = (state = { loggedIn : false }, action) => {
-    switch(action.type) {
-        case 'login':
-            return { loggedIn : true };
-        case 'logout':
-            return { loggedIn : false };
+const defaultSessionState = {
+    state: 'loggout',
+    username: null,
+    token: null    
+};
+
+
+const session = (state = defaultSessionState, action) => {
+    switch (action.type) {
+        case types.LOGIN_REQUEST:
+            return {
+                state: 'logging',
+                username: action.username,
+                token: null
+            };
+        case types.LOGIN_SUCCESS:
+            return {
+                state: 'logged',
+                token: action.token
+            }
+        case types.LOGIN_FAILURE:
+            return defaultSessionState;
+        case types.LOGOUT_REQUEST:
+            return state;
+        case types.LOGOUT_SUCCESS:
+            return defaultSessionState;
+        case types.LOGOUT_FAILURE:
+            return state;
         default:
             return state;
     }
@@ -24,7 +46,7 @@ const loginReducer = (state = { loggedIn : false }, action) => {
 
 const rootReducer = combineReducers({
     filter,
-    loginReducer,
+    session,
     routing
 });
 

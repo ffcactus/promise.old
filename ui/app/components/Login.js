@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {login} from '../actions/loginAction';
 
 class Login extends Component {
   constructor(props) {
@@ -22,8 +23,8 @@ class Login extends Component {
   }
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state);
     event.preventDefault();
+    this.props.dispatch(login(this.state.username, this.state.password));
   }
 
   render() {
@@ -33,10 +34,15 @@ class Login extends Component {
         <input id="username" type="text" onChange={this.handleUsernameChange} />
         <label>Password</label>
         <input id="password" type="password" onChange={this.handlePasswordChange} />
-        <input type="submit" value="login" />
+        <input type="submit" value="login" disabled={this.props.session.state === 'logging'} />
       </form>
     );
   }
 }
 
-export default connect(null, null)(Login);
+function mapStateToProps(state) {
+  const { session } = state;
+  return { session };
+}
+
+export default connect(mapStateToProps)(Login);
