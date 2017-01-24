@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Provider } from 'react-redux';
 import CSSModules from 'react-css-modules';
 import DevTools from './DevTools';
-import RTRouter from '../RTRouter';
+import RTRouter from './RTRouter';
 import styles from "../styles/main.css";
 
 class Root extends Component {

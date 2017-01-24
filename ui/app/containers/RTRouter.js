@@ -1,11 +1,11 @@
 import React from 'react';
-import { Router, Route, IndexRoute } from 'react-router';
-import App from './components/App';
-import About from './components/About';
-import Login from './components/Login';
-import DashBoard from './components/DashBoard';
-import Activity from './components/Activity';
-import Hardware from './components/Hardware';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import App from '../components/App';
+import About from '../components/About';
+import Login from '../components/Login';
+import DashBoard from '../components/DashBoard';
+import Activity from '../components/Activity';
+import Hardware from '../components/Hardware';
 
 export default class RTRouter extends React.Component {
 
@@ -15,8 +15,10 @@ export default class RTRouter extends React.Component {
     this.requireAuth = this.requireAuth.bind(this);
     this.isLoggedIn = this.isLoggedIn.bind(this);
 
-    // Configure routes here as this solves a problem with hot loading where
-    // the routes are recreated each time.
+    /**
+     * If the user go to any protected routes, he will be redirected to login router
+     * if he is not logged in.
+     */
     this.routes = (
       <Route path="/" component={App}>
         <IndexRoute onEnter={this.requireAuth} component={DashBoard} />
@@ -25,7 +27,7 @@ export default class RTRouter extends React.Component {
         <Route onEnter={this.requireAuth} path="/activity" component={Activity} />
         <Route onEnter={this.requireAuth} path="/about" component={About} />
         <Route onEnter={this.requireAuth} path="/hardware" component={Hardware} />
-      </Route>      
+      </Route>
     );
   }
 
@@ -33,6 +35,10 @@ export default class RTRouter extends React.Component {
     return state.session.state === 'logged';
   }
 
+  /**
+   * If the user go to any protected routes, he will be redirected to login router
+   * if he is not logged in.
+   */
   requireAuth(nextState, replace) {
     const { getState } = this.props;
 
@@ -40,7 +46,10 @@ export default class RTRouter extends React.Component {
     // Obviously this is not complete, but at this point it's easy to redirect or
     // initiate an action in order to login via cookie or whatever
     if (!this.isLoggedIn(getState())) {
-      replace('/login');
+      replace({
+        pathname: '/login',
+        state: { nextPathname: nextState.location.pathname }
+      });
     }
   }
 

@@ -7,7 +7,6 @@ const App = ({ children }) =>
     <div>
         <header styleName='header'>
             <Link to="/" styleName="item">Dashboard</Link>
-            <Link to="/table" styleName="item">Filterable Table</Link>
             <Link to="/about" styleName="item">About</Link>
             <Link to="/login" styleName="item">Login</Link>
             <Link to="/activity" styleName="item">Activity</Link>

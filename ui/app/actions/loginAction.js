@@ -1,4 +1,5 @@
 import * as types from './types';
+import { browserHistory } from 'react-router';
 
 function loginRequest(username, password) {
   return {
@@ -25,11 +26,14 @@ function loginSuccess(token) {
  * The async action of login. It will involve sync actions.
  * 
  */
-export function login(username, password) {
+export function login(username, password, afterLoginPath) {
   return dispatch => {
     dispatch(loginRequest(username, password));
     setTimeout(()=> {
       dispatch(loginSuccess('myToken'));
+      // TODO
+      // Is it good to do redirection in action?
+      browserHistory.push(afterLoginPath);              
     }, 5000);
   }
 }

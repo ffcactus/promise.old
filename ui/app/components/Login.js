@@ -24,7 +24,10 @@ class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.dispatch(login(this.state.username, this.state.password));
+
+    // If we can't find a next path after login, we go to root.
+    let nextPathname = this.props.location.state ? this.props.location.state.nextPathname : '/';
+    this.props.dispatch(login(this.state.username, this.state.password, nextPathname));
   }
 
   render() {
