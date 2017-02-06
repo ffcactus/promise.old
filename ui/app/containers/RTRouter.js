@@ -19,6 +19,7 @@ export default class RTRouter extends React.Component {
      * If the user go to any protected routes, he will be redirected to login router
      * if he is not logged in.
      */
+
     this.routes = (
       <Route path="/" component={App}>
         <IndexRoute onEnter={this.requireAuth} component={DashBoard} />

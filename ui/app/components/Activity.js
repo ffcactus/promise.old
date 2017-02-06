@@ -1,43 +1,62 @@
 import React, { Component } from 'react';
-
-const activity = [
-  { id: '0001', name: 'Add Hardware', state: 'Running', percentage: 20 },
-  { id: '0002', name: 'Add Hardware', state: 'Running', percentage: 20 },
-  { id: '0003', name: 'Refresh Hardware', state: 'Running', percentage: 30 },
-  { id: '0004', name: 'Refresh Hardware', state: 'Running', percentage: 30 },
-  { id: '0005', name: 'Refresh Hardware', state: 'Running', percentage: 50 },
-  { id: '0006', name: 'Refresh Hardware', state: 'Running', percentage: 60 }
-];
+import { connect } from 'react-redux';
+import {getAllActivity} from '../actions/ActivityAction';
 
 class Activity extends Component {
   constructor(props) {
     super(props);
   }
 
+  componentDidMount() {
+    this.props.dispatch(getAllActivity());
+  }
+
   render() {
 
-    const rows = activity.map((each) => {
-      return (
-        <tr key={each.id}>
-          <td>{each.name}</td>
-          <td>{each.state}</td>
-          <td>{each.percentage}</td>
-        </tr>
-      );
-    });
-    return (
-      <table>
-        <tbody>
-          <tr>
-            <th>Name</th>
-            <th>State</th>
-            <th>Percentage</th>
+    const makeRows = (activities) => {
+      return activities.map((each) => {
+        return (
+          <tr key={each.id}>
+            <td>{each.name}</td>
+            <td>{each.state}</td>
+            <td>{each.percentage}</td>
           </tr>
-          {rows}
-        </tbody>
-      </table>
-    );
+        );
+      });
+    }
+
+    if (this.props.activity.state === 'getStart') {
+      return (<p>Getting Activities ...</p>);
+    }
+
+    switch (this.props.activity.state) {
+      case 'getStart':
+        return (<p>Getting Activities ...</p>);
+        break;
+      case 'success':
+        return (
+          <table>
+            <tbody>
+              <tr>
+                <th>Name</th>
+                <th>State</th>
+                <th>Percentage</th>
+              </tr>
+              {makeRows(this.props.activity.value)}
+            </tbody>
+          </table>
+        );
+        break;
+      case 'failure':
+        return (<p>Failed to get activities ...</p>);
+        break;        
+    }
   }
 }
 
-export default Activity;
+function mapStateToProps(state) {
+  const { activity } = state;
+  return { activity };
+}
+
+export default connect(mapStateToProps)(Activity);
