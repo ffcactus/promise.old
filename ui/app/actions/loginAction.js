@@ -34,6 +34,6 @@ export function login(username, password, afterLoginPath) {
       // TODO
       // Is it good to do redirection in action?
       browserHistory.push(afterLoginPath);              
-    }, 5000);
+    }, 1000);
   }
 }

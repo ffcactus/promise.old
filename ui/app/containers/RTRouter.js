@@ -21,7 +21,7 @@ export default class RTRouter extends React.Component {
      */
 
     this.routes = (
-      <Route path="/" component={App}>
+      <Route path="/" components={App}>
         <IndexRoute onEnter={this.requireAuth} component={DashBoard} />
         <Route path="/login" component={Login} />
         <Route onEnter={this.requireAuth} path="/dashboard" component={DashBoard} />

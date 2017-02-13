@@ -1,17 +1,26 @@
 import React, { PropTypes } from 'react';
 import CSSModules from 'react-css-modules';
-import { Link, withRouter } from 'react-router';
-import Menu from './Menu';
 import styles from '../styles/frame.css';
 
-
-const App = ({ children }) =>
-    <div>
-        <div styleName="header"><Menu/></div>
-        <div styleName="main">{children}</div>
-        <div styleName="footer">{children ? children.footer: null}</div>
-    </div>;
-
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    /*render() {
+        return (
+            <div>
+                <div styleName="header"><Menu /></div>
+                <div styleName="main">{this.props.children}</div>
+                <div styleName="footer">{this.props.children ? this.props.children.footer : null}</div>
+            </div>
+        )
+    }*/
+    render() {
+        return (
+            <div>{this.props.children}</div>
+        )
+    }
+}
 
 App.propTypes = {
     children: PropTypes.object

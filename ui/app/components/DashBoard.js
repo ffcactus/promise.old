@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Frame from './Frame';
 
 class DashBoard extends Component {
   constructor(props) {
@@ -7,7 +8,7 @@ class DashBoard extends Component {
 
   render() {
     return (
-      <h1>This is DashBoard</h1>
+      <Frame main={<h1>Dashboard</h1>} footer={<p>footer</p>}></Frame>
     );
   }
 }
