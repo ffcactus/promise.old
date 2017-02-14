@@ -38,8 +38,8 @@ export function login(username, password, afterLoginPath) {
   }
 }
 
-export function popDialog() {
+export function popAddHardwareDialog() {
   return {
-    type: types.POP_DIALOG,
+    type: types.HARDWARE_POP_ADD_DIALOG,
   }
 }

@@ -3,78 +3,99 @@ import { combineReducers } from 'redux';
 import * as types from './actions/types';
 
 const filter = (state = '', action) => {
-    switch (action.type) {
-        case types.FILTER:
-            return action.filter;
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case types.FILTER:
+      return action.filter;
+    default:
+      return state;
+  }
 };
 
 const defaultSessionState = {
-    state: 'loggout',
-    username: null,
-    token: null    
+  state: 'loggout',
+  username: null,
+  token: null,
+  popDialog: false,
 };
 
 
 const session = (state = defaultSessionState, action) => {
-    switch (action.type) {
-        case types.LOGIN_REQUEST:
-            return {
-                state: 'logging',
-                username: action.username,
-                token: null
-            };
-        case types.LOGIN_SUCCESS:
-            return {
-                state: 'logged',
-                token: action.token
-            }
-        case types.LOGIN_FAILURE:
-            return defaultSessionState;
-        case types.LOGOUT_REQUEST:
-            return state;
-        case types.LOGOUT_SUCCESS:
-            return defaultSessionState;
-        case types.LOGOUT_FAILURE:
-            return state;
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case types.LOGIN_REQUEST:
+      return {
+        state: 'logging',
+        username: action.username,
+        token: null
+      };
+    case types.LOGIN_SUCCESS:
+      return {
+        state: 'logged',
+        token: action.token
+      }
+    case types.POP_DIALOG:
+      return {
+        popDialog: true
+      };
+    case types.LOGIN_FAILURE:
+      return defaultSessionState;
+    case types.LOGOUT_REQUEST:
+      return state;
+    case types.LOGOUT_SUCCESS:
+      return defaultSessionState;
+    case types.LOGOUT_FAILURE:
+      return state;
+    default:
+      return state;
+  }
 };
 
 const defaultActivityState = {
-    state: 'getStart',
-    value: []
+  state: 'getStart',
+  value: []
 };
 
 const activity = (state = defaultActivityState, action) => {
-    switch (action.type) {
-        case types.ACTIVITY_GET_START:
-            return {
-                state: 'getStart',
-            };
-        case types.ACTIVITY_GET_SUCCESS:
-            return {
-                state: 'success',
-                value: action.info
-            };
-        case types.ACTIVITY_GET_FAILURE:
-            return {
-                state: 'failure',
-                value: action.info
-            };
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case types.ACTIVITY_GET_START:
+      return {
+        state: 'getStart',
+      };
+    case types.ACTIVITY_GET_SUCCESS:
+      return {
+        state: 'success',
+        value: action.info
+      };
+    case types.ACTIVITY_GET_FAILURE:
+      return {
+        state: 'failure',
+        value: action.info
+      };
+    default:
+      return state;
+  }
 };
 
+const defaultHardwareState = {
+  popingAddHardwareDialog: false
+}
+
+const hardware = (state = defaultHardwareState, action) => {
+  switch (action.type) {
+    case types.HARDWARE_POP_ADD_DIALOG:
+      return {
+        popingAddHardwareDialog: true,
+      };
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
-    filter,
-    session,
-    activity,
-    routing
+  filter,
+  session,
+  activity,
+  hardware,
+  routing
 });
 
 export default rootReducer;

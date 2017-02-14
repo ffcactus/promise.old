@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {getAllActivity} from '../actions/ActivityAction';
+import { getAllActivity } from '../actions/ActivityAction';
+import Frame from './Frame';
 
 class Activity extends Component {
   constructor(props) {
@@ -25,16 +26,12 @@ class Activity extends Component {
       });
     }
 
-    if (this.props.activity.state === 'getStart') {
-      return (<p>Getting Activities ...</p>);
-    }
-
     switch (this.props.activity.state) {
       case 'getStart':
-        return (<p>Getting Activities ...</p>);
+        return (<Frame main={<h1>Getting Activities ...</h1>} footer={<p>footer</p>}></Frame>);
         break;
       case 'success':
-        return (
+        let main =
           <table>
             <tbody>
               <tr>
@@ -45,11 +42,12 @@ class Activity extends Component {
               {makeRows(this.props.activity.value)}
             </tbody>
           </table>
-        );
+
+        return (<Frame main={main} footer={<p>footer</p>}></Frame>);
         break;
       case 'failure':
-        return (<p>Failed to get activities ...</p>);
-        break;        
+        return (<Frame main={<h1>Failed to get activities ...</h1>} footer={<p>footer</p>}></Frame>);
+        break;
     }
   }
 }

@@ -5,10 +5,10 @@ import styles from '../styles/menu.css'
 
 const Menu = () =>
   <header styleName='header'>
-    <Link to="/" styleName="item">Dashboard</Link>
-    <Link to="/about" styleName="item">About</Link>
-    <Link to="/login" styleName="item">Login</Link>
+    <Link to="/" styleName="item">Dashboard</Link>    
     <Link to="/activity" styleName="item">Activity</Link>
     <Link to="/hardware" styleName="item">Hardware</Link>
+    <Link to="/login" styleName="item">Login</Link>
+    <Link to="/about" styleName="item">About</Link>
   </header>
 export default CSSModules(Menu, styles);

@@ -11,7 +11,7 @@ class Login extends Component {
     };
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);    
   }
 
   handleUsernameChange(event) {
@@ -29,6 +29,7 @@ class Login extends Component {
     let nextPathname = this.props.location.state ? this.props.location.state.nextPathname : '/';
     this.props.dispatch(login(this.state.username, this.state.password, nextPathname));
   }
+
 
   render() {
     return (
