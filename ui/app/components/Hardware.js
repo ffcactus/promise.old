@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Frame from './Frame';
 import Dialog from './Dialog';
-import { popAddHardwareDialog } from '../actions/HardwareAction';
+import { popAddHardwareDialog, addHardwareDialogCancel, addHardwareDialogOK } from '../actions/HardwareAction';
 
 class Hardware extends Component {
   constructor(props) {
@@ -16,11 +16,11 @@ class Hardware extends Component {
   }
 
   render() {
-    let addHardwareDialog = <Dialog />
+    let addHardwareDialog = <Dialog title="Add Hardware" onCancel={addHardwareDialogCancel} onOK={addHardwareDialogOK} />
     let mainDiv=<div>
       <h1>Hardware</h1>
       <button onClick={this.handleDialog}>Add Hardware</button>
-      {(this.props.hardware.popingAddHardwareDialog) ? <Dialog /> : null}
+      {(this.props.hardware.popingAddHardwareDialog) ? addHardwareDialog : null}
     </div>
     return (
       <Frame main={mainDiv} footer={<p>footer</p>}>

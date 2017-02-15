@@ -85,6 +85,14 @@ const hardware = (state = defaultHardwareState, action) => {
       return {
         popingAddHardwareDialog: true,
       };
+    case types.HARDWARE_ADD_DIALOG_CANCEL:
+      return {
+        popingAddHardwareDialog: false,
+      };
+    case types.HARDWARE_ADD_DIALOG_OK:
+      return {
+        popingAddHardwareDialog: false,
+      }
     default:
       return state;
   }

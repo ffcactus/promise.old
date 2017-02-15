@@ -37,9 +37,3 @@ export function login(username, password, afterLoginPath) {
     }, 1000);
   }
 }
-
-export function popDialog() {
-  return {
-    type: types.POP_DIALOG,
-  }
-}
