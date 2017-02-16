@@ -14,8 +14,7 @@ const filter = (state = '', action) => {
 const defaultSessionState = {
   state: 'loggout',
   username: null,
-  token: null,
-  popDialog: false,
+  token: null
 };
 
 
@@ -32,10 +31,6 @@ const session = (state = defaultSessionState, action) => {
         state: 'logged',
         token: action.token
       }
-    case types.POP_DIALOG:
-      return {
-        popDialog: true
-      };
     case types.LOGIN_FAILURE:
       return defaultSessionState;
     case types.LOGOUT_REQUEST:
@@ -76,23 +71,32 @@ const activity = (state = defaultActivityState, action) => {
 };
 
 const defaultHardwareState = {
-  popingAddHardwareDialog: false
+  popingAddHardwareDialog: false,
+  hardwareInput: null,
+  hardwareList: []
 }
 
 const hardware = (state = defaultHardwareState, action) => {
   switch (action.type) {
     case types.HARDWARE_POP_ADD_DIALOG:
-      return {
+      return Object.assign({}, state, {
         popingAddHardwareDialog: true,
-      };
+        hardwareInput: null
+      });
     case types.HARDWARE_ADD_DIALOG_CANCEL:
-      return {
+      return Object.assign({}, state, {
         popingAddHardwareDialog: false,
-      };
+        hardwareInput: null
+      });
     case types.HARDWARE_ADD_DIALOG_OK:
-      return {
+      return Object.assign({}, state, {
         popingAddHardwareDialog: false,
-      }
+        hardwareList: state.hardwareList.concat([state.hardwareInput]),
+      });
+    case types.HARDWARE_ADD_INPUT:
+      return Object.assign({}, state, {
+        hardwareInput: action.info
+      });
     default:
       return state;
   }

@@ -2,23 +2,33 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Frame from './Frame';
 import Dialog from './Dialog';
-import { popAddHardwareDialog, addHardwareDialogCancel, addHardwareDialogOK } from '../actions/HardwareAction';
+import { hardwareActionPopAddDialog, hardwareActionDialogCancel, hardwareActionDialogOK, hardwareActionDialogInput } from '../actions/HardwareAction';
 
 class Hardware extends Component {
   constructor(props) {
     super(props);
     this.handleDialog = this.handleDialog.bind(this);
+    this.handleDialogInput = this.handleDialogInput.bind(this);
   }
 
   handleDialog(event) {
     event.preventDefault();
-    this.props.dispatch(popAddHardwareDialog());
+    this.props.dispatch(hardwareActionPopAddDialog());
+  }
+
+  handleDialogInput(event) {
+    event.preventDefault();
+    this.props.dispatch(hardwareActionDialogInput(event.target.value));
   }
 
   render() {
-    let addHardwareDialog = <Dialog title="Add Hardware" onCancel={addHardwareDialogCancel} onOK={addHardwareDialogOK} />
+    let dialogMain = <input type='text' onChange={this.handleDialogInput} />
+    let addHardwareDialog = <Dialog title="Add Hardware" content={dialogMain} onCancel={hardwareActionDialogCancel} onOK={hardwareActionDialogOK} />
     let mainDiv=<div>
       <h1>Hardware</h1>
+      {this.props.hardware.hardwareList.map((hardware) => {
+        return(<p>{hardware}</p>)
+      })}
       <button onClick={this.handleDialog}>Add Hardware</button>
       {(this.props.hardware.popingAddHardwareDialog) ? addHardwareDialog : null}
     </div>
