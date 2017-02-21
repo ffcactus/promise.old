@@ -72,7 +72,6 @@ const activity = (state = defaultActivityState, action) => {
 
 const defaultHardwareState = {
   popingAddHardwareDialog: false,
-  hardwareInput: null,
   hardwareList: []
 }
 
@@ -81,21 +80,15 @@ const hardware = (state = defaultHardwareState, action) => {
     case types.HARDWARE_POP_ADD_DIALOG:
       return Object.assign({}, state, {
         popingAddHardwareDialog: true,
-        hardwareInput: null
       });
     case types.HARDWARE_ADD_DIALOG_CANCEL:
       return Object.assign({}, state, {
         popingAddHardwareDialog: false,
-        hardwareInput: null
       });
     case types.HARDWARE_ADD_DIALOG_OK:
       return Object.assign({}, state, {
         popingAddHardwareDialog: false,
-        hardwareList: state.hardwareList.concat([state.hardwareInput]),
-      });
-    case types.HARDWARE_ADD_INPUT:
-      return Object.assign({}, state, {
-        hardwareInput: action.info
+        hardwareList: state.hardwareList.concat([action.info]),
       });
     default:
       return state;

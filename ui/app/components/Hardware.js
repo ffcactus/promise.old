@@ -1,39 +1,55 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Frame from './Frame';
-import Dialog from './Dialog';
-import { hardwareActionPopAddDialog, hardwareActionDialogCancel, hardwareActionDialogOK, hardwareActionDialogInput } from '../actions/HardwareAction';
+import AddHardwareDialog from '../containers/hardware/AddHardwareDialog';
+import { hardwareActionPopAddDialog, hardwareActionDialogCancel, hardwareActionDialogOk, hardwareActionDialogInput } from '../actions/HardwareAction';
 
 class Hardware extends Component {
   constructor(props) {
     super(props);
-    this.handleDialog = this.handleDialog.bind(this);
-    this.handleDialogInput = this.handleDialogInput.bind(this);
+    this.onOpenDialog = this.onOpenDialog.bind(this);
+    this.onAddHardwareDialogOk = this.onAddHardwareDialogOk.bind(this);
+    this.onAddHardwareDialogCancel = this.onAddHardwareDialogCancel.bind(this);
   }
 
-  handleDialog(event) {
+  onOpenDialog(event) {
     event.preventDefault();
     this.props.dispatch(hardwareActionPopAddDialog());
   }
 
-  handleDialogInput(event) {
-    event.preventDefault();
-    this.props.dispatch(hardwareActionDialogInput(event.target.value));
+  onAddHardwareDialogOk(input) {
+    this.props.dispatch(hardwareActionDialogOk(input))
+  }
+
+  onAddHardwareDialogCancel() {
+    this.props.dispatch(hardwareActionDialogCancel());
   }
 
   render() {
-    let dialogMain = <input type='text' onChange={this.handleDialogInput} />
-    let addHardwareDialog = <Dialog title="Add Hardware" content={dialogMain} onCancel={hardwareActionDialogCancel} onOK={hardwareActionDialogOK} />
-    let mainDiv=<div>
-      <h1>Hardware</h1>
-      {this.props.hardware.hardwareList.map((hardware) => {
-        return(<p>{hardware}</p>)
-      })}
-      <button onClick={this.handleDialog}>Add Hardware</button>
-      {(this.props.hardware.popingAddHardwareDialog) ? addHardwareDialog : null}
-    </div>
+
+    let getHardwareDialog = () => {
+      return (
+        <AddHardwareDialog onCancel={this.onAddHardwareDialogCancel} onOk={this.onAddHardwareDialogOk} />
+      );
+    };
+
+    let getMainDiv = () => {
+      return (
+        <div >
+          <h1>Hardware</h1>
+          {
+            this.props.hardware.hardwareList.map((hardware) => {
+              return (<p key={hardware}>{hardware}</p>)
+            })
+          }
+          <button onClick={this.onOpenDialog}>Add Hardware</button>
+          {(this.props.hardware.popingAddHardwareDialog) ? getHardwareDialog() : null}
+        </div >
+      );
+    };
+
     return (
-      <Frame main={mainDiv} footer={<p>footer</p>}>
+      <Frame main={getMainDiv()} footer={<p>footer</p>}>
       </Frame>
     );
   }
