@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { getAllActivity } from '../actions/ActivityAction';
-import Frame from './Frame';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getAllActivity } from "../actions/ActivityAction";
+import Frame from "./common/Frame";
 
 class Activity extends Component {
   constructor(props) {

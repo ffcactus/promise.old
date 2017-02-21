@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Frame from './Frame';
-import AddHardwareDialog from '../containers/hardware/AddHardwareDialog';
-import { hardwareActionPopAddDialog, hardwareActionDialogCancel, hardwareActionDialogOk, hardwareActionDialogInput } from '../actions/HardwareAction';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import Frame from "./common/Frame";
+import AddHardwareDialog from "../containers/hardware/AddHardwareDialog";
+import * as Action from "../actions/HardwareAction";
 
 class Hardware extends Component {
   constructor(props) {
@@ -14,15 +14,15 @@ class Hardware extends Component {
 
   onOpenDialog(event) {
     event.preventDefault();
-    this.props.dispatch(hardwareActionPopAddDialog());
+    this.props.dispatch(Action.hardwareActionPopAddDialog());
   }
 
   onAddHardwareDialogOk(input) {
-    this.props.dispatch(hardwareActionDialogOk(input))
+    this.props.dispatch(Action.hardwareActionDialogOk(input))
   }
 
   onAddHardwareDialogCancel() {
-    this.props.dispatch(hardwareActionDialogCancel());
+    this.props.dispatch(Action.hardwareActionDialogCancel());
   }
 
   render() {
@@ -33,7 +33,7 @@ class Hardware extends Component {
       );
     };
 
-    let getMainDiv = () => {
+    let getMainContent = () => {
       return (
         <div >
           <h1>Hardware</h1>
@@ -49,7 +49,7 @@ class Hardware extends Component {
     };
 
     return (
-      <Frame main={getMainDiv()} footer={<p>footer</p>}>
+      <Frame main={getMainContent()} footer={<p>footer</p>}>
       </Frame>
     );
   }

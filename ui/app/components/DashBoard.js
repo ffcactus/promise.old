@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import Frame from './Frame';
+import React, { Component } from "react";
+import Frame from "./common/Frame";
 
 class DashBoard extends Component {
   constructor(props) {

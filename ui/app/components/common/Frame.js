@@ -1,8 +1,8 @@
-import React, { PropTypes } from 'react';
-import CSSModules from 'react-css-modules';
-import { Link, withRouter } from 'react-router';
-import styles from '../styles/frame.css';
-import Menu from './Menu';
+import React, { PropTypes } from "react";
+import CSSModules from "react-css-modules";
+import { Link, withRouter } from "react-router";
+import styles from "../../styles/frame.css";
+import Menu from "./Menu";
 
 function Frame(props) {
   return (

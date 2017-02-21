@@ -4,11 +4,13 @@ import * as types from "../actions/types";
 import session from "./SessionReducer";
 import activity from "./ActivityReducer";
 import hardware from "./HardwareReducer";
+import setting from "./SettingReducer";
 
 const rootReducer = combineReducers({
   session,
   activity,
   hardware,
+  setting,
   routing
 });
 
