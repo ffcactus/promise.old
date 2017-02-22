@@ -40,6 +40,8 @@
 		<module>common</module>
 		<module>auth-sdk</module>
 		<module>auth</module>
+        <module>setting-sdk</module>
+        <module>setting</module>        
         <module>task-sdk</module>
         <module>task</module>
         

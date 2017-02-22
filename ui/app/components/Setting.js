@@ -20,6 +20,8 @@ class Setting extends React.Component {
 
   render() {
 
+    let file = this.props.setting.upgradeBundle;
+
     let getMainContent = () => {
       return (
         <div>
@@ -28,11 +30,11 @@ class Setting extends React.Component {
             <input id="setting_upload_upgrade_bundle_input" type="file" onChange={this.onUploadUpgradeBundleDialogOpen}></input>
           </label>
           <li key="xxx">
-            <strong>{this.props.setting.upgradeBundle.name + " "}</strong>
+            <strong>{file.name + " "}</strong>
             {
-              (this.props.setting.upgradeBundle.type || 'n/a') + " - " +
-              this.props.setting.upgradeBundle.size + " bytes, last modified: " +
-              (this.props.setting.upgradeBundle.lastModifiedDate ? this.props.setting.upgradeBundle.lastModifiedDate.toLocaleDateString() : "n/a")
+              (file.type || 'n/a') + " - " +
+              file.size + " bytes, last modified: " +
+              (file.lastModifiedDate ? file.lastModifiedDate.toLocaleDateString() : "n/a")
             }
           </li>
         </div>

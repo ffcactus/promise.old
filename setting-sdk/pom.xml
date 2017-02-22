@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.promise</groupId>
+        <artifactId>promise</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <groupId>com.promise.module</groupId>
+    <artifactId>setting-sdk</artifactId>
+
+    <dependencies>
+
+        <!-- json -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${com.fasterxml.jackson.core.version}</version>
+        </dependency>
+
+        <!-- promise -->
+        <dependency>
+            <groupId>com.promise.module</groupId>
+            <artifactId>common</artifactId>
+            <version>${com.promise.version}</version>
+        </dependency>
+
+    </dependencies>
+
+</project>
