@@ -2,26 +2,22 @@ package com.promise.setting.controller;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.promise.auth.sdk.aspect.PromisePublicInterface;
 import com.promise.common.PromiseErrorResponse;
 import com.promise.common.constant.PromiseCategory;
 import com.promise.common.exception.InternelErrorException;
@@ -74,30 +70,22 @@ public class SettingPublicController
      * @return The HTTP response that represents the task created.
      * @throws Exception
      */
-    @PromisePublicInterface
-    @PostMapping("/setting/upgrade/file")
+    //@PromisePublicInterface
+    @RequestMapping(value = "/setting/upgrade/file", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<UploadUpgradeFileResponse> uploadUpgradeFile(
             @RequestHeader Map<String, String> header,
-            @RequestParam("files") MultipartFile[] fileList)
+            @RequestParam(name = "fileName") MultipartFile file)
             throws InvalidRequestBodyException
     {
-        final LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-        final List<String> tempFileNameList = new ArrayList<>();
-        String tempFileName;
-        FileOutputStream fo;
-
         try
         {
-            for (final MultipartFile file : fileList)
-            {
-                tempFileName = "/tmp/" + file.getOriginalFilename();
-                tempFileNameList.add(tempFileName);
-                fo = new FileOutputStream(tempFileName);
-                fo.write(file.getBytes());
-                fo.close();
-                map.add("files", new FileSystemResource(tempFileName));
-            }
-
+            //            for (final MultipartFile file : fileList)
+            //            {
+            final String tempFileName = "/tmp/" + file.getOriginalFilename();
+            final FileOutputStream fo = new FileOutputStream(tempFileName);
+            fo.write(file.getBytes());
+            fo.close();
+            //}
         }
         catch (final IOException e)
         {

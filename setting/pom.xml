@@ -84,7 +84,7 @@
                 <configuration>
                     <url>http://${server_ip}:8080/manager/text</url>
                     <server>Promise0</server>
-                    <path>/task</path>
+                    <path>/setting</path>
                 </configuration>
                 <executions>
                     <execution>
