@@ -1,7 +1,8 @@
 package com.promise.setting.controller;
 
-import java.io.FileOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -74,17 +75,19 @@ public class SettingPublicController
     @RequestMapping(value = "/setting/upgrade/file", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<UploadUpgradeFileResponse> uploadUpgradeFile(
             @RequestHeader Map<String, String> header,
-            @RequestParam(name = "fileName") MultipartFile file)
+            @RequestParam(name = "file") MultipartFile file)
             throws InvalidRequestBodyException
     {
         try
         {
-            //            for (final MultipartFile file : fileList)
-            //            {
-            final String tempFileName = "/tmp/" + file.getOriginalFilename();
-            final FileOutputStream fo = new FileOutputStream(tempFileName);
-            fo.write(file.getBytes());
-            fo.close();
+            final File dest = new File("/tmp/" + file.getOriginalFilename());
+            Files.copy(file.getInputStream(), dest.toPath());
+            //            final String tempFileName = "/tmp/" + file.getOriginalFilename();
+            //            final FileOutputStream fo = new FileOutputStream(tempFileName);
+            //            final InputStream inputStream = file.getInputStream();
+            //            final File dest = new File("/tmp/" + file.getOriginalFilename());
+            //            file.transferTo(dest);
+            //            fo.close();
             //}
         }
         catch (final IOException e)
