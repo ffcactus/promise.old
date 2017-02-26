@@ -6,8 +6,27 @@ import * as Action from "../actions/SettingAction";
 class Setting extends React.Component {
   constructor(props) {
     super(props);
+    this.createCorRequest = this.createCorRequest.bind(this);
     this.onUploadUpgradeBundleDialogOpen = this.onUploadUpgradeBundleDialogOpen.bind(this);
     this.onUploadUpgradeBundleConfirm = this.onUploadUpgradeBundleConfirm.bind(this);
+  }
+
+  createCorRequest(method, url, async) {
+    let xhr = new XMLHttpRequest();
+    if("withCredentials" in xhr) {
+      // Check if the XMLHttpRequest object has a "withCredentials" property.
+      // "withCredentials" only exists on XMLHTTPRequest2 objects.
+      xhr.open(method, url, async);
+    } else if (typeof XDomainRequest != "undefined") {
+      // Otherwise, check if XDomainRequest.
+      // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+      xhr = new XDomainRequest();
+      xhr.open(method, url, async);
+    } else {
+      // Otherwise, CORS is not supported by the browser.
+      xhr = null;
+    }
+    return xhr;
   }
 
   onUploadUpgradeBundleDialogOpen(event) {
@@ -19,11 +38,16 @@ class Setting extends React.Component {
     }
   }
 
+
+
   onUploadUpgradeBundleConfirm(event) {
     event.preventDefault();
     let reader = new FileReader();
     let fd = new FormData();
-    let xhr = new XMLHttpRequest();
+    let xhr = this.createCorRequest("POST", "http://192.168.116.132/rest/setting/upgrade/file", true); //asynchronously.
+    if(!xhr) {
+      throw new Error('CORS not supported');
+    }
     // xhr.upload.addEventListener("progress", (e) => {
     //   if(e.lengthComputable) {
     //     let percentage = Math.round((e.loaded * 100) / e.total);
@@ -33,11 +57,31 @@ class Setting extends React.Component {
     // xhr.upload.addEventListener("load", (e) => {
     //   console.info("load");
     // });
-    xhr.open("POST", "http://192.168.116.132/rest/setting/upgrade/file", true); //asynchronously.
     xhr.onreadystatechange = () => {
+      //console.log("onreadystatechange() readyState = " + xhr.readyState + ", status = " + xhr.status);
       if(xhr.readyState === 4 && xhr.status == 200) {
-        alert(xhr.responseText);
+        console.log(xhr.responseText);
       }
+    }
+    xhr.onloadstart = (e) => {
+      console.log("onloadstart()");
+    }
+    xhr.onloadend = (e) => {
+      console.log("onloadend()");
+    }
+    xhr.onload = () => {
+      var responseText = xhr.responseText;
+      console.log("onload() " + responseText);
+    }
+    xhr.onerror = (e) => {
+      console.log("onerror() There was an error! " + e);
+    }
+    xhr.onprogress = (e) => {
+      console.log("onprogress()");
+      if(e.lengthComputable) {
+        let percentage = Math.round((e.loaded * 100) / e.total);
+        console.log("onprogress() " + percentage);
+      }        
     }
     fd.append("file", this.props.setting.upgradeBundle);
     xhr.send(fd);

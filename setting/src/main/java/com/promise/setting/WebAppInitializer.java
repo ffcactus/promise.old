@@ -13,7 +13,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 public class WebAppInitializer implements WebApplicationInitializer
 {
-    private static final int MAX_UPLOAD_SIZE_IN_MB = 5 * 1024 * 1024 * 1024; // 5 GB
+    private static final long MAX_UPLOAD_SIZE_IN_MB = 5L * 1024 * 1024 * 1024; // 5 GB
 
     @Override
     public void onStartup(ServletContext servletContext)
@@ -34,7 +34,7 @@ public class WebAppInitializer implements WebApplicationInitializer
                 uploadDirectory.getAbsolutePath(),
                 MAX_UPLOAD_SIZE_IN_MB,
                 MAX_UPLOAD_SIZE_IN_MB * 2,
-                MAX_UPLOAD_SIZE_IN_MB / 2);
+                (int) (MAX_UPLOAD_SIZE_IN_MB / 2));
         dynamic.setMultipartConfig(multipartConfigElement);
         dynamic.setLoadOnStartup(1);
     }

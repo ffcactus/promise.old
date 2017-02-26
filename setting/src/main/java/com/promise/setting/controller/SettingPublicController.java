@@ -24,7 +24,6 @@ import com.promise.common.constant.PromiseCategory;
 import com.promise.common.exception.InternelErrorException;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.PromiseException;
-import com.promise.setting.sdk.dto.UploadUpgradeFileResponse;
 
 @RestController
 @RequestMapping("/rest")
@@ -73,7 +72,7 @@ public class SettingPublicController
      */
     //@PromisePublicInterface
     @RequestMapping(value = "/setting/upgrade/file", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<UploadUpgradeFileResponse> uploadUpgradeFile(
+    public ResponseEntity<?> uploadUpgradeFile(
             @RequestHeader Map<String, String> header,
             @RequestParam(name = "file") MultipartFile file)
             throws InvalidRequestBodyException
@@ -94,6 +93,17 @@ public class SettingPublicController
         {
             e.printStackTrace();
         }
-        return null;
+        //        final HttpHeaders responseHeaders = new HttpHeaders();
+        //        responseHeaders.setAccessControlAllowOrigin("*");
+        //        final List<HttpMethod> methodList = new ArrayList<>();
+        //        methodList.add(HttpMethod.POST);
+        //        responseHeaders.setAccessControlAllowMethods(methodList);
+        //        final List<String> requestHeaders = new ArrayList<>();
+        //        requestHeaders.add("Origin");
+        //        requestHeaders.add("Content-Type");
+        //        requestHeaders.add("X-Auth-Token");
+        //        responseHeaders.setAccessControlRequestHeaders(requestHeaders);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
