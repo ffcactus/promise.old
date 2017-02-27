@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {login} from "../actions/LoginAction";
+import CSSModules from "react-css-modules";
+import { login } from "../actions/LoginAction";
+import Styles from "../styles/login.css"
 
 class Login extends Component {
   constructor(props) {
@@ -11,7 +13,7 @@ class Login extends Component {
     };
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);    
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleUsernameChange(event) {
@@ -33,13 +35,18 @@ class Login extends Component {
 
   render() {
     return (
+      <div styleName="loginForm">
       <form id="login" onSubmit={this.handleSubmit}>
-        <label>Username</label>
-        <input id="username" type="text" onChange={this.handleUsernameChange} />
-        <label>Password</label>
-        <input id="password" type="password" onChange={this.handlePasswordChange} />
-        <input type="submit" value="login" disabled={this.props.session.state === 'logging'} />
+        <p styleName="loginTitle">Promise</p>
+        <section styleName="loginInput">
+          <input id="username" type="text" placeholder="username" onChange={this.handleUsernameChange} />
+          <input id="password" type="password" placeholder="password" onChange={this.handlePasswordChange} />
+        </section>
+        <section styleName="loginSubmit">
+          <input type="submit" value="login" disabled={this.props.session.state === 'logging'} />
+        </section>
       </form>
+      </div>
     );
   }
 }
@@ -49,4 +56,4 @@ function mapStateToProps(state) {
   return { session };
 }
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(CSSModules(Login, Styles));
