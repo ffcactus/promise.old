@@ -30,18 +30,17 @@ class AddHardwareDialog extends React.Component {
   }
 
   render() {
-
-    let getChildren = () => {
+    const getChildren = () => {
       return (
-        <input type='text' onChange={this.onInputChange} />
+        <input type="text" onChange={this.onInputChange} />
       );
-    }
+    };
 
     return (
       <Dialog title="Add Hardware" children={getChildren()} onOk={this.onOk} onCancel={this.onCancel} />
-    )
+    );
   }
-};
+}
 
 AddHardwareDialog.propTypes = {
   onCancel: PropTypes.func,

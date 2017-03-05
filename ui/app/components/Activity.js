@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { getAllActivity } from "../actions/ActivityAction";
-import Frame from "./common/Frame";
+import React, { PropTypes, Component } from 'react';
+import { connect } from 'react-redux';
+import { getAllActivity } from '../actions/ActivityAction';
+import Frame from './common/Frame';
 
 class Activity extends Component {
   constructor(props) {
@@ -13,7 +13,6 @@ class Activity extends Component {
   }
 
   render() {
-
     const makeRows = (activities) => {
       return activities.map((each) => {
         return (
@@ -24,14 +23,13 @@ class Activity extends Component {
           </tr>
         );
       });
-    }
+    };
 
     switch (this.props.activity.state) {
       case 'getStart':
-        return (<Frame main={<h1>Getting Activities ...</h1>} footer={<p>footer</p>}></Frame>);
-        break;
+        return <Frame main={<h1>Getting Activities ...</h1>} footer={<p>footer</p>} />;
       case 'success':
-        let main =
+        const main = (
           <table>
             <tbody>
               <tr>
@@ -41,13 +39,12 @@ class Activity extends Component {
               </tr>
               {makeRows(this.props.activity.value)}
             </tbody>
-          </table>
-
-        return (<Frame main={main} footer={<p>footer</p>}></Frame>);
-        break;
+        </table>);
+        return <Frame main={main} footer={<p>footer</p>} />;
       case 'failure':
-        return (<Frame main={<h1>Failed to get activities ...</h1>} footer={<p>footer</p>}></Frame>);
-        break;
+        return (<Frame main={<h1>Failed to get activities ...</h1>} footer={<p>footer</p>} />);
+      default:
+        return (<Frame main={<h1>Failed to get activities ...</h1>} footer={<p>footer</p>} />);
     }
   }
 }
@@ -56,5 +53,10 @@ function mapStateToProps(state) {
   const { activity } = state;
   return { activity };
 }
+
+Activity.propTypes = {
+  activity: PropTypes.object,
+  dispatch: PropTypes.func,
+};
 
 export default connect(mapStateToProps)(Activity);

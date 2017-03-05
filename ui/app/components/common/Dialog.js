@@ -11,13 +11,13 @@ const Dialog = (props) => {
       <button onClick={props.onOk}>OK</button >
     </div>
   );
-}
+};
 
 Dialog.propTypes = {
-    title: PropTypes.string,
-    children: PropTypes.object,
-    onCancel: PropTypes.func,
-    onOk: PropTypes.func
+  title: PropTypes.string,
+  children: PropTypes.object,
+  onCancel: PropTypes.func,
+  onOk: PropTypes.func
 };
 
 export default CSSModules(Dialog, styles);

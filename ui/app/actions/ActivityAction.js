@@ -12,14 +12,14 @@ const activity = [
 function activityGetStartAction() {
   return {
     type: types.ACTIVITY_GET_START
-  }
+  };
 }
 
 function activityGetSuccessAction() {
   return {
     type: types.ACTIVITY_GET_SUCCESS,
     info: activity
-  }
+  };
 }
 
 
@@ -27,7 +27,7 @@ export function getAllActivity() {
   return dispatch => {
     dispatch(activityGetStartAction());
     setTimeout(() => {
-      dispatch(activityGetSuccessAction())
+      dispatch(activityGetSuccessAction());
     }, 3000);
-  }
+  };
 }

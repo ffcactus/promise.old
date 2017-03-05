@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import CSSModules from "react-css-modules";
-import { login } from "../actions/LoginAction";
-import Styles from "../styles/login.css"
+import React, { PropTypes, Component } from 'react';
+import { connect } from 'react-redux';
+import CSSModules from 'react-css-modules';
+import { login } from '../actions/LoginAction';
+import Styles from '../styles/login.css';
 
 class Login extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class Login extends Component {
     event.preventDefault();
 
     // If we can't find a next path after login, we go to root.
-    let nextPathname = this.props.location.state ? this.props.location.state.nextPathname : '/';
+    const nextPathname = this.props.location.state ? this.props.location.state.nextPathname : '/';
     this.props.dispatch(login(this.state.username, this.state.password, nextPathname));
   }
 
@@ -55,5 +55,11 @@ function mapStateToProps(state) {
   const { session } = state;
   return { session };
 }
+
+Login.propTypes = {
+  session: PropTypes.object,
+  location: PropTypes.object,
+  dispatch: PropTypes.func
+};
 
 export default connect(mapStateToProps)(CSSModules(Login, Styles));

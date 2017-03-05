@@ -1,9 +1,9 @@
-import * as types from "../actions/types";
+import * as types from '../actions/types';
 
 const defaultHardwareState = {
   popingAddHardwareDialog: false,
   hardwareList: []
-}
+};
 
 const hardware = (state = defaultHardwareState, action) => {
   switch (action.type) {
@@ -23,6 +23,6 @@ const hardware = (state = defaultHardwareState, action) => {
     default:
       return state;
   }
-}
+};
 
 export default hardware;

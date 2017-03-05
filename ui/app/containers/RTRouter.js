@@ -1,12 +1,12 @@
-import React from "react";
-import { Router, Route, IndexRoute, browserHistory } from "react-router";
-import App from "../components/App";
-import About from "../components/About";
-import Login from "../components/Login";
-import DashBoard from "../components/DashBoard";
-import Activity from "../components/Activity";
-import Hardware from "../components/Hardware";
-import Setting from "../components/Setting";
+import React, { PropTypes } from 'react';
+import { Router, Route, IndexRoute } from 'react-router';
+import App from '../components/App';
+import About from '../components/About';
+import Login from '../components/Login';
+import DashBoard from '../components/DashBoard';
+import Activity from '../components/Activity';
+import Hardware from '../components/Hardware';
+import Setting from '../components/Setting';
 
 export default class RTRouter extends React.Component {
 
@@ -26,7 +26,7 @@ export default class RTRouter extends React.Component {
         <IndexRoute onEnter={this.requireAuth} component={DashBoard} />
         <Route path="/login" component={Login} />
         <Route onEnter={this.requireAuth} path="/dashboard" component={DashBoard} />
-        <Route onEnter={this.requireAuth} path="/activity" component={Activity} />        
+        <Route onEnter={this.requireAuth} path="/activity" component={Activity} />
         <Route onEnter={this.requireAuth} path="/hardware" component={Hardware} />
         <Route onEnter={this.requireAuth} path="/setting" component={Setting} />
         <Route onEnter={this.requireAuth} path="/about" component={About} />
@@ -65,3 +65,8 @@ export default class RTRouter extends React.Component {
     );
   }
 }
+
+RTRouter.propTypes = {
+  getState: PropTypes.func,
+  history: PropTypes.object,
+};

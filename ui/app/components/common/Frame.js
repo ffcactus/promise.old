@@ -1,8 +1,7 @@
-import React, { PropTypes } from "react";
-import CSSModules from "react-css-modules";
-import { Link, withRouter } from "react-router";
-import styles from "../../styles/frame.css";
-import Menu from "./Menu";
+import React, { PropTypes } from 'react';
+import CSSModules from 'react-css-modules';
+import styles from '../../styles/frame.css';
+import Menu from './Menu';
 
 function Frame(props) {
   return (
@@ -11,11 +10,12 @@ function Frame(props) {
       <div styleName="main">{props.main}</div>
       <div styleName="footer">{props.footer}</div>
     </div>
-  )
+  );
 }
 
 Frame.propTypes = {
-  children: PropTypes.object
+  main: PropTypes.object,
+  footer: PropTypes.object
 };
 
 export default CSSModules(Frame, styles);

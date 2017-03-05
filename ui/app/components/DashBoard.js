@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import Frame from "./common/Frame";
+import React, { Component } from 'react';
+import Frame from './common/Frame';
 
 class DashBoard extends Component {
   constructor(props) {
@@ -7,9 +7,7 @@ class DashBoard extends Component {
   }
 
   render() {
-    return (
-      <Frame main={<h1>Dashboard</h1>} footer={<p>footer</p>}></Frame>
-    );
+    return <Frame main={<h1>Dashboard</h1>} footer={<p>footer</p>} />;
   }
 }
 

@@ -1,4 +1,4 @@
-import * as types from "../actions/types";
+import * as types from '../actions/types';
 
 const defaultSessionState = {
   state: 'loggout',
@@ -19,7 +19,7 @@ const session = (state = defaultSessionState, action) => {
       return {
         state: 'logged',
         token: action.token
-      }
+      };
     case types.LOGIN_FAILURE:
       return defaultSessionState;
     case types.LOGOUT_REQUEST:

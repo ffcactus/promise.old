@@ -19,7 +19,9 @@
 }
 
 .loginInput input {
-	padding: 0;
+	height: 25px;
+	border-radius: 2px;
+	padding: 0 5px 0 5px;
 	border: 0;
 	margin: 2px;
 	display: flex;

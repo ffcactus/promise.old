@@ -1,18 +1,18 @@
 import * as types from '../actions/types';
 
 const defaultSettingState = {
-  upgradeBundle: {}
+  host: null
 };
 
-const setting = (state = defaultSettingState, action) => {
+const global = (state = defaultSettingState, action) => {
   switch (action.type) {
-    case types.SETTING_SELECT_UPGRADE_BUNDLE:
+    case types.OPEN:
       return Object.assign({}, state, {
-        upgradeBundle: action.info.files[0]
+        host: action.info.hostAddress
       });
     default:
       return state;
   }
 };
 
-export default setting;
+export default global;

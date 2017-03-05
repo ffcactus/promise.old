@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import Frame from "./common/Frame";
-import AddHardwareDialog from "../containers/hardware/AddHardwareDialog";
-import * as Action from "../actions/HardwareAction";
+import React, { PropTypes, Component } from 'react';
+import { connect } from 'react-redux';
+import Frame from './common/Frame';
+import AddHardwareDialog from '../containers/hardware/AddHardwareDialog';
+import * as Action from '../actions/HardwareAction';
 
 class Hardware extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class Hardware extends Component {
   }
 
   onAddHardwareDialogOk(input) {
-    this.props.dispatch(Action.hardwareActionDialogOk(input))
+    this.props.dispatch(Action.hardwareActionDialogOk(input));
   }
 
   onAddHardwareDialogCancel() {
@@ -26,20 +26,17 @@ class Hardware extends Component {
   }
 
   render() {
-
-    let getHardwareDialog = () => {
-      return (
-        <AddHardwareDialog onCancel={this.onAddHardwareDialogCancel} onOk={this.onAddHardwareDialogOk} />
-      );
+    const getHardwareDialog = () => {
+      return <AddHardwareDialog onCancel={this.onAddHardwareDialogCancel} onOk={this.onAddHardwareDialogOk} />;
     };
 
-    let getMainContent = () => {
+    const getMainContent = () => {
       return (
         <div >
           <h1>Hardware</h1>
           {
             this.props.hardware.hardwareList.map((hardware) => {
-              return (<p key={hardware}>{hardware}</p>)
+              return (<p key={hardware}>{hardware}</p>);
             })
           }
           <button onClick={this.onOpenDialog}>Add Hardware</button>
@@ -49,8 +46,7 @@ class Hardware extends Component {
     };
 
     return (
-      <Frame main={getMainContent()} footer={<p>footer</p>}>
-      </Frame>
+      <Frame main={getMainContent()} footer={<p>footer</p>} />
     );
   }
 }
@@ -59,5 +55,10 @@ function mapStateToProps(state) {
   const { hardware } = state;
   return { hardware };
 }
+
+Hardware.propTypes = {
+  hardware: PropTypes.object,
+  dispatch: PropTypes.func,
+};
 
 export default connect(mapStateToProps)(Hardware);
