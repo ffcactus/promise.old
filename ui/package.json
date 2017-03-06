@@ -6,7 +6,9 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node server",
-        "build": "rimraf dist && webpack --config ./webpack.production.config.js --progress --profile --colors",
+        "clean": "rm -rf dist",
+        "build": "cnpm run clean && webpack --config ./webpack.production.config.js --progress --profile --colors",
+        "deploy": "cnpm run build && scp ./dist/* root@192.168.116.135:/var/www/html",
         "eslint": "eslint ."
     },
     "author": "bin.bai",

@@ -14,9 +14,9 @@ module.exports = {
     path.join(__dirname, 'app/index.js')
   ],
   output: {
-    path: path.join(__dirname, 'public'),
-    filename: 'index.js',
-    publicPath: '/public'
+    path: path.join(__dirname, '/dist/'),
+    filename: '[name].js',
+    publicPath: '/'
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -37,10 +37,10 @@ module.exports = {
     failOnWarning: false,
     failOnError: false
   },
-  postcss: [
-    require('autoprefixer-core'),
-    require('postcss-color-rebeccapurple')
-  ],
+  // postcss: [
+  //   require('autoprefixer-core'),
+  //   require('postcss-color-rebeccapurple')
+  // ],
   module: {
     // preLoaders: [
     //     {

@@ -1,5 +1,6 @@
 import * as types from './types';
 import { browserHistory } from 'react-router';
+// import * as Rest from '../utils/Rest';
 
 function loginRequest(username, password) {
   return {
@@ -30,11 +31,13 @@ function loginSuccess(token) {
 export function login(username, password, afterLoginPath) {
   return dispatch => {
     dispatch(loginRequest(username, password));
-    setTimeout(()=> {
-      dispatch(loginSuccess('myToken'));
-      // TODO
-      // Is it good to do redirection in action?
-      browserHistory.push(afterLoginPath);
-    }, 1000);
+    dispatch(loginSuccess('resposne'));
+    browserHistory.push(afterLoginPath);
+    // Rest.login(username, password).then((resposne) => {
+    //   dispatch(loginSuccess(resposne));
+    //   // TODO
+    //   // Is it good to do redirection in action?
+    //   browserHistory.push(afterLoginPath);
+    // });
   };
 }

@@ -4,11 +4,10 @@ import { render } from 'react-dom';
 import { browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { AppContainer } from 'react-hot-loader';
-import configureStore from './configureStore';
+import store from './configureStore';
 import Root from './containers/Root';
 import * as Action from './actions/GlobalAction';
 
-const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
 store.dispatch(Action.open(window.location.hostname));
 

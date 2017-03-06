@@ -6,14 +6,14 @@ import * as Action from '../actions/SettingAction';
 class Setting extends Component {
   constructor(props) {
     super(props);
-    this.createCorRequest = this.createCorRequest.bind(this);
+    this.createCoreRequest = this.createCoreRequest.bind(this);
     this.onUploadUpgradeBundleDialogOpen = this.onUploadUpgradeBundleDialogOpen.bind(this);
     this.onUploadUpgradeBundleConfirm = this.onUploadUpgradeBundleConfirm.bind(this);
   }
 
-  createCorRequest(method, url, async) {
+  createCoreRequest(method, url, async) {
     let xhr = new XMLHttpRequest();
-    if('withCredentials' in xhr) {
+    if ('withCredentials' in xhr) {
       // Check if the XMLHttpRequest object has a 'withCredentials' property.
       // 'withCredentials' only exists on XMLHTTPRequest2 objects.
       xhr.open(method, url, async);
@@ -40,13 +40,13 @@ class Setting extends Component {
   onUploadUpgradeBundleConfirm(event) {
     event.preventDefault();
     const fd = new FormData();
-    const xhr = this.createCorRequest('POST', 'http://192.168.116.132/rest/setting/upgrade/file', true); // asynchronously.
-    if(!xhr) {
+    const xhr = this.createCoreRequest('POST', 'http://192.168.116.135/rest/login', true); // asynchronously.
+    if (!xhr) {
       throw new Error('CORS not supported');
     }
 
     xhr.onreadystatechange = () => {
-      if(xhr.readyState === 4 && xhr.status === 200) {
+      if (xhr.readyState === 4 && xhr.status === 200) {
         console.log(xhr.responseText);
       }
     };
@@ -70,14 +70,19 @@ class Setting extends Component {
 
     xhr.onprogress = (e) => {
       console.log('onprogress()');
-      if(e.lengthComputable) {
+      if (e.lengthComputable) {
         const percentage = Math.round((e.loaded * 100) / e.total);
         console.log('onprogress() ' + percentage);
       }
     };
 
     fd.append('file', this.props.setting.upgradeBundle);
-    xhr.send(fd);
+    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    xhr.send(JSON.stringify({
+      userName: 'Administrator',
+      domain: 'LOCAL',
+      password: 'admin'
+    }));
   }
 
   render() {
