@@ -1,8 +1,9 @@
 import store from '../configureStore';
 
 const Promise = require('promise');
+const HOST = (process.env.NODE_ENV === 'development') ? '192.168.116.135' : store.getState().global.host;
 
-function createCoreRequest(method, url, async) {
+function createCORSRequest(method, url, async) {
   let xhr = new XMLHttpRequest();
   if ('withCredentials' in xhr) {
     // Check if the XMLHttpRequest object has a 'withCredentials' property.
@@ -22,14 +23,18 @@ function createCoreRequest(method, url, async) {
 
 function doPost(url, request) {
   return new Promise((resolve, reject) => {
-    const xhr = createCoreRequest('POST', url, true);
+    const xhr = createCORSRequest('POST', url, true);
     if (!xhr) {
       throw new Error('CORS not supported');
     }
     xhr.setRequestHeader('Accept', 'application/json');
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     xhr.onload = () => {
-      resolve(xhr.responseText);
+      resolve({
+        response: JSON.parse(xhr.response),
+        status: xhr.status,
+        statusText: xhr.statusText
+      });
     };
     xhr.onerror = (e) => {
       reject(e);
@@ -39,7 +44,7 @@ function doPost(url, request) {
 }
 
 export function login(userName, password) {
-  return doPost('http://192.168.116.135/rest/login', {// + store.getState().global.host, {
+  return doPost('http://' + HOST + '/rest/login', {// + store.getState().global.host, {
     userName,
     password,
     domain: 'LOCAL'
