@@ -1,7 +1,7 @@
 import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
 import global from './GlobalReducer';
-import session from './SessionReducer';
+import { session } from './SessionReducer';
 import activity from './ActivityReducer';
 import hardware from './HardwareReducer';
 import setting from './SettingReducer';

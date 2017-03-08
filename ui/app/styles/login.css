@@ -36,3 +36,25 @@
 	flex-flow: column wrap;
 	align-items: center;
 }
+
+.loginFailureMessage {
+	text-align: center;
+}
+
+.hidden {
+	visibility: hidden
+}
+
+.visible {
+	visibility: visible
+}
+
+.showError {
+	composes: visible;
+	color: red;
+}
+
+.hideError {
+	composes: hidden;
+	color: red;
+}
