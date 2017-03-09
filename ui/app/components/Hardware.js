@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import Frame from './common/Frame';
 import AddHardwareDialog from '../containers/hardware/AddHardwareDialog';
+import { ProgressBar } from '../components/common/ProgressBar';
 import * as Action from '../actions/HardwareAction';
 
 class Hardware extends Component {
@@ -34,6 +35,7 @@ class Hardware extends Component {
       return (
         <div >
           <h1>Hardware</h1>
+          <ProgressBar percentage="50" />
           {
             this.props.hardware.hardwareList.map((hardware) => {
               return (<p key={hardware}>{hardware}</p>);
