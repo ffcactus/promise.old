@@ -5,6 +5,7 @@ public enum PromiseCategory
     TASK ("task"),
     USER ("user"),
     SCOPE ("scope"),
+    SERVER ("server"),
     AA ("auth");
 
     private final String value;

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.promise.module</groupId>
+    <artifactId>server</artifactId>
+    <packaging>war</packaging>
+
+    <parent>
+        <groupId>com.promise</groupId>
+        <artifactId>promise</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <dependencies>
+    <!-- Spring -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+        <version>${org.springframework.boot.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-tomcat</artifactId>
+        <version>${org.springframework.boot.version}</version>
+        <scope>provided</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-orm</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-tx</artifactId>
+    </dependency>
+    <!-- Spring AOP and AspectJ -->
+    <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjrt</artifactId>
+        <version>${org.aspectj.version}</version>
+        <scope>runtime</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjtools</artifactId>
+        <version>${org.aspectj.version}</version>
+    </dependency>
+    <!-- Hibernate -->
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>${org.hibernate.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>${org.postgresql.version}</version>
+    </dependency>        
+        <!-- Promise -->
+        <dependency>
+            <groupId>com.promise.module</groupId>
+            <artifactId>common</artifactId>
+            <version>${com.promise.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.promise.module</groupId>
+            <artifactId>server-sdk</artifactId>
+            <version>${com.promise.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.promise.module</groupId>
+            <artifactId>auth-sdk</artifactId>
+            <version>${com.promise.version}</version>
+        </dependency>        
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>${org.apache.tomcat.maven.version}</version>
+                <configuration>
+                    <url>http://${server_ip}:8080/manager/text</url>
+                    <server>Promise0</server>
+                    <path>/server</path>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
