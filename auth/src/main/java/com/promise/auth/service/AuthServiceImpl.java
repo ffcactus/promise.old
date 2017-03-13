@@ -19,11 +19,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.promise.auth.sdk.client.AuthClient;
 import com.promise.auth.sdk.dto.PostAuthResponse;
 import com.promise.auth.sdk.dto.PostLoginRequest;
 import com.promise.auth.sdk.dto.PostLoginResponse;
 import com.promise.common.PromiseAccessPoint;
+import com.promise.common.PromiseClient;
 import com.promise.common.PromiseToken;
 import com.promise.common.PromiseUser;
 import com.promise.common.constant.PromiseCategory;
@@ -52,7 +52,7 @@ public class AuthServiceImpl implements AuthServiceInterface
         try
         {
             localToken = new PromiseToken(UUID.randomUUID().toString());
-            final Path file = Paths.get(AuthClient.LOCAL_TOKEN_FILE);
+            final Path file = Paths.get(PromiseClient.LOCAL_TOKEN_FILE);
             final List<String> lines = Arrays.asList(localToken.getValue());
             Files.write(file, lines, Charset.forName("UTF-8"), StandardOpenOption.CREATE);
         }

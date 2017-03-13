@@ -19,6 +19,13 @@ public class PostTaskStepRequest
 
     }
 
+    public PostTaskStepRequest(String name, String description, int expectedExcutionMs)
+    {
+        this.name = name;
+        this.description = description;
+        this.expectedExcutionMs = expectedExcutionMs;
+    }
+
     public String getName()
     {
         return name;

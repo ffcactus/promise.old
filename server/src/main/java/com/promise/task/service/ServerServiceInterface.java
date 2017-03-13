@@ -3,6 +3,7 @@ package com.promise.task.service;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.task.sdk.dto.AddServerRequest;
+import com.promise.task.sdk.dto.AddServerResponse;
 import com.promise.task.sdk.dto.GetServerResponse;
 
 public interface ServerServiceInterface
@@ -15,7 +16,7 @@ public interface ServerServiceInterface
      * @return The DTO that represents the server added.
      * @throws Exception
      */
-    public GetServerResponse addServer(AddServerRequest request)
+    public AddServerResponse addServer(AddServerRequest request)
             throws InvalidRequestBodyException;
 
     /**

@@ -26,6 +26,7 @@ import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.common.exception.PromiseException;
 import com.promise.task.sdk.dto.AddServerRequest;
+import com.promise.task.sdk.dto.AddServerResponse;
 import com.promise.task.sdk.dto.GetServerResponse;
 import com.promise.task.service.ServerServiceInterface;
 
@@ -75,12 +76,12 @@ public class ServerPublicController
      *
      * @param header The header of the HTTP request.
      * @param request The HTTP request.
-     * @return The HTTP response that represents the server added.
+     * @return The HTTP response that represents the adding server action.
      * @throws Exception
      */
     @PromisePublicInterface
     @PostMapping("/server")
-    public ResponseEntity<GetServerResponse> addServer(
+    public ResponseEntity<AddServerResponse> addServer(
             @RequestHeader Map<String, String> header,
             @RequestBody AddServerRequest request)
             throws InvalidRequestBodyException

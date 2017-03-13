@@ -7,7 +7,12 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -19,6 +24,35 @@ public class PromiseClient
 {
     public static final int CONNECTION_TIMEOUT = 1000;
     public static final int READ_TIMEOUT = 1000;
+    public final static String URL_HEAD = "http://localhost";
+    public static final String LOCAL_TOKEN_FILE = "/tmp/promise_local_token";
+
+    /**
+     * Get the module token
+     *
+     * @param ModuleName The name of the module.
+     * @return The module token, or null if any error.
+     */
+    public static PromiseToken getModuleToken(String ModuleName)
+    {
+        final Path file = Paths.get(LOCAL_TOKEN_FILE);
+        try
+        {
+            final List<String> content = Files.readAllLines(file, StandardCharsets.UTF_8);
+            if ((content != null) && (content.size() > 0))
+            {
+                return new PromiseToken(content.get(0));
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch (final IOException e)
+        {
+            return null;
+        }
+    }
 
     public static Map<String, String> makeHeader(PromiseToken token, PromiseAccessPoint accessPoint)
     {
@@ -64,6 +98,15 @@ public class PromiseClient
         }
     }
 
+    /**
+     * Common HTTP POST operation.
+     *
+     * @param url The URL of the operation.
+     * @param request The request.
+     * @param header The header of the request.
+     * @param responseClass The class of the response.
+     * @return The response of the operation.
+     */
     public static <T, E> ResponseEntity<T> httpPost(String url, E request, Map<String, String> header, Class<T> responseClass)
     {
         HttpURLConnection c = null;
@@ -137,6 +180,96 @@ public class PromiseClient
         return null;
     }
 
+    /**
+     * Common HTTP PUT operation.
+     *
+     * @param url The URL of the operation.
+     * @param request The request.
+     * @param header The header of the request.
+     * @param responseClass The class of the response.
+     * @return The response of the operation.
+     */
+    public static <T, E> ResponseEntity<T> httpPut(String url, E request, Map<String, String> header, Class<T> responseClass)
+    {
+        HttpURLConnection c = null;
+        try
+        {
+            final URL u = new URL(url);
+            c = (HttpURLConnection) u.openConnection();
+            c.setRequestMethod("PUT");
+            c.setConnectTimeout(CONNECTION_TIMEOUT);
+            c.setReadTimeout(READ_TIMEOUT);
+            c.setDoInput(true);
+            c.setDoOutput(true);
+            c.setUseCaches(false);
+            c.setAllowUserInteraction(false);
+            c.setRequestProperty("Content-Type", "application/json");
+            c.setRequestProperty("Accept", "application/json");
+            if (header != null)
+            {
+                for (final String key : header.keySet())
+                {
+                    c.setRequestProperty(key, header.get(key));
+                }
+            }
+            final OutputStream os = c.getOutputStream();
+            if (request != null)
+            {
+                os.write(new ObjectMapper().writeValueAsBytes(request));
+                os.flush();
+            }
+
+            c.connect();
+            final int status = c.getResponseCode();
+            switch (status)
+            {
+                case 200:
+                case HttpURLConnection.HTTP_CREATED:
+                    final BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
+                    final StringBuilder sb = new StringBuilder();
+                    String line;
+                    while ((line = br.readLine()) != null)
+                    {
+                        sb.append(line + "\n");
+                    }
+                    br.close();
+                    final ObjectMapper mapper = new ObjectMapper();
+                    return new ResponseEntity<>(mapper.readValue(sb.toString(), responseClass), HttpStatus.valueOf(status));
+            }
+        }
+        catch (final MalformedURLException ex)
+        {
+            System.out.println(ex);
+        }
+        catch (final IOException ex)
+        {
+            System.out.println(ex);
+        }
+        finally
+        {
+            if (c != null)
+            {
+                try
+                {
+                    c.disconnect();
+                }
+                catch (final Exception ex)
+                {
+                    System.out.println(ex);
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * The common HTTP GET operation.
+     *
+     * @param url The URL of the operation.
+     * @param header The header of the request.
+     * @param responseClass The class of response
+     * @return The response of the operation.
+     */
     public static <T> ResponseEntity<T> httpGet(String url, Map<String, String> header, Class<T> responseClass)
     {
         HttpURLConnection c = null;
@@ -203,6 +336,13 @@ public class PromiseClient
         return null;
     }
 
+    /**
+     * The common HTTP DELETE operation.
+     * 
+     * @param url The URL of the operation.
+     * @param header THe Header of the request.
+     * @return The response of the operation.
+     */
     public static ResponseEntity<String> httpDelete(String url, Map<String, String> header)
     {
         HttpURLConnection c = null;

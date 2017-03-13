@@ -70,6 +70,11 @@
         </dependency>
         <dependency>
             <groupId>com.promise.module</groupId>
+            <artifactId>task-sdk</artifactId>
+            <version>${com.promise.version}</version>
+        </dependency>        
+        <dependency>
+            <groupId>com.promise.module</groupId>
             <artifactId>auth-sdk</artifactId>
             <version>${com.promise.version}</version>
         </dependency>        
