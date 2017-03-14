@@ -5,8 +5,8 @@ import javax.persistence.Table;
 
 import com.promise.common.PromiseEntity;
 
-@Entity(name = "task")
-@Table(name = "task")
+@Entity(name = "server")
+@Table(name = "server")
 public class ServerEntity extends PromiseEntity
 {
 

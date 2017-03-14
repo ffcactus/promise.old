@@ -3,17 +3,14 @@ package com.promise.task.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.promise.common.constant.PromiseCategory;
-import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
-import com.promise.server.dao.ServerDaoInterface;
+import com.promise.server.process.AddServerProcess;
 import com.promise.task.sdk.client.TaskClient;
 import com.promise.task.sdk.dto.AddServerRequest;
 import com.promise.task.sdk.dto.AddServerResponse;
@@ -26,8 +23,6 @@ import com.promise.task.sdk.dto.PostTaskStepRequest;
 @Transactional
 public class ServerServiceImpl implements ServerServiceInterface
 {
-    @Autowired
-    private ServerDaoInterface taskDao;
     private final static PostTaskStepRequest ADD_SERVER_TASK_STEP[] = {
             new PostTaskStepRequest("Check connection", "Check the connection to the server.", 3 * 1000),
             new PostTaskStepRequest("Get basic information", "Get the basic information of the server.", 3 * 1000),
@@ -39,40 +34,39 @@ public class ServerServiceImpl implements ServerServiceInterface
     public AddServerResponse addServer(AddServerRequest request)
             throws InvalidRequestBodyException
     {
-        try
+
+        final CreateTaskRequest taskRequest = new CreateTaskRequest();
+        taskRequest.setName("Add Server");
+        taskRequest.setDescription("Add a server to the management platform.");
+        taskRequest.setExpectedExcutionMs(20 * 1000);
+        taskRequest.setStepList(fromArray(ADD_SERVER_TASK_STEP));
+        final ResponseEntity<GetTaskResponse> createTaskResponse = TaskClient.createTask(taskRequest);
+        if (createTaskResponse.getStatusCode() == HttpStatus.CREATED)
         {
-            final CreateTaskRequest taskRequest = new CreateTaskRequest();
-            taskRequest.setName("Add Server");
-            taskRequest.setDescription("Add a server to the management platform.");
-            taskRequest.setExpectedExcutionMs(20 * 1000);
-            taskRequest.setStepList(fromArray(ADD_SERVER_TASK_STEP));
-            final ResponseEntity<GetTaskResponse> createTaskResponse = TaskClient.createTask(taskRequest);
-            if (createTaskResponse.getStatusCode() == HttpStatus.CREATED)
-            {
-
-                taskDao.create(request);
-            }
-
+            final String taskUri = createTaskResponse.getBody().getUri();
+            final Runnable process = new AddServerProcess(request, taskUri);
+            process.run();
+            final AddServerResponse ret = new AddServerResponse();
+            ret.setTaskUri(taskUri);
             return new AddServerResponse();
         }
-        catch (final DbOperationException e)
-        {
-            throw new InvalidRequestBodyException(e, PromiseCategory.TASK);
-        }
+        final AddServerResponse ret = new AddServerResponse();
+        return ret;
+
     }
 
     @Override
     public GetServerResponse getServer(String id)
             throws NoDbInstanceException
     {
-        return taskDao.get(id);
+        return null;
     }
 
     @Override
     public void removeServer(String id)
             throws NoDbInstanceException
     {
-        taskDao.delete(id);
+
     }
 
     /**
