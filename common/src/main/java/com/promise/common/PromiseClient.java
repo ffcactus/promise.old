@@ -19,11 +19,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.promise.common.exception.PromiseException;
 
 public class PromiseClient
 {
-    public static final int CONNECTION_TIMEOUT = 1000;
-    public static final int READ_TIMEOUT = 1000;
+    public static final int CONNECTION_TIMEOUT = 3 * 1000;
+    public static final int READ_TIMEOUT = 3 * 1000;
     public final static String URL_HEAD = "http://localhost";
     public static final String LOCAL_TOKEN_FILE = "/tmp/promise_local_token";
 
@@ -99,6 +100,26 @@ public class PromiseClient
     }
 
     /**
+     * When you are sure the response always is a fixed class, use this one.
+     * Or use httpPost.
+     *
+     * @param url
+     * @param request
+     * @param header
+     * @param responseClass
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public static <T, E> ResponseEntity<T> httpPostAndConvert(
+            String url,
+            E request,
+            Map<String, String> header,
+            Class<T> responseClass)
+    {
+        return (ResponseEntity<T>) httpPost(url, request, header, responseClass);
+    }
+
+    /**
      * Common HTTP POST operation.
      *
      * @param url The URL of the operation.
@@ -107,7 +128,7 @@ public class PromiseClient
      * @param responseClass The class of the response.
      * @return The response of the operation.
      */
-    public static <T, E> ResponseEntity<T> httpPost(String url, E request, Map<String, String> header, Class<T> responseClass)
+    public static <T, E> ResponseEntity<?> httpPost(String url, E request, Map<String, String> header, Class<?> responseClass)
     {
         HttpURLConnection c = null;
         try
@@ -137,22 +158,38 @@ public class PromiseClient
                 os.flush();
             }
 
-            c.connect();
+            try
+            {
+                c.connect();
+            }
+            catch (final IOException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                return new ResponseEntity<>(null, HttpStatus.valueOf(HttpURLConnection.HTTP_INTERNAL_ERROR));
+            }
             final int status = c.getResponseCode();
+            final BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
+            final StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null)
+            {
+                sb.append(line + "\n");
+            }
+            br.close();
+            final ObjectMapper mapper = new ObjectMapper();
             switch (status)
             {
-                case 200:
+                case HttpURLConnection.HTTP_OK:
                 case HttpURLConnection.HTTP_CREATED:
-                    final BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
-                    final StringBuilder sb = new StringBuilder();
-                    String line;
-                    while ((line = br.readLine()) != null)
-                    {
-                        sb.append(line + "\n");
-                    }
-                    br.close();
-                    final ObjectMapper mapper = new ObjectMapper();
                     return new ResponseEntity<>(mapper.readValue(sb.toString(), responseClass), HttpStatus.valueOf(status));
+                case HttpURLConnection.HTTP_INTERNAL_ERROR:
+                    return new ResponseEntity<>(
+                            mapper.readValue(sb.toString(), PromiseException.class),
+                            HttpStatus.valueOf(status));
+                default:
+                    // TODO
+                    return new ResponseEntity<>(null, HttpStatus.valueOf(status));
             }
         }
         catch (final MalformedURLException ex)
@@ -220,6 +257,7 @@ public class PromiseClient
             }
 
             c.connect();
+
             final int status = c.getResponseCode();
             switch (status)
             {
@@ -338,7 +376,7 @@ public class PromiseClient
 
     /**
      * The common HTTP DELETE operation.
-     * 
+     *
      * @param url The URL of the operation.
      * @param header THe Header of the request.
      * @return The response of the operation.

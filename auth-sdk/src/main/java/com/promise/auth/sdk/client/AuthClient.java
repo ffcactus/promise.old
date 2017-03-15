@@ -13,7 +13,7 @@ public class AuthClient
 {
     public static ResponseEntity<PostAuthResponse> aa(PromiseToken token, PromiseAccessPoint accessPoint)
     {
-        return PromiseClient.httpPost(
+        return PromiseClient.httpPostAndConvert(
                 PromiseClient.URL_HEAD + "/rest/private/auth",
                 null,
                 PromiseClient.makeHeader(token, accessPoint),
@@ -26,7 +26,7 @@ public class AuthClient
         request.setUserName(username);
         request.setPassword(password);
         request.setDomain(domain);
-        return PromiseClient.httpPost(
+        return PromiseClient.httpPostAndConvert(
                 PromiseClient.URL_HEAD + "/rest/login",
                 request,
                 null,

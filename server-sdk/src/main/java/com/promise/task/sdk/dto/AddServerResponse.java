@@ -25,4 +25,14 @@ public class AddServerResponse
     {
         this.taskUri = taskUri;
     }
+
+    public PromiseException getException()
+    {
+        return exception;
+    }
+
+    public void setException(PromiseException exception)
+    {
+        this.exception = exception;
+    }
 }

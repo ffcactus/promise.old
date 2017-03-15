@@ -22,8 +22,8 @@ public class TaskServiceImpl implements TaskServiceInterface
     @Autowired
     private TaskDaoInterface taskDao;
 
-    @Autowired
-    private TestServiceInterface testDao;
+    //@Autowired
+    //private TestServiceInterface testDao;
 
     @Override
     public GetTaskResponse createTask(CreateTaskRequest request)
@@ -50,14 +50,15 @@ public class TaskServiceImpl implements TaskServiceInterface
     public UpdateTaskResponse updateTask(String id, UpdateTaskRequest request)
             throws NoDbInstanceException
     {
-        return taskDao.updateTask(id, request);
+        //return taskDao.updateTask(id, request);
+        return null;
     }
 
     @Override
     public void deleteTask(String id)
             throws NoDbInstanceException
     {
-        taskDao.delete(id);
+        //taskDao.delete(id);
     }
 
 }

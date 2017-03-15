@@ -7,11 +7,11 @@ import com.promise.task.sdk.dto.UpdateTaskRequest;
 public class AddServerProcess implements Runnable
 {
     private final String taskUrl;
-    private final AddServerRequest request;
+    //    private final AddServerRequest request;
 
     public AddServerProcess(AddServerRequest request, String taskUrl)
     {
-        this.request = request;
+        //        this.request = request;
         this.taskUrl = taskUrl;
     }
 

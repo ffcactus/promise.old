@@ -40,18 +40,27 @@ public class ServerServiceImpl implements ServerServiceInterface
         taskRequest.setDescription("Add a server to the management platform.");
         taskRequest.setExpectedExcutionMs(20 * 1000);
         taskRequest.setStepList(fromArray(ADD_SERVER_TASK_STEP));
-        final ResponseEntity<GetTaskResponse> createTaskResponse = TaskClient.createTask(taskRequest);
-        if (createTaskResponse.getStatusCode() == HttpStatus.CREATED)
+        final ResponseEntity<?> createTaskResponseEntity = TaskClient.createTask(taskRequest);
+        if (createTaskResponseEntity.getBody() instanceof GetTaskResponse)
         {
-            final String taskUri = createTaskResponse.getBody().getUri();
-            final Runnable process = new AddServerProcess(request, taskUri);
-            process.run();
+            if (createTaskResponseEntity.getStatusCode() == HttpStatus.CREATED)
+            {
+                final GetTaskResponse taskResponse = (GetTaskResponse) createTaskResponseEntity.getBody();
+                final String taskUri = taskResponse.getUri();
+                final Runnable process = new AddServerProcess(request, taskUri);
+                process.run();
+                final AddServerResponse ret = new AddServerResponse();
+                ret.setTaskUri(taskUri);
+                return new AddServerResponse();
+            }
             final AddServerResponse ret = new AddServerResponse();
-            ret.setTaskUri(taskUri);
-            return new AddServerResponse();
+            return ret;
         }
-        final AddServerResponse ret = new AddServerResponse();
-        return ret;
+        else
+        {
+            System.out.println("Failed to create the task... Not combined token?");
+            return null;
+        }
 
     }
 

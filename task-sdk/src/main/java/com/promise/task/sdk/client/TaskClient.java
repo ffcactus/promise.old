@@ -11,13 +11,14 @@ import com.promise.task.sdk.dto.UpdateTaskRequest;
 public class TaskClient
 {
 
-    public static ResponseEntity<GetTaskResponse> createTask(CreateTaskRequest request)
+    public static ResponseEntity<?> createTask(CreateTaskRequest request)
     {
-        return PromiseClient.httpPost(
+        final ResponseEntity<?> ret = PromiseClient.httpPost(
                 PromiseClient.URL_HEAD + "/rest/task",
                 request,
                 PromiseClient.makeHeader(PromiseClient.getModuleToken(PromiseCategory.TASK.getValue()), null),
                 GetTaskResponse.class);
+        return ret;
     }
 
     public static ResponseEntity<GetTaskResponse> updateTask(String url, UpdateTaskRequest request)
