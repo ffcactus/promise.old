@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -27,6 +29,8 @@ public class PromiseClient
     public static final int READ_TIMEOUT = 20 * 1000;
     public final static String URL_HEAD = "http://localhost";
     public static final String LOCAL_TOKEN_FILE = "/tmp/promise_local_token";
+
+    private final static Logger log = LoggerFactory.getLogger(PromiseClient.class);
 
     /**
      * Get the module token
@@ -133,6 +137,7 @@ public class PromiseClient
         HttpURLConnection c = null;
         try
         {
+            log.info("POST to " + url);
             final URL u = new URL(url);
             c = (HttpURLConnection) u.openConnection();
             c.setRequestMethod("POST");
@@ -157,29 +162,11 @@ public class PromiseClient
                 os.write(new ObjectMapper().writeValueAsBytes(request));
                 os.flush();
             }
-
-            try
-            {
-                c.connect();
-            }
-            catch (final IOException e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                return new ResponseEntity<>(null, HttpStatus.valueOf(HttpURLConnection.HTTP_INTERNAL_ERROR));
-            }
-            int status;
-            try
-            {
-                status = c.getResponseCode();
-            }
-            catch (final IOException e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                return new ResponseEntity<>(null, HttpStatus.valueOf(HttpURLConnection.HTTP_INTERNAL_ERROR));
-            }
-
+            log.info("POST to " + url + " connect()");
+            c.connect();
+            log.info("POST to " + url + " getResponseCode()");
+            final int status = c.getResponseCode();
+            log.info("POST to " + url + " getInputStream()");
             final BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
             final StringBuilder sb = new StringBuilder();
             String line;
@@ -187,8 +174,10 @@ public class PromiseClient
             {
                 sb.append(line + "\n");
             }
+            log.info("POST to " + url + " close()");
             br.close();
             final ObjectMapper mapper = new ObjectMapper();
+            log.info("Post to " + url + " return " + status);
             switch (status)
             {
                 case HttpURLConnection.HTTP_OK:
@@ -205,11 +194,11 @@ public class PromiseClient
         }
         catch (final MalformedURLException ex)
         {
-            System.out.println(ex);
+            log.info("Post to " + url + " MalformedURLException");
         }
         catch (final IOException ex)
         {
-            System.out.println(ex);
+            log.info("Post to " + url + " IOException");
         }
         finally
         {
@@ -221,10 +210,11 @@ public class PromiseClient
                 }
                 catch (final Exception ex)
                 {
-                    System.out.println(ex);
+                    log.warn("Post to " + url + " disconnect() IOException");
                 }
             }
         }
+        log.info("Post to " + url + " return null");
         return null;
     }
 

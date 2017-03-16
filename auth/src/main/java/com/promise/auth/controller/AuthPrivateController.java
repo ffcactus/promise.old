@@ -62,11 +62,12 @@ public class AuthPrivateController
     @PostMapping("/auth")
     public ResponseEntity<PostAuthResponse> auth(@RequestHeader Map<String, String> header)
     {
+        log.info("POST /auth begin");
         final PromiseToken token = PromiseClient.getToken(header);
         final PromiseAccessPoint accessPoint = PromiseClient.getAccessPoint(header);
         final PostAuthResponse response = authService.auth(token, accessPoint);
+        log.info("POST /auth done, authenticated = " + response.isAuthenticated() + " authorized = " + response.isAuthorized());
         return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
 
 }

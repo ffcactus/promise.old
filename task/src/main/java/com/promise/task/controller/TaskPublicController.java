@@ -71,7 +71,8 @@ public class TaskPublicController
             log.info("Handling unknown Exception " + ex.getStackTrace());
             response = PromiseErrorResponse.makeInstance(new InternelErrorException(PromiseCategory.TASK));
         }
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        log.info("Exception return " + response.getDescription() + ", HTTP status = " + HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
@@ -89,7 +90,10 @@ public class TaskPublicController
             @RequestBody CreateTaskRequest request)
             throws InvalidRequestBodyException
     {
-        return new ResponseEntity<>(taskService.createTask(request), HttpStatus.CREATED);
+        log.info("POST /task begin, task name " + request.getName());
+        final ResponseEntity<GetTaskResponse> ret = new ResponseEntity<>(taskService.createTask(request), HttpStatus.CREATED);
+        log.info("POST /task done, task name = " + ret.getBody().getName() + " HTTP status = " + HttpStatus.CREATED);
+        return ret;
     }
 
     /**

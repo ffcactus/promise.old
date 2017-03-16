@@ -8,6 +8,8 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,9 @@ import com.promise.common.exception.InvalidTokenException;
 @Component
 public class PromiseAuthAspect
 {
+
+    private final Logger log = LoggerFactory.getLogger(PromiseAuthAspect.class);
+
     @Before("@annotation(com.promise.auth.sdk.aspect.PromisePublicInterface)")
     public void promisePublicInterfaceAspect(JoinPoint jp)
             throws InvalidTokenException
@@ -56,12 +61,19 @@ public class PromiseAuthAspect
                         }
                         else
                         {
-
+                            log.warn("Throwing InvalidTokenException authenticated = "
+                                    +
+                                    response.getBody().isAuthenticated()
+                                    +
+                                    " authorized = "
+                                    +
+                                    response.getBody().isAuthorized());
                             throw new InvalidTokenException();
                         }
                     }
                     else
                     {
+                        log.warn("Throwing InvalidTokenException response status code = " + response.getStatusCode());
                         throw new InvalidTokenException();
                     }
                 }

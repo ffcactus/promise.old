@@ -56,6 +56,7 @@ public class AuthServiceImpl implements AuthServiceInterface
             final Path file = Paths.get(PromiseClient.LOCAL_TOKEN_FILE);
             final List<String> lines = Arrays.asList(localToken.getValue());
             Files.write(file, lines, Charset.forName("UTF-8"), StandardOpenOption.CREATE);
+            log.info("Local token created.");
         }
         catch (final IOException e)
         {

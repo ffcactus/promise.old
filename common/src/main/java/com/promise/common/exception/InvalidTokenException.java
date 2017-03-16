@@ -15,7 +15,7 @@ public class InvalidTokenException extends PromiseException
         super();
         this.setCategory(PromiseCategory.AA);
         this.setName(PromiseCategory.AA.name());
-        this.setDescription("Operation permitted.");
+        this.setDescription("Operation not permitted.");
         final String[] reason = {
                 "Missing token in the header.",
                 "Invalied token."
