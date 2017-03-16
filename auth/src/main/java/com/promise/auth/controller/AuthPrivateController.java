@@ -4,7 +4,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class AuthPrivateController
     @Autowired
     private AuthServiceInterface authService;
 
-    private final Logger log = Logger.getLogger(AuthPrivateController.class);
+    private final Logger log = LoggerFactory.getLogger(AuthPrivateController.class);
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<PromiseErrorResponse> exceptionHandler(HttpServletRequest req, Exception ex)

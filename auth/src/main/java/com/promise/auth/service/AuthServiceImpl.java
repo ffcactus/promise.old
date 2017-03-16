@@ -13,7 +13,8 @@ import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -36,7 +37,7 @@ import com.promise.common.exception.NoDbInstanceException;
 @Transactional
 public class AuthServiceImpl implements AuthServiceInterface
 {
-    private static final Logger log = Logger.getLogger(AuthServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(AuthServiceImpl.class);
 
     @Autowired
     private UserServiceInterface userService;
@@ -58,7 +59,7 @@ public class AuthServiceImpl implements AuthServiceInterface
         }
         catch (final IOException e)
         {
-            log.fatal("Failed to create a local token");
+            log.error("Failed to create a local token");
         }
     }
 

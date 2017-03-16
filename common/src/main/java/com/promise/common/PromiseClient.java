@@ -23,8 +23,8 @@ import com.promise.common.exception.PromiseException;
 
 public class PromiseClient
 {
-    public static final int CONNECTION_TIMEOUT = 3 * 1000;
-    public static final int READ_TIMEOUT = 3 * 1000;
+    public static final int CONNECTION_TIMEOUT = 20 * 1000;
+    public static final int READ_TIMEOUT = 20 * 1000;
     public final static String URL_HEAD = "http://localhost";
     public static final String LOCAL_TOKEN_FILE = "/tmp/promise_local_token";
 
@@ -168,7 +168,18 @@ public class PromiseClient
                 e.printStackTrace();
                 return new ResponseEntity<>(null, HttpStatus.valueOf(HttpURLConnection.HTTP_INTERNAL_ERROR));
             }
-            final int status = c.getResponseCode();
+            int status;
+            try
+            {
+                status = c.getResponseCode();
+            }
+            catch (final IOException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                return new ResponseEntity<>(null, HttpStatus.valueOf(HttpURLConnection.HTTP_INTERNAL_ERROR));
+            }
+
             final BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
             final StringBuilder sb = new StringBuilder();
             String line;

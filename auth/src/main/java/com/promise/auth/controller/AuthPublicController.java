@@ -6,7 +6,8 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,7 +61,7 @@ public class AuthPublicController
     @Autowired
     private ScopeServiceInterface scopeService;
 
-    private final Logger log = Logger.getLogger(AuthPublicController.class);
+    private final Logger log = LoggerFactory.getLogger(AuthPublicController.class);
 
     /**
      * The exception handler for this controller.

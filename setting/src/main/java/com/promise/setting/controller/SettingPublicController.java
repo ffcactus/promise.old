@@ -7,7 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ import com.promise.common.exception.PromiseException;
 @RequestMapping("/rest")
 public class SettingPublicController
 {
-    private final Logger log = Logger.getLogger(SettingPublicController.class);
+    private final Logger log = LoggerFactory.getLogger(SettingPublicController.class);
 
     /**
      * The exception handler for this controller.
