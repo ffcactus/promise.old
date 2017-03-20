@@ -23,6 +23,7 @@ import com.promise.auth.util.PasswordUtil;
 import com.promise.auth.util.PasswordUtil.HashResult;
 import com.promise.common.PromiseUser;
 import com.promise.common.constant.PromiseCategory;
+import com.promise.common.dto.PromiseHttpOperationResponse;
 import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
@@ -75,7 +76,7 @@ public class UserServiceImpl implements UserServiceInterface
     }
 
     @Override
-    public GetUserResponse createUser(CreateUserRequest createUserRequest)
+    public PromiseHttpOperationResponse createUser(CreateUserRequest createUserRequest)
             throws InvalidRequestBodyException
     {
         try
@@ -113,10 +114,9 @@ public class UserServiceImpl implements UserServiceInterface
     }
 
     @Override
-    public void deleteUser(String id)
-            throws NoDbInstanceException
+    public PromiseHttpOperationResponse deleteUser(String id)
     {
-        userDao.delete(id);
+        return userDao.delete(id);
     }
 
 }

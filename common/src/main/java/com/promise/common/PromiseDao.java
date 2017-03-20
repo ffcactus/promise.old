@@ -15,6 +15,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.promise.common.constant.PromiseCategory;
+import com.promise.common.dto.PromiseHttpOperationResponse;
 import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.util.PromiseUtil;
@@ -42,16 +43,18 @@ public abstract class PromiseDao<E, C, G> implements PromiseDaoInterface<C, G>
     public abstract E fromCreateRequestToEntity(C request)
             throws DbOperationException;
 
+    public abstract PromiseHttpOperationResponse fromEntityToOperationResponse(E entity);
+
     public abstract G fromEntityToGetResponse(E entity);
 
     @Override
-    public G create(C request)
+    public PromiseHttpOperationResponse create(C request)
             throws DbOperationException
     {
         final E entity = fromCreateRequestToEntity(request);
         getSession().save(entity);
         getSession().flush();
-        return fromEntityToGetResponse(entity);
+        return fromEntityToOperationResponse(entity);
     }
 
     @Override
@@ -77,8 +80,7 @@ public abstract class PromiseDao<E, C, G> implements PromiseDaoInterface<C, G>
     }
 
     @Override
-    public void delete(String id)
-            throws NoDbInstanceException
+    public PromiseHttpOperationResponse delete(String id)
     {
         E entity;
         try
@@ -87,14 +89,15 @@ public abstract class PromiseDao<E, C, G> implements PromiseDaoInterface<C, G>
         }
         catch (final IllegalArgumentException e)
         {
-            throw new NoDbInstanceException(category);
+            return null;
         }
 
         if (entity == null)
         {
-            throw new NoDbInstanceException(category);
+            return null;
         }
         getSession().delete(entity);
+        return null;
     }
 
     @Override

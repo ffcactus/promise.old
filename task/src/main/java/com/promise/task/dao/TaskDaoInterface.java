@@ -23,7 +23,7 @@ public interface TaskDaoInterface extends PromiseDaoInterface<CreateTaskRequest,
 
     /**
      * Get a list of task.
-     * 
+     *
      * @param start
      * @param count
      * @return

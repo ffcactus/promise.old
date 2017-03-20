@@ -11,6 +11,7 @@ import com.promise.common.PromiseExecutionResultState;
 import com.promise.common.PromiseExecutionState;
 import com.promise.common.PromiseTaskStep;
 import com.promise.common.constant.PromiseCategory;
+import com.promise.common.dto.PromiseHttpOperationResponse;
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.task.entity.ExecutionResult;
 import com.promise.task.entity.TaskEntity;
@@ -133,6 +134,13 @@ public class TaskDaoImpl extends PromiseDao<TaskEntity, CreateTaskRequest, GetTa
         response.setSubTaskUriList(subTaskUriList);
         return response;
 
+    }
+
+    @Override
+    public PromiseHttpOperationResponse fromEntityToOperationResponse(TaskEntity entity)
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.promise.auth.sdk.aspect.PromisePublicInterface;
 import com.promise.common.PromiseErrorResponse;
 import com.promise.common.constant.PromiseCategory;
+import com.promise.common.dto.PromiseHttpOperationResponse;
+import com.promise.common.dto.PromiseOperationResponse;
 import com.promise.common.exception.InternelErrorException;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
@@ -85,14 +87,17 @@ public class TaskPublicController
      */
     @PromisePublicInterface
     @PostMapping("/task")
-    public ResponseEntity<GetTaskResponse> postTask(
+    public ResponseEntity<PromiseOperationResponse> postTask(
             @RequestHeader Map<String, String> header,
             @RequestBody CreateTaskRequest request)
             throws InvalidRequestBodyException
     {
         log.info("POST /task begin, task name " + request.getName());
-        final ResponseEntity<GetTaskResponse> ret = new ResponseEntity<>(taskService.createTask(request), HttpStatus.CREATED);
-        log.info("POST /task done, task name = " + ret.getBody().getName() + " HTTP status = " + HttpStatus.CREATED);
+        final PromiseHttpOperationResponse serviceRet = taskService.createTask(request);
+        final ResponseEntity<PromiseOperationResponse> ret = new ResponseEntity<>(
+                serviceRet.getResponse(),
+                serviceRet.getHttpStatus());
+        log.info("POST /task done, task name = " + request.getName() + " HTTP status = " + serviceRet.getHttpStatus());
         return ret;
     }
 

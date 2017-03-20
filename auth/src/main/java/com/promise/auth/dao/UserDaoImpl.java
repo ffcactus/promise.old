@@ -20,6 +20,7 @@ import com.promise.common.PromiseDao;
 import com.promise.common.PromiseEntity;
 import com.promise.common.PromiseUser;
 import com.promise.common.constant.PromiseCategory;
+import com.promise.common.dto.PromiseHttpOperationResponse;
 import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.util.PromiseUtil;
@@ -146,6 +147,13 @@ public class UserDaoImpl extends PromiseDao<UserEntity, CreateUserRequest, GetUs
         ret.setCount(list.size());
         ret.setMemberList(list);
         return ret;
+    }
+
+    @Override
+    public PromiseHttpOperationResponse fromEntityToOperationResponse(UserEntity entity)
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

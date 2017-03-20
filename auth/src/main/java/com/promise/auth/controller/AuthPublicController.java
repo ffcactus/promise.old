@@ -39,6 +39,8 @@ import com.promise.common.PromiseAccessPoint;
 import com.promise.common.PromiseErrorResponse;
 import com.promise.common.PromiseToken;
 import com.promise.common.constant.PromiseCategory;
+import com.promise.common.dto.PromiseHttpOperationResponse;
+import com.promise.common.dto.PromiseOperationResponse;
 import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.InternelErrorException;
 import com.promise.common.exception.InvalidRequestBodyException;
@@ -117,12 +119,13 @@ public class AuthPublicController
      */
     @PromisePublicInterface
     @PostMapping("/user")
-    ResponseEntity<GetUserResponse> createUser(
+    ResponseEntity<PromiseOperationResponse> createUser(
             @RequestHeader Map<String, String> header,
             @RequestBody CreateUserRequest request)
             throws InvalidRequestBodyException
     {
-        return new ResponseEntity<>(userService.createUser(request), HttpStatus.CREATED);
+        final PromiseHttpOperationResponse serviceRet = userService.createUser(request);
+        return new ResponseEntity<>(serviceRet.getResponse(), serviceRet.getHttpStatus());
     }
 
     @PromisePublicInterface
@@ -173,19 +176,12 @@ public class AuthPublicController
      */
     @PromisePublicInterface
     @DeleteMapping("/user/{id}")
-    public ResponseEntity<String> deleteUser(
+    public ResponseEntity<PromiseOperationResponse> deleteUser(
             @RequestHeader Map<String, String> header,
             @PathVariable String id)
     {
-        try
-        {
-            userService.deleteUser(id);
-            return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
-        }
-        catch (final NoDbInstanceException e)
-        {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        final PromiseHttpOperationResponse serviceRet = userService.deleteUser(id);
+        return new ResponseEntity<>(serviceRet.getResponse(), serviceRet.getHttpStatus());
     }
 
     /**
@@ -199,12 +195,13 @@ public class AuthPublicController
      */
     @PromisePublicInterface
     @PostMapping("/scope")
-    public ResponseEntity<GetScopeResponse> createScope(
+    public ResponseEntity<PromiseOperationResponse> createScope(
             @RequestHeader Map<String, String> header,
             @RequestBody CreateScopeRequest scope)
             throws InvalidRequestBodyException
     {
-        return new ResponseEntity<>(scopeService.createScope(scope), HttpStatus.CREATED);
+        final PromiseHttpOperationResponse serviceRet = scopeService.createScope(scope);
+        return new ResponseEntity<>(serviceRet.getResponse(), serviceRet.getHttpStatus());
     }
 
     @PromisePublicInterface
@@ -254,19 +251,12 @@ public class AuthPublicController
      */
     @PromisePublicInterface
     @DeleteMapping("/scope/{id}")
-    public ResponseEntity<String> deleteScope(
+    public ResponseEntity<PromiseOperationResponse> deleteScope(
             @RequestHeader Map<String, String> header,
             @PathVariable String id)
     {
-        try
-        {
-            scopeService.deleteScope(id);
-            return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
-        }
-        catch (final NoDbInstanceException e)
-        {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        final PromiseHttpOperationResponse serviceRet = scopeService.deleteScope(id);
+        return new ResponseEntity<>(serviceRet.getResponse(), serviceRet.getHttpStatus());
     }
 
 }

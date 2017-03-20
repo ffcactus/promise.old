@@ -13,6 +13,7 @@ import com.promise.auth.sdk.dto.GetScopeResponse;
 import com.promise.common.PromiseAccessPoint;
 import com.promise.common.PromiseDao;
 import com.promise.common.constant.PromiseCategory;
+import com.promise.common.dto.PromiseHttpOperationResponse;
 import com.promise.util.PromiseUtil;
 
 @Repository("scopeDao")
@@ -85,6 +86,13 @@ public class ScopeDaoImpl extends PromiseDao<ScopeEntity, CreateScopeRequest, Ge
         }
         response.setAccessPointList(accessPointList);
         return response;
+    }
+
+    @Override
+    public PromiseHttpOperationResponse fromEntityToOperationResponse(ScopeEntity entity)
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

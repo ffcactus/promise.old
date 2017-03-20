@@ -11,6 +11,7 @@ import com.promise.auth.sdk.dto.CreateScopeRequest;
 import com.promise.auth.sdk.dto.GetScopeListResponse;
 import com.promise.auth.sdk.dto.GetScopeResponse;
 import com.promise.common.constant.PromiseCategory;
+import com.promise.common.dto.PromiseHttpOperationResponse;
 import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
@@ -24,7 +25,7 @@ public class ScopeServiceImpl implements ScopeServiceInterface
     private ScopeDaoInterface scopeDao;
 
     @Override
-    public GetScopeResponse createScope(CreateScopeRequest createScopeRequest)
+    public PromiseHttpOperationResponse createScope(CreateScopeRequest createScopeRequest)
             throws InvalidRequestBodyException
     {
         try
@@ -45,10 +46,9 @@ public class ScopeServiceImpl implements ScopeServiceInterface
     }
 
     @Override
-    public void deleteScope(String id)
-            throws NoDbInstanceException
+    public PromiseHttpOperationResponse deleteScope(String id)
     {
-        scopeDao.delete(id);
+        return scopeDao.delete(id);
     }
 
     @Override

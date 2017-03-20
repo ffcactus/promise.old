@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.promise.common.constant.PromiseCategory;
+import com.promise.common.dto.PromiseHttpOperationResponse;
 import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
@@ -26,7 +27,7 @@ public class TaskServiceImpl implements TaskServiceInterface
     //private TestServiceInterface testDao;
 
     @Override
-    public GetTaskResponse createTask(CreateTaskRequest request)
+    public PromiseHttpOperationResponse createTask(CreateTaskRequest request)
             throws InvalidRequestBodyException
     {
         try
