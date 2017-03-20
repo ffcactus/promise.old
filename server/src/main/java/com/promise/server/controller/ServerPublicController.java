@@ -22,12 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.promise.auth.sdk.aspect.PromisePublicInterface;
 import com.promise.common.PromiseErrorResponse;
 import com.promise.common.constant.PromiseCategory;
+import com.promise.common.dto.PromiseHttpOperationResponse;
+import com.promise.common.dto.PromiseOperationResponse;
 import com.promise.common.exception.InternelErrorException;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.common.exception.PromiseException;
 import com.promise.task.sdk.dto.AddServerRequest;
-import com.promise.task.sdk.dto.AddServerResponse;
 import com.promise.task.sdk.dto.GetServerResponse;
 import com.promise.task.service.ServerServiceInterface;
 
@@ -82,12 +83,13 @@ public class ServerPublicController
      */
     @PromisePublicInterface
     @PostMapping("/server")
-    public ResponseEntity<AddServerResponse> addServer(
+    public ResponseEntity<PromiseOperationResponse> addServer(
             @RequestHeader Map<String, String> header,
             @RequestBody AddServerRequest request)
             throws InvalidRequestBodyException
     {
-        return new ResponseEntity<>(serverService.addServer(request), HttpStatus.CREATED);
+        final PromiseHttpOperationResponse ret = serverService.addServer(request);
+        return new ResponseEntity<>(ret.getResponse(), ret.getHttpStatus());
     }
 
     /**
@@ -121,19 +123,12 @@ public class ServerPublicController
      */
     @PromisePublicInterface
     @DeleteMapping("/server/{id}")
-    public ResponseEntity<String> deleteServer(
+    public ResponseEntity<PromiseOperationResponse> deleteServer(
             @RequestHeader Map<String, String> header,
             @PathVariable String id)
     {
-        try
-        {
-            serverService.removeServer(id);
-            return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
-        }
-        catch (final NoDbInstanceException e)
-        {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        final PromiseHttpOperationResponse ret = serverService.removeServer(id);
+        return new ResponseEntity<>(ret.getResponse(), ret.getHttpStatus());
     }
 
 }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.promise.common.dto.PromiseHttpOperationResponse;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.server.process.AddServerProcess;
@@ -31,7 +32,7 @@ public class ServerServiceImpl implements ServerServiceInterface
     };
 
     @Override
-    public AddServerResponse addServer(AddServerRequest request)
+    public PromiseHttpOperationResponse addServer(AddServerRequest request)
             throws InvalidRequestBodyException
     {
 
@@ -51,9 +52,9 @@ public class ServerServiceImpl implements ServerServiceInterface
                 process.run();
                 final AddServerResponse ret = new AddServerResponse();
                 ret.setTaskUri(taskUri);
-                return new AddServerResponse();
+                return new PromiseHttpOperationResponse();
             }
-            final AddServerResponse ret = new AddServerResponse();
+            final PromiseHttpOperationResponse ret = new PromiseHttpOperationResponse();
             return ret;
         }
         else
@@ -72,10 +73,9 @@ public class ServerServiceImpl implements ServerServiceInterface
     }
 
     @Override
-    public void removeServer(String id)
-            throws NoDbInstanceException
+    public PromiseHttpOperationResponse removeServer(String id)
     {
-
+        return null;
     }
 
     /**
