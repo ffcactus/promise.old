@@ -92,7 +92,7 @@ public class TaskPublicController
             @RequestBody CreateTaskRequest request)
             throws InvalidRequestBodyException
     {
-        log.info("POST /task begin, task name " + request.getName());
+        log.info("POST /task begin, task name = " + request.getName());
         final PromiseHttpOperationResponse serviceRet = taskService.createTask(request);
         final ResponseEntity<PromiseOperationResponse> ret = new ResponseEntity<>(
                 serviceRet.getResponse(),

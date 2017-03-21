@@ -1,7 +1,10 @@
 package com.promise.common.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.promise.common.constant.PromiseCategory;
 
+@JsonInclude(Include.NON_NULL)
 public class PromiseOperationResponse
 {
     private PromiseResponseState state;
