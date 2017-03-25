@@ -1,6 +1,7 @@
 package com.promise.task.controller;
 
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -30,6 +32,7 @@ import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.common.exception.PromiseException;
 import com.promise.task.sdk.dto.CreateTaskRequest;
+import com.promise.task.sdk.dto.GetTaskListResponse;
 import com.promise.task.sdk.dto.GetTaskResponse;
 import com.promise.task.sdk.dto.UpdateTaskRequest;
 import com.promise.task.sdk.dto.UpdateTaskResponse;
@@ -109,7 +112,7 @@ public class TaskPublicController
      * @return The HTTP response that represents the task.
      */
     @PromisePublicInterface
-    @PostMapping("/task/{id}")
+    @GetMapping("/task/{id}")
     public ResponseEntity<GetTaskResponse> getTask(
             @RequestHeader Map<String, String> header,
             @PathVariable String id)
@@ -122,6 +125,32 @@ public class TaskPublicController
         {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+    }
+
+    /**
+     * Get task list.
+     *
+     * @param header
+     * @param start
+     * @param count
+     * @return
+     * @throws InvalidRequestBodyException
+     */
+    @PromisePublicInterface
+    @GetMapping("/task")
+    ResponseEntity<GetTaskListResponse> getTaskList(
+            @RequestHeader Map<String, String> header,
+            @PathVariable(value = "start") Optional<Integer> start,
+            @PathVariable(value = "count") Optional<Integer> count)
+            throws InvalidRequestBodyException
+    {
+        if ((start.isPresent() && start.get() < 0) || (count.isPresent() && count.get() < 0))
+        {
+            // TODO Invalid URL?
+            throw new InvalidRequestBodyException(null, PromiseCategory.TASK);
+        }
+        final GetTaskListResponse ret = taskService.getTaskList(start, count);
+        return new ResponseEntity<>(ret, HttpStatus.OK);
     }
 
     /**
@@ -156,19 +185,12 @@ public class TaskPublicController
      */
     @PromisePublicInterface
     @DeleteMapping("/task/{id}")
-    public ResponseEntity<String> deleteTask(
+    public ResponseEntity<PromiseOperationResponse> deleteTask(
             @RequestHeader Map<String, String> header,
             @PathVariable String id)
     {
-        try
-        {
-            taskService.deleteTask(id);
-            return new ResponseEntity<>(null, HttpStatus.ACCEPTED);
-        }
-        catch (final NoDbInstanceException e)
-        {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        final PromiseHttpOperationResponse ret = taskService.deleteTask(id);
+        return new ResponseEntity<>(ret.getResponse(), ret.getHttpStatus());
     }
 
 }

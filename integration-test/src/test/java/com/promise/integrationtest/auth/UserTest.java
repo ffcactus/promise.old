@@ -152,6 +152,8 @@ public class UserTest extends PromisePublicInterfaceTest
         Assert.assertEquals(createUserRequest.getEmail(), getUserResponse.getEmail());
         Assert.assertTrue(CommonTestUtil.collectionEquals(scopeUriList, getUserResponse.getScopeUri()));
 
+        Assert.assertEquals(userUri, getUserResponse.getUri());
+
         // Clean up.
         final ResponseEntity<PromiseOperationResponse> deleteResponseEntity = HttpJsonClient
                 .delete(HOSTNAME + userUri, token, PromiseOperationResponse.class);

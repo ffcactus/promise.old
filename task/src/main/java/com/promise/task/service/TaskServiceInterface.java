@@ -1,9 +1,12 @@
 package com.promise.task.service;
 
+import java.util.Optional;
+
 import com.promise.common.dto.PromiseHttpOperationResponse;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.task.sdk.dto.CreateTaskRequest;
+import com.promise.task.sdk.dto.GetTaskListResponse;
 import com.promise.task.sdk.dto.GetTaskResponse;
 import com.promise.task.sdk.dto.UpdateTaskRequest;
 import com.promise.task.sdk.dto.UpdateTaskResponse;
@@ -32,6 +35,15 @@ public interface TaskServiceInterface
             throws NoDbInstanceException;
 
     /**
+     * Get task list.
+     *
+     * @param start
+     * @param count
+     * @return
+     */
+    public GetTaskListResponse getTaskList(Optional<Integer> start, Optional<Integer> count);
+
+    /**
      * Update a task.
      *
      * @param id The ID of the task.
@@ -48,6 +60,5 @@ public interface TaskServiceInterface
      * @param id The ID of the task.
      * @throws NoDbInstanceException If the task can't be found by the ID.
      */
-    public void deleteTask(String id)
-            throws NoDbInstanceException;
+    public PromiseHttpOperationResponse deleteTask(String id);
 }

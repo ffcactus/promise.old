@@ -17,7 +17,7 @@ import com.promise.integrationtest.PromisePublicInterfaceTest;
 import com.promise.integrationtest.util.CommonTestUtil;
 import com.promise.integrationtest.util.HttpJsonClient;
 import com.promise.task.sdk.dto.CreateTaskRequest;
-import com.promise.task.sdk.dto.PostTaskResponse;
+import com.promise.task.sdk.dto.GetTaskResponse;
 import com.promise.task.sdk.dto.PostTaskStepRequest;
 
 public class TaskTest extends PromisePublicInterfaceTest
@@ -64,56 +64,26 @@ public class TaskTest extends PromisePublicInterfaceTest
     @Test
     public void testCreateDefaultTask()
     {
-        final ResponseEntity<PostTaskResponse> responseEntity = HttpJsonClient
-                .post(HOSTNAME + "/rest/task", token, postDefaultTaskRequest, PostTaskResponse.class);
+        final ResponseEntity<PromiseOperationResponse> responseEntity = HttpJsonClient
+                .post(HOSTNAME + "/rest/task", token, postDefaultTaskRequest, PromiseOperationResponse.class);
         Assert.assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-        final PostTaskResponse postResponse = responseEntity.getBody();
-        CommonTestUtil.assertPromiseResource(postResponse);
-        Assert.assertEquals(postDefaultTaskRequest.getName(), postResponse.getName());
-        Assert.assertEquals(0, postResponse.getExpectedExcutionMs());
-        Assert.assertEquals(PromiseExecutionState.READY, postResponse.getState());
-        Assert.assertNull(postResponse.getTerminatedTime());
-        Assert.assertEquals(0, postResponse.getPercentage());
-        Assert.assertEquals(0, postResponse.getStepList().size());
-        Assert.assertEquals(0, postResponse.getSubTaskUriList().size());
-        Assert.assertEquals(PromiseExecutionResultState.UNKNOWN, postResponse.getResult().getState());
-        Assert.assertEquals(0, postResponse.getResult().getReason().size());
-        Assert.assertEquals(0, postResponse.getResult().getSolution().size());
+        final PromiseOperationResponse postResponse = responseEntity.getBody();
+        CommonTestUtil.assertPromiseOperationResponse(postResponse);
 
         // Clean up.
         final ResponseEntity<PromiseOperationResponse> deleteRet = HttpJsonClient
-                .delete(HOSTNAME + "/rest/task/" + postResponse.getId(), token, PromiseOperationResponse.class);
+                .delete(HOSTNAME + postResponse.getUri(), token, PromiseOperationResponse.class);
         Assert.assertEquals(HttpStatus.ACCEPTED, deleteRet.getStatusCode());
     }
 
     @Test
     public void testCreateFullTask()
     {
-        final ResponseEntity<PostTaskResponse> responseEntity = HttpJsonClient
-                .post(HOSTNAME + "/rest/task", token, postFullTaskRequest, PostTaskResponse.class);
+        final ResponseEntity<PromiseOperationResponse> responseEntity = HttpJsonClient
+                .post(HOSTNAME + "/rest/task", token, postFullTaskRequest, PromiseOperationResponse.class);
         Assert.assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-        final PostTaskResponse postResponse = responseEntity.getBody();
-        CommonTestUtil.assertPromiseResource(postResponse);
-        Assert.assertEquals(postFullTaskRequest.getName(), postResponse.getName());
-        Assert.assertEquals(postFullTaskRequest.getExpectedExcutionMs(), postResponse.getExpectedExcutionMs());
-        Assert.assertEquals(PromiseExecutionState.READY, postResponse.getState());
-        Assert.assertEquals(postFullTaskRequest.getStepList().size(), postResponse.getStepList().size());
-        for (final PromiseTaskStep each : postResponse.getStepList())
-        {
-            Assert.assertEquals(PromiseExecutionState.READY, each.getState());
-            Assert.assertEquals(0, each.getPercentage());
-            Assert.assertNull(each.getTerminatedTime());
-            Assert.assertEquals(PromiseExecutionResultState.UNKNOWN, each.getResult().getState());
-        }
-        Assert.assertEquals(0, postResponse.getSubTaskUriList().size());
-        Assert.assertEquals(PromiseExecutionResultState.UNKNOWN, postResponse.getResult().getState());
-        Assert.assertEquals(0, postResponse.getResult().getReason().size());
-        Assert.assertEquals(0, postResponse.getResult().getSolution().size());
-
-        // Clean up.
-        final ResponseEntity<PromiseOperationResponse> deleteRet = HttpJsonClient
-                .delete(HOSTNAME + "/rest/task/" + postResponse.getId(), token, PromiseOperationResponse.class);
-        Assert.assertEquals(HttpStatus.ACCEPTED, deleteRet.getStatusCode());
+        final PromiseOperationResponse postResponse = responseEntity.getBody();
+        CommonTestUtil.assertPromiseOperationResponse(postResponse);
     }
 
     @Test
@@ -130,9 +100,41 @@ public class TaskTest extends PromisePublicInterfaceTest
 
     }
 
-    @Ignore
+    @Test
     public void testGetTaskList()
     {
+        final ResponseEntity<PromiseOperationResponse> responseEntity = HttpJsonClient
+                .post(HOSTNAME + "/rest/task", token, postFullTaskRequest, PromiseOperationResponse.class);
+        Assert.assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+        final PromiseOperationResponse postResponse = responseEntity.getBody();
+        CommonTestUtil.assertPromiseOperationResponse(postResponse);
 
+        final String taskUri = postResponse.getUri();
+        final ResponseEntity<GetTaskResponse> getResponseEntity = HttpJsonClient
+                .get(HOSTNAME + taskUri, token, GetTaskResponse.class);
+
+        final GetTaskResponse getResponse = getResponseEntity.getBody();
+        Assert.assertEquals(postFullTaskRequest.getName(), getResponse.getName());
+        Assert.assertEquals(postFullTaskRequest.getExpectedExcutionMs(), getResponse.getExpectedExcutionMs());
+        Assert.assertEquals(PromiseExecutionState.READY, getResponse.getState());
+        Assert.assertEquals(postFullTaskRequest.getStepList().size(), getResponse.getStepList().size());
+        for (final PromiseTaskStep each : getResponse.getStepList())
+        {
+            Assert.assertEquals(PromiseExecutionState.READY, each.getState());
+            Assert.assertEquals(0, each.getPercentage());
+            Assert.assertNull(each.getTerminatedTime());
+            Assert.assertEquals(PromiseExecutionResultState.UNKNOWN, each.getResult().getState());
+        }
+        Assert.assertEquals(0, getResponse.getSubTaskUriList().size());
+        Assert.assertEquals(PromiseExecutionResultState.UNKNOWN, getResponse.getResult().getState());
+        Assert.assertEquals(0, getResponse.getResult().getReason().size());
+        Assert.assertEquals(0, getResponse.getResult().getSolution().size());
+
+        Assert.assertEquals(taskUri, getResponse.getUri());
+
+        // Clean up.
+        final ResponseEntity<PromiseOperationResponse> deleteRet = HttpJsonClient
+                .delete(HOSTNAME + taskUri, token, PromiseOperationResponse.class);
+        Assert.assertEquals(HttpStatus.ACCEPTED, deleteRet.getStatusCode());
     }
 }

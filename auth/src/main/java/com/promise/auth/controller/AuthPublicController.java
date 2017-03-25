@@ -255,8 +255,8 @@ public class AuthPublicController
             @RequestHeader Map<String, String> header,
             @PathVariable String id)
     {
-        final PromiseHttpOperationResponse serviceRet = scopeService.deleteScope(id);
-        return new ResponseEntity<>(serviceRet.getResponse(), serviceRet.getHttpStatus());
+        final PromiseHttpOperationResponse ret = scopeService.deleteScope(id);
+        return new ResponseEntity<>(ret.getResponse(), ret.getHttpStatus());
     }
 
 }
