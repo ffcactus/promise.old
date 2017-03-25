@@ -116,14 +116,11 @@ public class UserTest extends PromisePublicInterfaceTest
         createUserRequest.setPassword("iforgot".toCharArray());
         createUserRequest.setScopeUriList(scopeUriList);
 
-        final ResponseEntity<GetUserResponse> responseEntity = HttpJsonClient
-                .post(HOSTNAME + "/rest/user", token, createUserRequest, GetUserResponse.class);
+        final ResponseEntity<PromiseOperationResponse> responseEntity = HttpJsonClient
+                .post(HOSTNAME + "/rest/user", token, createUserRequest, PromiseOperationResponse.class);
         Assert.assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-        final GetUserResponse postResponse = responseEntity.getBody();
-        CommonTestUtil.assertPromiseResource(postResponse);
-        Assert.assertEquals(createUserRequest.getUsername(), postResponse.getUsername());
-        Assert.assertEquals(createUserRequest.getEmail(), postResponse.getEmail());
-        Assert.assertTrue(CommonTestUtil.collectionEquals(scopeUriList, postResponse.getScopeUri()));
+        final PromiseOperationResponse postResponse = responseEntity.getBody();
+        CommonTestUtil.assertPromiseOperationResponse(postResponse);
         // Clean up.
         final ResponseEntity<PromiseOperationResponse> deleteResponseEntity = HttpJsonClient
                 .delete(HOSTNAME + postResponse.getUri(), token, PromiseOperationResponse.class);
@@ -141,8 +138,8 @@ public class UserTest extends PromisePublicInterfaceTest
         createUserRequest.setEmail("baibin@email.com");
         createUserRequest.setPassword("iforgot".toCharArray());
         createUserRequest.setScopeUriList(scopeUriList);
-        final ResponseEntity<GetUserResponse> createUserResponseEntity = HttpJsonClient
-                .post(HOSTNAME + "/rest/user", token, createUserRequest, GetUserResponse.class);
+        final ResponseEntity<PromiseOperationResponse> createUserResponseEntity = HttpJsonClient
+                .post(HOSTNAME + "/rest/user", token, createUserRequest, PromiseOperationResponse.class);
         final String userUri = createUserResponseEntity.getBody().getUri();
 
         // Get the user that is created before.
@@ -180,8 +177,8 @@ public class UserTest extends PromisePublicInterfaceTest
         createUserRequest.setEmail("baibin@email.com");
         createUserRequest.setPassword("iforgot".toCharArray());
         createUserRequest.setScopeUriList(scopeUriList);
-        final ResponseEntity<GetUserResponse> createUserResponseEntity = HttpJsonClient
-                .post(HOSTNAME + "/rest/user", token, createUserRequest, GetUserResponse.class);
+        final ResponseEntity<PromiseOperationResponse> createUserResponseEntity = HttpJsonClient
+                .post(HOSTNAME + "/rest/user", token, createUserRequest, PromiseOperationResponse.class);
         final String userUri = createUserResponseEntity.getBody().getUri();
 
         // Delete the user that is created before.
@@ -209,8 +206,8 @@ public class UserTest extends PromisePublicInterfaceTest
         createUserRequest.setEmail("baibin@email.com");
         createUserRequest.setPassword("iforgot".toCharArray());
         createUserRequest.setScopeUriList(scopeUriList);
-        final ResponseEntity<GetUserResponse> createUserResponseEntity = HttpJsonClient
-                .post(HOSTNAME + "/rest/user", token, createUserRequest, GetUserResponse.class);
+        final ResponseEntity<PromiseOperationResponse> createUserResponseEntity = HttpJsonClient
+                .post(HOSTNAME + "/rest/user", token, createUserRequest, PromiseOperationResponse.class);
         final String userUri = createUserResponseEntity.getBody().getUri();
 
         // Get the user list.
