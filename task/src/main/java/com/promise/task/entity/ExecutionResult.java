@@ -8,6 +8,9 @@ import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.promise.common.PromiseExecutionResultState;
 
 @Embeddable
@@ -20,9 +23,11 @@ public class ExecutionResult
     @Column(name = "description")
     private String description;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ElementCollection
     private List<String> reason;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ElementCollection
     private List<String> solution;
 
