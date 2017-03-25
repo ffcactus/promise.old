@@ -23,9 +23,6 @@ public class TaskServiceImpl implements TaskServiceInterface
     @Autowired
     private TaskDaoInterface taskDao;
 
-    //@Autowired
-    //private TestServiceInterface testDao;
-
     @Override
     public PromiseHttpOperationResponse createTask(CreateTaskRequest request)
             throws InvalidRequestBodyException

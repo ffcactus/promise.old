@@ -87,7 +87,6 @@ public class UserServiceImpl implements UserServiceInterface
         {
             throw new InvalidRequestBodyException(e, PromiseCategory.AA);
         }
-
     }
 
     @Override

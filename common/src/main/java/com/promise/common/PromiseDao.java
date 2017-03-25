@@ -15,12 +15,15 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.promise.common.constant.PromiseCategory;
+import com.promise.common.dto.PromiseCreateHttpOperationResponse;
+import com.promise.common.dto.PromiseDeleteHttpOperationResponse;
 import com.promise.common.dto.PromiseHttpOperationResponse;
+import com.promise.common.dto.PromiseNotFoundHttpOperationResponse;
 import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.util.PromiseUtil;
 
-public abstract class PromiseDao<E, C, G> implements PromiseDaoInterface<C, G>
+public abstract class PromiseDao<E extends PromiseEntity, C, G> implements PromiseDaoInterface<C, G>
 {
     private final Class<E> entityType;
     private final PromiseCategory category;
@@ -42,8 +45,6 @@ public abstract class PromiseDao<E, C, G> implements PromiseDaoInterface<C, G>
 
     public abstract E fromCreateRequestToEntity(C request)
             throws DbOperationException;
-
-    public abstract PromiseHttpOperationResponse fromEntityToOperationResponse(E entity);
 
     public abstract G fromEntityToGetResponse(E entity);
 
@@ -89,15 +90,16 @@ public abstract class PromiseDao<E, C, G> implements PromiseDaoInterface<C, G>
         }
         catch (final IllegalArgumentException e)
         {
-            return null;
+            return new PromiseNotFoundHttpOperationResponse(category, null);
         }
 
         if (entity == null)
         {
-            return null;
+            return new PromiseNotFoundHttpOperationResponse(category, null);
         }
+        final String uri = entity.getUri();
         getSession().delete(entity);
-        return null;
+        return new PromiseDeleteHttpOperationResponse(category, uri);
     }
 
     @Override
@@ -120,4 +122,12 @@ public abstract class PromiseDao<E, C, G> implements PromiseDaoInterface<C, G>
         return ret;
     }
 
+    private PromiseHttpOperationResponse fromEntityToOperationResponse(E entity)
+    {
+        if (entity == null)
+        {
+            return new PromiseNotFoundHttpOperationResponse(category, null);
+        }
+        return new PromiseCreateHttpOperationResponse(category, entity.getUri());
+    }
 }

@@ -11,9 +11,6 @@ import com.promise.common.PromiseExecutionResultState;
 import com.promise.common.PromiseExecutionState;
 import com.promise.common.PromiseTaskStep;
 import com.promise.common.constant.PromiseCategory;
-import com.promise.common.dto.PromiseCreateHttpOperationResponse;
-import com.promise.common.dto.PromiseHttpOperationResponse;
-import com.promise.common.dto.PromiseNotFoundHttpOperationResponse;
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.task.entity.ExecutionResult;
 import com.promise.task.entity.TaskEntity;
@@ -136,16 +133,6 @@ public class TaskDaoImpl extends PromiseDao<TaskEntity, CreateTaskRequest, GetTa
         response.setSubTaskUriList(subTaskUriList);
         return response;
 
-    }
-
-    @Override
-    public PromiseHttpOperationResponse fromEntityToOperationResponse(TaskEntity entity)
-    {
-        if (entity == null)
-        {
-            return new PromiseNotFoundHttpOperationResponse(PromiseCategory.TASK, null);
-        }
-        return new PromiseCreateHttpOperationResponse(PromiseCategory.TASK, entity.getUri());
     }
 
 }

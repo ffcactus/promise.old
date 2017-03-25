@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import com.promise.common.PromiseExecutionResultState;
 import com.promise.common.PromiseExecutionState;
 import com.promise.common.PromiseTaskStep;
+import com.promise.common.dto.PromiseOperationResponse;
 import com.promise.integrationtest.PromisePublicInterfaceTest;
 import com.promise.integrationtest.util.CommonTestUtil;
 import com.promise.integrationtest.util.HttpJsonClient;
@@ -80,8 +81,8 @@ public class TaskTest extends PromisePublicInterfaceTest
         Assert.assertEquals(0, postResponse.getResult().getSolution().size());
 
         // Clean up.
-        final ResponseEntity<String> deleteRet = HttpJsonClient
-                .delete(HOSTNAME + "/rest/task/" + postResponse.getId(), token);
+        final ResponseEntity<PromiseOperationResponse> deleteRet = HttpJsonClient
+                .delete(HOSTNAME + "/rest/task/" + postResponse.getId(), token, PromiseOperationResponse.class);
         Assert.assertEquals(HttpStatus.ACCEPTED, deleteRet.getStatusCode());
     }
 
@@ -110,16 +111,16 @@ public class TaskTest extends PromisePublicInterfaceTest
         Assert.assertEquals(0, postResponse.getResult().getSolution().size());
 
         // Clean up.
-        final ResponseEntity<String> deleteRet = HttpJsonClient
-                .delete(HOSTNAME + "/rest/task/" + postResponse.getId(), token);
+        final ResponseEntity<PromiseOperationResponse> deleteRet = HttpJsonClient
+                .delete(HOSTNAME + "/rest/task/" + postResponse.getId(), token, PromiseOperationResponse.class);
         Assert.assertEquals(HttpStatus.ACCEPTED, deleteRet.getStatusCode());
     }
 
     @Test
     public void testDeleteNoneExistTask()
     {
-        final ResponseEntity<String> deleteRet = HttpJsonClient
-                .delete(HOSTNAME + "/rest/task/" + "xxxx", token);
+        final ResponseEntity<PromiseOperationResponse> deleteRet = HttpJsonClient
+                .delete(HOSTNAME + "/rest/task/" + "xxxx", token, PromiseOperationResponse.class);
         Assert.assertEquals(HttpStatus.NOT_FOUND, deleteRet.getStatusCode());
     }
 

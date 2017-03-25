@@ -14,13 +14,40 @@ import com.promise.common.exception.NoDbInstanceException;
  */
 public interface PromiseDaoInterface<C, G>
 {
+    /**
+     * Create the object in DB and return a response.
+     * 
+     * @param request
+     * @return
+     * @throws DbOperationException
+     */
     public PromiseHttpOperationResponse create(C request)
             throws DbOperationException;
 
+    /**
+     * Get the object from DB, and generate response.
+     * 
+     * @param id
+     * @return
+     * @throws NoDbInstanceException
+     */
     public G get(String id)
             throws NoDbInstanceException;
 
+    /**
+     * Delete the object from DB and return the result.
+     * 
+     * @param id
+     * @return
+     */
     public PromiseHttpOperationResponse delete(String id);
 
+    /**
+     * Get the objects from DB.
+     * 
+     * @param start
+     * @param count
+     * @return
+     */
     public List<G> list(int start, int count);
 }

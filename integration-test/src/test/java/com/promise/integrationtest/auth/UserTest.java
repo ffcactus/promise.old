@@ -15,19 +15,19 @@ import org.springframework.http.ResponseEntity;
 
 import com.promise.auth.sdk.dto.CreateScopeRequest;
 import com.promise.auth.sdk.dto.CreateUserRequest;
-import com.promise.auth.sdk.dto.GetScopeResponse;
 import com.promise.auth.sdk.dto.GetUserListResponse;
 import com.promise.auth.sdk.dto.GetUserResponse;
 import com.promise.auth.sdk.dto.PostLoginRequest;
 import com.promise.auth.sdk.dto.PostLoginResponse;
 import com.promise.common.PromiseAccessPoint;
 import com.promise.common.PromiseToken;
+import com.promise.common.dto.PromiseOperationResponse;
+import com.promise.integrationtest.PromisePublicInterfaceTest;
 import com.promise.integrationtest.util.CommonTestUtil;
 import com.promise.integrationtest.util.HttpJsonClient;
 
-public class UserTest
+public class UserTest extends PromisePublicInterfaceTest
 {
-    private static final String HOSTNAME = "http://192.168.116.130";
     private static final CreateScopeRequest createScopeRequest;
     private static String scopeUri;
     private static List<String> scopeUriList;
@@ -43,6 +43,13 @@ public class UserTest
         accessPointList.add(new PromiseAccessPoint(PromiseAccessPoint.URI, "rest/task"));
         accessPointList.add(new PromiseAccessPoint(PromiseAccessPoint.URI, "rest/scope"));
         createScopeRequest.setAccessPointList(accessPointList);
+    }
+
+    public UserTest()
+            throws Exception
+    {
+        super();
+        // TODO Auto-generated constructor stub
     }
 
     @BeforeClass
@@ -68,8 +75,8 @@ public class UserTest
         }
 
         // Create scopes.
-        final ResponseEntity<GetScopeResponse> createScopeResponse = HttpJsonClient
-                .post(HOSTNAME + "/rest/scope", token, createScopeRequest, GetScopeResponse.class);
+        final ResponseEntity<PromiseOperationResponse> createScopeResponse = HttpJsonClient
+                .post(HOSTNAME + "/rest/scope", token, createScopeRequest, PromiseOperationResponse.class);
         Assert.assertEquals(HttpStatus.CREATED, createScopeResponse.getStatusCode());
         scopeUri = createScopeResponse.getBody().getUri();
         scopeUriList = new ArrayList<>();
@@ -81,8 +88,8 @@ public class UserTest
             throws Exception
     {
         // Clean up.
-        final ResponseEntity<String> deleteRet = HttpJsonClient
-                .delete(HOSTNAME + scopeUri, token);
+        final ResponseEntity<PromiseOperationResponse> deleteRet = HttpJsonClient
+                .delete(HOSTNAME + scopeUri, token, PromiseOperationResponse.class);
         Assert.assertEquals(HttpStatus.ACCEPTED, deleteRet.getStatusCode());
     }
 
@@ -118,8 +125,8 @@ public class UserTest
         Assert.assertEquals(createUserRequest.getEmail(), postResponse.getEmail());
         Assert.assertTrue(CommonTestUtil.collectionEquals(scopeUriList, postResponse.getScopeUri()));
         // Clean up.
-        final ResponseEntity<String> deleteResponseEntity = HttpJsonClient
-                .delete(HOSTNAME + postResponse.getUri(), token);
+        final ResponseEntity<PromiseOperationResponse> deleteResponseEntity = HttpJsonClient
+                .delete(HOSTNAME + postResponse.getUri(), token, PromiseOperationResponse.class);
         Assert.assertEquals(HttpStatus.ACCEPTED, deleteResponseEntity.getStatusCode());
     }
 
@@ -149,8 +156,8 @@ public class UserTest
         Assert.assertTrue(CommonTestUtil.collectionEquals(scopeUriList, getUserResponse.getScopeUri()));
 
         // Clean up.
-        final ResponseEntity<String> deleteResponseEntity = HttpJsonClient
-                .delete(HOSTNAME + userUri, token);
+        final ResponseEntity<PromiseOperationResponse> deleteResponseEntity = HttpJsonClient
+                .delete(HOSTNAME + userUri, token, PromiseOperationResponse.class);
         Assert.assertEquals(HttpStatus.ACCEPTED, deleteResponseEntity.getStatusCode());
     }
 
@@ -178,16 +185,16 @@ public class UserTest
         final String userUri = createUserResponseEntity.getBody().getUri();
 
         // Delete the user that is created before.
-        final ResponseEntity<String> deleteResponseEntity = HttpJsonClient
-                .delete(HOSTNAME + userUri, token);
+        final ResponseEntity<PromiseOperationResponse> deleteResponseEntity = HttpJsonClient
+                .delete(HOSTNAME + userUri, token, PromiseOperationResponse.class);
         Assert.assertEquals(HttpStatus.ACCEPTED, deleteResponseEntity.getStatusCode());
     }
 
     @Test
     public void testDeleteNonexistUser()
     {
-        final ResponseEntity<String> deleteResponseEntity = HttpJsonClient
-                .delete(HOSTNAME + "/rest/user/xxxx", token);
+        final ResponseEntity<PromiseOperationResponse> deleteResponseEntity = HttpJsonClient
+                .delete(HOSTNAME + "/rest/user/xxxx", token, PromiseOperationResponse.class);
         Assert.assertEquals(HttpStatus.NOT_FOUND, deleteResponseEntity.getStatusCode());
     }
 
@@ -237,8 +244,8 @@ public class UserTest
         Assert.assertTrue(foundAdministrator);
 
         // Clean up.
-        final ResponseEntity<String> deleteResponseEntity = HttpJsonClient
-                .delete(HOSTNAME + userUri, token);
+        final ResponseEntity<PromiseOperationResponse> deleteResponseEntity = HttpJsonClient
+                .delete(HOSTNAME + userUri, token, PromiseOperationResponse.class);
         Assert.assertEquals(HttpStatus.ACCEPTED, deleteResponseEntity.getStatusCode());
     }
 

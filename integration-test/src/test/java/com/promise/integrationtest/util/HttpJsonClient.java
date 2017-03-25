@@ -150,7 +150,7 @@ public class HttpJsonClient
         return null;
     }
 
-    public static ResponseEntity<String> delete(String url, PromiseToken token)
+    public static <T> ResponseEntity<T> delete(String url, PromiseToken token, Class<T> responseClass)
     {
         HttpURLConnection c = null;
         try
@@ -183,7 +183,8 @@ public class HttpJsonClient
                         sb.append(line + "\n");
                     }
                     br.close();
-                    return new ResponseEntity<>(sb.toString(), HttpStatus.valueOf(status));
+                    final ObjectMapper mapper = new ObjectMapper();
+                    return new ResponseEntity<>(mapper.readValue(sb.toString(), responseClass), HttpStatus.valueOf(status));
                 case HttpURLConnection.HTTP_NOT_FOUND:
                     return new ResponseEntity<>(null, HttpStatus.valueOf(status));
             }

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import com.promise.common.PromiseDao;
 import com.promise.common.constant.PromiseCategory;
-import com.promise.common.dto.PromiseHttpOperationResponse;
 import com.promise.server.entity.ServerEntity;
 import com.promise.task.sdk.dto.AddServerRequest;
 import com.promise.task.sdk.dto.GetServerListResponse;
@@ -18,7 +17,7 @@ public class ServerDaoImpl extends PromiseDao<ServerEntity, AddServerRequest, Ge
 
     public ServerDaoImpl()
     {
-        super(PromiseCategory.TASK);
+        super(PromiseCategory.SERVER);
     }
 
     @Override
@@ -43,13 +42,6 @@ public class ServerDaoImpl extends PromiseDao<ServerEntity, AddServerRequest, Ge
     {
         return null;
 
-    }
-
-    @Override
-    public PromiseHttpOperationResponse fromEntityToOperationResponse(ServerEntity entity)
-    {
-        // TODO Auto-generated method stub
-        return null;
     }
 
 }
