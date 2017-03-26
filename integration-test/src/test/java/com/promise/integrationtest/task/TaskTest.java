@@ -101,7 +101,7 @@ public class TaskTest extends PromisePublicInterfaceTest
     }
 
     @Test
-    public void testGetTaskList()
+    public void testGetTask()
     {
         final ResponseEntity<PromiseOperationResponse> responseEntity = HttpJsonClient
                 .post(HOSTNAME + "/rest/task", token, postFullTaskRequest, PromiseOperationResponse.class);

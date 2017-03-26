@@ -144,7 +144,7 @@ public class UserDaoImpl extends PromiseDao<UserEntity, CreateUserRequest, GetUs
         final GetUserListResponse ret = new GetUserListResponse();
         ret.setStart(start);
         ret.setCount(list.size());
-        ret.setMemberList(list);
+        ret.setMember(list);
         return ret;
     }
 

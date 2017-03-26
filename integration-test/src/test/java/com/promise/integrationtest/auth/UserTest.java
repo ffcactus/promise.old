@@ -224,7 +224,7 @@ public class UserTest extends PromisePublicInterfaceTest
         // Make sure both created user and Administrator getted.
         boolean foundCreatedUser = false;
         boolean foundAdministrator = false;
-        for (final GetUserResponse each : getUserListResponse.getMemberList())
+        for (final GetUserResponse each : getUserListResponse.getMember())
         {
             CommonTestUtil.assertPromiseResource(each);
             if (each.getUsername().equals("Administrator"))

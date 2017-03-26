@@ -189,18 +189,18 @@ public class ScopeTest extends PromisePublicInterfaceTest
         Assert.assertEquals(HttpStatus.OK, getScopeListRet.getStatusCode());
         Assert.assertEquals(0, getScopeListResponse.getStart());
         Assert.assertEquals(2, getScopeListResponse.getCount());
-        Assert.assertEquals(2, getScopeListResponse.getMemberList().size());
+        Assert.assertEquals(2, getScopeListResponse.getMember().size());
 
-        if (getScopeListResponse.getMemberList().get(0).getUri().equals(postResponse0.getUri()))
+        if (getScopeListResponse.getMember().get(0).getUri().equals(postResponse0.getUri()))
         {
-            final GetScopeResponse t0 = getScopeListResponse.getMemberList().get(0);
+            final GetScopeResponse t0 = getScopeListResponse.getMember().get(0);
             CommonTestUtil.assertPromiseResource(t0);
             Assert.assertEquals(createRequest0.getName(), t0.getName());
             Assert.assertEquals(createRequest0.getDescription(), t0.getDescription());
             CommonTestUtil.assertPromiseResource(t0);
             Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest0.getAccessPointList(), t0.getAccessPointList()));
 
-            final GetScopeResponse t1 = getScopeListResponse.getMemberList().get(1);
+            final GetScopeResponse t1 = getScopeListResponse.getMember().get(1);
             CommonTestUtil.assertPromiseResource(t1);
             Assert.assertEquals(createRequest1.getName(), t1.getName());
             Assert.assertEquals(createRequest1.getDescription(), t1.getDescription());
@@ -209,14 +209,14 @@ public class ScopeTest extends PromisePublicInterfaceTest
         }
         else
         {
-            final GetScopeResponse t0 = getScopeListResponse.getMemberList().get(0);
+            final GetScopeResponse t0 = getScopeListResponse.getMember().get(0);
             CommonTestUtil.assertPromiseResource(t0);
             Assert.assertEquals(createRequest1.getName(), t0.getName());
             Assert.assertEquals(createRequest1.getDescription(), t0.getDescription());
             CommonTestUtil.assertPromiseResource(t0);
             Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest1.getAccessPointList(), t0.getAccessPointList()));
 
-            final GetScopeResponse t1 = getScopeListResponse.getMemberList().get(1);
+            final GetScopeResponse t1 = getScopeListResponse.getMember().get(1);
             CommonTestUtil.assertPromiseResource(t1);
             Assert.assertEquals(createRequest0.getName(), t1.getName());
             Assert.assertEquals(createRequest0.getDescription(), t1.getDescription());

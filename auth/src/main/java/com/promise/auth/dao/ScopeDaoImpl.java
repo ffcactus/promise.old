@@ -46,7 +46,7 @@ public class ScopeDaoImpl extends PromiseDao<ScopeEntity, CreateScopeRequest, Ge
         final GetScopeListResponse ret = new GetScopeListResponse();
         ret.setStart(start);
         ret.setCount(list.size());
-        ret.setMemberList(list);
+        ret.setMember(list);
         return ret;
     }
 

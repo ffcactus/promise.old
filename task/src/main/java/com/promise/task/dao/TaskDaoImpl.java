@@ -39,7 +39,7 @@ public class TaskDaoImpl extends PromiseDao<TaskEntity, CreateTaskRequest, GetTa
         final GetTaskListResponse ret = new GetTaskListResponse();
         ret.setStart(start);
         ret.setCount(list.size());
-        ret.setMemberList(list);
+        ret.setMember(list);
         return ret;
     }
 

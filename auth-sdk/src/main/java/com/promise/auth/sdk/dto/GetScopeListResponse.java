@@ -1,45 +1,11 @@
 package com.promise.auth.sdk.dto;
 
-import java.util.List;
+import com.promise.common.dto.PromiseListResponse;
 
-public class GetScopeListResponse
+public class GetScopeListResponse extends PromiseListResponse<GetScopeResponse>
 {
-    private int start;
-    private int count;
-    private List<GetScopeResponse> memberList;
-
     public GetScopeListResponse()
     {
 
-    }
-
-    public int getStart()
-    {
-        return start;
-    }
-
-    public void setStart(int start)
-    {
-        this.start = start;
-    }
-
-    public int getCount()
-    {
-        return count;
-    }
-
-    public void setCount(int count)
-    {
-        this.count = count;
-    }
-
-    public List<GetScopeResponse> getMemberList()
-    {
-        return memberList;
-    }
-
-    public void setMemberList(List<GetScopeResponse> memberList)
-    {
-        this.memberList = memberList;
     }
 }
