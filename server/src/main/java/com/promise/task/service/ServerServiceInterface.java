@@ -1,6 +1,6 @@
 package com.promise.task.service;
 
-import com.promise.common.dto.PromiseHttpOperationResponse;
+import com.promise.common.dto.PromiseHttpResponse;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.task.sdk.dto.AddServerRequest;
@@ -16,7 +16,7 @@ public interface ServerServiceInterface
      * @return The DTO that represents the result.
      * @throws Exception
      */
-    public PromiseHttpOperationResponse addServer(AddServerRequest request)
+    public PromiseHttpResponse addServer(AddServerRequest request)
             throws InvalidRequestBodyException;
 
     /**
@@ -35,5 +35,5 @@ public interface ServerServiceInterface
      * @param id The ID of the server.
      * @throws NoDbInstanceException If the server can't be found by the ID.
      */
-    public PromiseHttpOperationResponse removeServer(String id);
+    public PromiseHttpResponse removeServer(String id);
 }

@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.promise.auth.sdk.aspect.PromisePublicInterface;
 import com.promise.common.PromiseErrorResponse;
 import com.promise.common.constant.PromiseCategory;
-import com.promise.common.dto.PromiseHttpOperationResponse;
+import com.promise.common.dto.PromiseHttpResponse;
 import com.promise.common.dto.PromiseOperationResponse;
 import com.promise.common.exception.InternelErrorException;
 import com.promise.common.exception.InvalidRequestBodyException;
@@ -96,7 +96,7 @@ public class TaskPublicController
             throws InvalidRequestBodyException
     {
         log.info("POST /task begin, task name = " + request.getName());
-        final PromiseHttpOperationResponse serviceRet = taskService.createTask(request);
+        final PromiseHttpResponse serviceRet = taskService.createTask(request);
         final ResponseEntity<PromiseOperationResponse> ret = new ResponseEntity<>(
                 serviceRet.getResponse(),
                 serviceRet.getHttpStatus());
@@ -189,7 +189,7 @@ public class TaskPublicController
             @RequestHeader Map<String, String> header,
             @PathVariable String id)
     {
-        final PromiseHttpOperationResponse ret = taskService.deleteTask(id);
+        final PromiseHttpResponse ret = taskService.deleteTask(id);
         return new ResponseEntity<>(ret.getResponse(), ret.getHttpStatus());
     }
 

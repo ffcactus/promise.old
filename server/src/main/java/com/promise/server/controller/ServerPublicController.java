@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.promise.auth.sdk.aspect.PromisePublicInterface;
 import com.promise.common.PromiseErrorResponse;
 import com.promise.common.constant.PromiseCategory;
-import com.promise.common.dto.PromiseHttpOperationResponse;
+import com.promise.common.dto.PromiseHttpResponse;
 import com.promise.common.dto.PromiseOperationResponse;
 import com.promise.common.exception.InternelErrorException;
 import com.promise.common.exception.InvalidRequestBodyException;
@@ -88,7 +88,7 @@ public class ServerPublicController
             @RequestBody AddServerRequest request)
             throws InvalidRequestBodyException
     {
-        final PromiseHttpOperationResponse ret = serverService.addServer(request);
+        final PromiseHttpResponse ret = serverService.addServer(request);
         return new ResponseEntity<>(ret.getResponse(), ret.getHttpStatus());
     }
 
@@ -127,7 +127,7 @@ public class ServerPublicController
             @RequestHeader Map<String, String> header,
             @PathVariable String id)
     {
-        final PromiseHttpOperationResponse ret = serverService.removeServer(id);
+        final PromiseHttpResponse ret = serverService.removeServer(id);
         return new ResponseEntity<>(ret.getResponse(), ret.getHttpStatus());
     }
 

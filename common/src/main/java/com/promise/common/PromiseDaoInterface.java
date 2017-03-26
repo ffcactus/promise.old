@@ -2,7 +2,7 @@ package com.promise.common;
 
 import java.util.List;
 
-import com.promise.common.dto.PromiseHttpOperationResponse;
+import com.promise.common.dto.PromiseHttpResponse;
 import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.NoDbInstanceException;
 
@@ -16,35 +16,34 @@ public interface PromiseDaoInterface<C, G>
 {
     /**
      * Create the object in DB and return a response.
-     * 
+     *
      * @param request
      * @return
      * @throws DbOperationException
      */
-    public PromiseHttpOperationResponse create(C request)
+    public PromiseHttpResponse create(C request)
             throws DbOperationException;
 
     /**
      * Get the object from DB, and generate response.
-     * 
+     *
      * @param id
      * @return
      * @throws NoDbInstanceException
      */
-    public G get(String id)
-            throws NoDbInstanceException;
+    public G get(String id);
 
     /**
      * Delete the object from DB and return the result.
-     * 
+     *
      * @param id
      * @return
      */
-    public PromiseHttpOperationResponse delete(String id);
+    public PromiseHttpResponse delete(String id);
 
     /**
      * Get the objects from DB.
-     * 
+     *
      * @param start
      * @param count
      * @return

@@ -2,15 +2,11 @@ package com.promise.common.dto;
 
 import org.springframework.http.HttpStatus;
 
-import com.promise.common.constant.PromiseCategory;
-
-public class PromiseNotFoundHttpOperationResponse extends PromiseHttpOperationResponse
+public class PromiseNotFoundHttpResponse extends PromiseHttpResponse
 {
-    public PromiseNotFoundHttpOperationResponse(PromiseCategory category, String uri)
+    public PromiseNotFoundHttpResponse()
     {
         final PromiseOperationResponse response = new PromiseOperationResponse();
-        response.setCategory(category);
-        response.setUri(uri);
         response.setState(PromiseResponseState.ERROR);
         response.setName("Not found.");
         response.setDescription("Can't find the object.");

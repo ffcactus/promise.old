@@ -5,9 +5,8 @@ import java.util.Optional;
 
 import com.promise.auth.sdk.dto.CreateUserRequest;
 import com.promise.auth.sdk.dto.GetUserListResponse;
-import com.promise.auth.sdk.dto.GetUserResponse;
 import com.promise.common.PromiseUser;
-import com.promise.common.dto.PromiseHttpOperationResponse;
+import com.promise.common.dto.PromiseHttpResponse;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
 
@@ -22,18 +21,16 @@ public interface UserServiceInterface
      * @throws NoDbInstanceException
      * @throws NoSuchAlgorithmException
      */
-    public PromiseHttpOperationResponse createUser(CreateUserRequest user)
+    public PromiseHttpResponse createUser(CreateUserRequest user)
             throws InvalidRequestBodyException;
 
     /**
      * Get user by ID.
      *
      * @param id The ID of the user.
-     * @return The DTO that represents the user.
-     * @throws NoDbInstanceException If the user can't be found.
+     * @return The DTO that represents the result.
      */
-    public GetUserResponse getUser(String id)
-            throws NoDbInstanceException;
+    public PromiseHttpResponse getUser(String id);
 
     /**
      * Get user by token.
@@ -75,5 +72,5 @@ public interface UserServiceInterface
      *
      * @param id The id of the user to delete.
      */
-    public PromiseHttpOperationResponse deleteUser(String id);
+    public PromiseHttpResponse deleteUser(String id);
 }

@@ -15,12 +15,11 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.promise.common.constant.PromiseCategory;
-import com.promise.common.dto.PromiseCreateHttpOperationResponse;
-import com.promise.common.dto.PromiseDeleteHttpOperationResponse;
-import com.promise.common.dto.PromiseHttpOperationResponse;
-import com.promise.common.dto.PromiseNotFoundHttpOperationResponse;
+import com.promise.common.dto.PromiseCreateHttpResponse;
+import com.promise.common.dto.PromiseDeleteHttpResponse;
+import com.promise.common.dto.PromiseHttpResponse;
+import com.promise.common.dto.PromiseNotFoundHttpResponse;
 import com.promise.common.exception.DbOperationException;
-import com.promise.common.exception.NoDbInstanceException;
 import com.promise.util.PromiseUtil;
 
 public abstract class PromiseDao<E extends PromiseEntity, C, G> implements PromiseDaoInterface<C, G>
@@ -49,7 +48,7 @@ public abstract class PromiseDao<E extends PromiseEntity, C, G> implements Promi
     public abstract G fromEntityToGetResponse(E entity);
 
     @Override
-    public PromiseHttpOperationResponse create(C request)
+    public PromiseHttpResponse create(C request)
             throws DbOperationException
     {
         final E entity = fromCreateRequestToEntity(request);
@@ -60,7 +59,6 @@ public abstract class PromiseDao<E extends PromiseEntity, C, G> implements Promi
 
     @Override
     public G get(String id)
-            throws NoDbInstanceException
     {
         E entity;
         try
@@ -69,19 +67,19 @@ public abstract class PromiseDao<E extends PromiseEntity, C, G> implements Promi
         }
         catch (final IllegalArgumentException e)
         {
-            throw new NoDbInstanceException(category);
+            return null;
         }
 
         if (entity == null)
         {
-            throw new NoDbInstanceException(category);
+            return null;
         }
 
         return fromEntityToGetResponse(entity);
     }
 
     @Override
-    public PromiseHttpOperationResponse delete(String id)
+    public PromiseHttpResponse delete(String id)
     {
         E entity;
         try
@@ -90,16 +88,16 @@ public abstract class PromiseDao<E extends PromiseEntity, C, G> implements Promi
         }
         catch (final IllegalArgumentException e)
         {
-            return new PromiseNotFoundHttpOperationResponse(category, null);
+            return new PromiseNotFoundHttpResponse();
         }
 
         if (entity == null)
         {
-            return new PromiseNotFoundHttpOperationResponse(category, null);
+            return new PromiseNotFoundHttpResponse();
         }
         final String uri = entity.getUri();
         getSession().delete(entity);
-        return new PromiseDeleteHttpOperationResponse(category, uri);
+        return new PromiseDeleteHttpResponse(category, uri);
     }
 
     @Override
@@ -122,12 +120,12 @@ public abstract class PromiseDao<E extends PromiseEntity, C, G> implements Promi
         return ret;
     }
 
-    private PromiseHttpOperationResponse fromEntityToOperationResponse(E entity)
+    private PromiseHttpResponse fromEntityToOperationResponse(E entity)
     {
         if (entity == null)
         {
-            return new PromiseNotFoundHttpOperationResponse(category, null);
+            return new PromiseNotFoundHttpResponse();
         }
-        return new PromiseCreateHttpOperationResponse(category, entity.getUri());
+        return new PromiseCreateHttpResponse(category, entity.getUri());
     }
 }

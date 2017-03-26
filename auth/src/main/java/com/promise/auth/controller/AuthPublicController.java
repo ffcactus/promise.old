@@ -23,23 +23,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.promise.auth.sdk.aspect.PromisePublicInterface;
-import com.promise.auth.sdk.client.AuthClient;
 import com.promise.auth.sdk.dto.CreateScopeRequest;
 import com.promise.auth.sdk.dto.CreateUserRequest;
 import com.promise.auth.sdk.dto.GetScopeListResponse;
 import com.promise.auth.sdk.dto.GetScopeResponse;
 import com.promise.auth.sdk.dto.GetUserListResponse;
-import com.promise.auth.sdk.dto.GetUserResponse;
 import com.promise.auth.sdk.dto.PostLoginRequest;
 import com.promise.auth.sdk.dto.PostLoginResponse;
 import com.promise.auth.service.AuthServiceInterface;
 import com.promise.auth.service.ScopeServiceInterface;
 import com.promise.auth.service.UserServiceInterface;
-import com.promise.common.PromiseAccessPoint;
 import com.promise.common.PromiseErrorResponse;
-import com.promise.common.PromiseToken;
 import com.promise.common.constant.PromiseCategory;
-import com.promise.common.dto.PromiseHttpOperationResponse;
+import com.promise.common.dto.PromiseHttpResponse;
 import com.promise.common.dto.PromiseOperationResponse;
 import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.InternelErrorException;
@@ -124,7 +120,7 @@ public class AuthPublicController
             @RequestBody CreateUserRequest request)
             throws InvalidRequestBodyException
     {
-        final PromiseHttpOperationResponse serviceRet = userService.createUser(request);
+        final PromiseHttpResponse serviceRet = userService.createUser(request);
         return new ResponseEntity<>(serviceRet.getResponse(), serviceRet.getHttpStatus());
     }
 
@@ -153,19 +149,12 @@ public class AuthPublicController
      */
     @PromisePublicInterface
     @GetMapping("/user/{id}")
-    ResponseEntity<GetUserResponse> getUser(
+    ResponseEntity<PromiseOperationResponse> getUser(
             @RequestHeader Map<String, String> header,
             @PathVariable String id)
     {
-        AuthClient.aa(new PromiseToken("token"), new PromiseAccessPoint());
-        try
-        {
-            return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
-        }
-        catch (final NoDbInstanceException e)
-        {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        final PromiseHttpResponse response = userService.getUser(id);
+        return PromiseHttpResponse.toResponseEntity(response);
     }
 
     /**
@@ -180,7 +169,7 @@ public class AuthPublicController
             @RequestHeader Map<String, String> header,
             @PathVariable String id)
     {
-        final PromiseHttpOperationResponse serviceRet = userService.deleteUser(id);
+        final PromiseHttpResponse serviceRet = userService.deleteUser(id);
         return new ResponseEntity<>(serviceRet.getResponse(), serviceRet.getHttpStatus());
     }
 
@@ -200,7 +189,7 @@ public class AuthPublicController
             @RequestBody CreateScopeRequest scope)
             throws InvalidRequestBodyException
     {
-        final PromiseHttpOperationResponse serviceRet = scopeService.createScope(scope);
+        final PromiseHttpResponse serviceRet = scopeService.createScope(scope);
         return new ResponseEntity<>(serviceRet.getResponse(), serviceRet.getHttpStatus());
     }
 
@@ -255,7 +244,7 @@ public class AuthPublicController
             @RequestHeader Map<String, String> header,
             @PathVariable String id)
     {
-        final PromiseHttpOperationResponse ret = scopeService.deleteScope(id);
+        final PromiseHttpResponse ret = scopeService.deleteScope(id);
         return new ResponseEntity<>(ret.getResponse(), ret.getHttpStatus());
     }
 

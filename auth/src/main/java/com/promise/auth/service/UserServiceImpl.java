@@ -23,7 +23,9 @@ import com.promise.auth.util.PasswordUtil;
 import com.promise.auth.util.PasswordUtil.HashResult;
 import com.promise.common.PromiseUser;
 import com.promise.common.constant.PromiseCategory;
-import com.promise.common.dto.PromiseHttpOperationResponse;
+import com.promise.common.dto.PromiseGetHttpResponse;
+import com.promise.common.dto.PromiseHttpResponse;
+import com.promise.common.dto.PromiseNotFoundHttpResponse;
 import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
@@ -76,7 +78,7 @@ public class UserServiceImpl implements UserServiceInterface
     }
 
     @Override
-    public PromiseHttpOperationResponse createUser(CreateUserRequest createUserRequest)
+    public PromiseHttpResponse createUser(CreateUserRequest createUserRequest)
             throws InvalidRequestBodyException
     {
         try
@@ -90,10 +92,17 @@ public class UserServiceImpl implements UserServiceInterface
     }
 
     @Override
-    public GetUserResponse getUser(String id)
-            throws NoDbInstanceException
+    public PromiseHttpResponse getUser(String id)
     {
-        return userDao.get(id);
+        final GetUserResponse user = userDao.get(id);
+        if (user == null)
+        {
+            return new PromiseNotFoundHttpResponse();
+        }
+        else
+        {
+            return new PromiseGetHttpResponse<>(user);
+        }
     }
 
     @Override
@@ -113,7 +122,7 @@ public class UserServiceImpl implements UserServiceInterface
     }
 
     @Override
-    public PromiseHttpOperationResponse deleteUser(String id)
+    public PromiseHttpResponse deleteUser(String id)
     {
         return userDao.delete(id);
     }

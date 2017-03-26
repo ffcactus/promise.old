@@ -21,6 +21,7 @@ import com.promise.auth.sdk.dto.PostLoginRequest;
 import com.promise.auth.sdk.dto.PostLoginResponse;
 import com.promise.common.PromiseAccessPoint;
 import com.promise.common.PromiseToken;
+import com.promise.common.dto.PromiseGetResponse;
 import com.promise.common.dto.PromiseOperationResponse;
 import com.promise.integrationtest.PromisePublicInterfaceTest;
 import com.promise.integrationtest.util.CommonTestUtil;
@@ -143,14 +144,15 @@ public class UserTest extends PromisePublicInterfaceTest
         final String userUri = createUserResponseEntity.getBody().getUri();
 
         // Get the user that is created before.
-        final ResponseEntity<GetUserResponse> getUserResponseEntity = HttpJsonClient
-                .get(HOSTNAME + userUri, token, GetUserResponse.class);
+        final ResponseEntity<PromiseGetResponse<GetUserResponse>> getUserResponseEntity = HttpJsonClient
+                .getWithType(HOSTNAME + userUri, token, GetUserResponse.class);
         Assert.assertEquals(HttpStatus.OK, getUserResponseEntity.getStatusCode());
-        final GetUserResponse getUserResponse = getUserResponseEntity.getBody();
-        CommonTestUtil.assertPromiseResource(getUserResponse);
-        Assert.assertEquals(createUserRequest.getUsername(), getUserResponse.getUsername());
-        Assert.assertEquals(createUserRequest.getEmail(), getUserResponse.getEmail());
-        Assert.assertTrue(CommonTestUtil.collectionEquals(scopeUriList, getUserResponse.getScopeUri()));
+        final PromiseGetResponse<GetUserResponse> getUserResponse = getUserResponseEntity.getBody();
+        final GetUserResponse user = getUserResponse.getData();
+        CommonTestUtil.assertPromiseResource(user);
+        Assert.assertEquals(createUserRequest.getUsername(), user.getUsername());
+        Assert.assertEquals(createUserRequest.getEmail(), user.getEmail());
+        Assert.assertTrue(CommonTestUtil.collectionEquals(scopeUriList, user.getScopeUri()));
 
         Assert.assertEquals(userUri, getUserResponse.getUri());
 

@@ -4,12 +4,11 @@ import org.springframework.http.HttpStatus;
 
 import com.promise.common.constant.PromiseCategory;
 
-public class PromiseCreateHttpOperationResponse extends PromiseHttpOperationResponse
+public class PromiseCreateHttpResponse extends PromiseHttpResponse
 {
-    public PromiseCreateHttpOperationResponse(PromiseCategory category, String uri)
+    public PromiseCreateHttpResponse(PromiseCategory category, String uri)
     {
         final PromiseOperationResponse response = new PromiseOperationResponse();
-        response.setCategory(category);
         response.setUri(uri);
         response.setState(PromiseResponseState.OK);
         setHttpStatus(HttpStatus.CREATED);

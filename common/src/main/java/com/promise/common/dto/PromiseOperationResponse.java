@@ -2,14 +2,12 @@ package com.promise.common.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.promise.common.constant.PromiseCategory;
 
 @JsonInclude(Include.NON_NULL)
 public class PromiseOperationResponse
 {
     private PromiseResponseState state;
     private String uri;
-    private PromiseCategory category;
     private String name;
     private String description;
     private String[] reason;
@@ -38,16 +36,6 @@ public class PromiseOperationResponse
     public void setUri(String uri)
     {
         this.uri = uri;
-    }
-
-    public PromiseCategory getCategory()
-    {
-        return category;
-    }
-
-    public void setCategory(PromiseCategory category)
-    {
-        this.category = category;
     }
 
     public String getName()
@@ -89,5 +77,4 @@ public class PromiseOperationResponse
     {
         this.solution = solution;
     }
-
 }

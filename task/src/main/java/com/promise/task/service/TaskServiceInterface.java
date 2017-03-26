@@ -2,7 +2,7 @@ package com.promise.task.service;
 
 import java.util.Optional;
 
-import com.promise.common.dto.PromiseHttpOperationResponse;
+import com.promise.common.dto.PromiseHttpResponse;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.task.sdk.dto.CreateTaskRequest;
@@ -21,7 +21,7 @@ public interface TaskServiceInterface
      * @return The DTO that represents the response.
      * @throws Exception
      */
-    public PromiseHttpOperationResponse createTask(CreateTaskRequest request)
+    public PromiseHttpResponse createTask(CreateTaskRequest request)
             throws InvalidRequestBodyException;
 
     /**
@@ -60,5 +60,5 @@ public interface TaskServiceInterface
      * @param id The ID of the task.
      * @throws NoDbInstanceException If the task can't be found by the ID.
      */
-    public PromiseHttpOperationResponse deleteTask(String id);
+    public PromiseHttpResponse deleteTask(String id);
 }

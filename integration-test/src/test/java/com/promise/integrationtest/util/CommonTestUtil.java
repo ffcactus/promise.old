@@ -30,7 +30,6 @@ public class CommonTestUtil
     public static void assertPromiseOperationResponse(PromiseOperationResponse r)
     {
         Assert.assertNotNull(r.getState());
-        Assert.assertNotNull(r.getCategory());
         Assert.assertNotNull(r.getUri());
     }
 }

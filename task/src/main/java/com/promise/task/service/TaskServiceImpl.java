@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.promise.common.constant.PromiseCategory;
-import com.promise.common.dto.PromiseHttpOperationResponse;
+import com.promise.common.dto.PromiseHttpResponse;
 import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
@@ -27,7 +27,7 @@ public class TaskServiceImpl implements TaskServiceInterface
     private TaskDaoInterface taskDao;
 
     @Override
-    public PromiseHttpOperationResponse createTask(CreateTaskRequest request)
+    public PromiseHttpResponse createTask(CreateTaskRequest request)
             throws InvalidRequestBodyException
     {
         try
@@ -57,7 +57,7 @@ public class TaskServiceImpl implements TaskServiceInterface
     }
 
     @Override
-    public PromiseHttpOperationResponse deleteTask(String id)
+    public PromiseHttpResponse deleteTask(String id)
     {
         return taskDao.delete(id);
     }
