@@ -20,6 +20,7 @@ import com.promise.auth.sdk.dto.PostLoginRequest;
 import com.promise.auth.sdk.dto.PostLoginResponse;
 import com.promise.common.PromiseAccessPoint;
 import com.promise.common.PromiseToken;
+import com.promise.common.dto.PromiseGetResponse;
 import com.promise.common.dto.PromiseOperationResponse;
 import com.promise.integrationtest.PromisePublicInterfaceTest;
 import com.promise.integrationtest.util.CommonTestUtil;
@@ -147,15 +148,16 @@ public class ScopeTest extends PromisePublicInterfaceTest
         Assert.assertEquals(HttpURLConnection.HTTP_CREATED, postScopeRet.getStatusCodeValue());
         CommonTestUtil.assertPromiseOperationResponse(postResponse);
 
-        final ResponseEntity<GetScopeResponse> getScopeRet = HttpJsonClient
-                .get(HOSTNAME + postResponse.getUri(), token, GetScopeResponse.class);
-        final GetScopeResponse getResponse = getScopeRet.getBody();
+        final ResponseEntity<PromiseGetResponse<GetScopeResponse>> getScopeRet = HttpJsonClient
+                .getWithType(HOSTNAME + postResponse.getUri(), token, GetScopeResponse.class);
 
+        final PromiseGetResponse<GetScopeResponse> getResponse = getScopeRet.getBody();
+        final GetScopeResponse scope = getResponse.getData();
         Assert.assertEquals(HttpStatus.OK, getScopeRet.getStatusCode());
-        CommonTestUtil.assertPromiseResource(getResponse);
-        Assert.assertEquals(createRequest0.getName(), getResponse.getName());
-        Assert.assertEquals(createRequest0.getDescription(), getResponse.getDescription());
-        Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest0.getAccessPointList(), getResponse.getAccessPointList()));
+        CommonTestUtil.assertPromiseResource(scope);
+        Assert.assertEquals(createRequest0.getName(), scope.getName());
+        Assert.assertEquals(createRequest0.getDescription(), scope.getDescription());
+        Assert.assertTrue(CommonTestUtil.collectionEquals(createRequest0.getAccessPointList(), scope.getAccessPointList()));
 
         Assert.assertEquals(postResponse.getUri(), getResponse.getUri());
 

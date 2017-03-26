@@ -26,7 +26,6 @@ import com.promise.auth.sdk.aspect.PromisePublicInterface;
 import com.promise.auth.sdk.dto.CreateScopeRequest;
 import com.promise.auth.sdk.dto.CreateUserRequest;
 import com.promise.auth.sdk.dto.GetScopeListResponse;
-import com.promise.auth.sdk.dto.GetScopeResponse;
 import com.promise.auth.sdk.dto.GetUserListResponse;
 import com.promise.auth.sdk.dto.PostLoginRequest;
 import com.promise.auth.sdk.dto.PostLoginResponse;
@@ -218,18 +217,12 @@ public class AuthPublicController
      */
     @PromisePublicInterface
     @GetMapping("/scope/{id}")
-    public ResponseEntity<GetScopeResponse> getScope(
+    public ResponseEntity<PromiseOperationResponse> getScope(
             @RequestHeader Map<String, String> header,
             @PathVariable String id)
     {
-        try
-        {
-            return new ResponseEntity<>(scopeService.getScope(id), HttpStatus.OK);
-        }
-        catch (final NoDbInstanceException e)
-        {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        final PromiseHttpResponse response = scopeService.getScope(id);
+        return PromiseHttpResponse.toResponseEntity(response);
     }
 
     /**

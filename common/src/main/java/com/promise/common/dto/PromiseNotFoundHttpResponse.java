@@ -7,7 +7,7 @@ public class PromiseNotFoundHttpResponse extends PromiseHttpResponse
     public PromiseNotFoundHttpResponse()
     {
         final PromiseOperationResponse response = new PromiseOperationResponse();
-        response.setState(PromiseResponseState.ERROR);
+        response.setState(PromiseResponseState.WARN);
         response.setName("Not found.");
         response.setDescription("Can't find the object.");
         final String reason[] = {

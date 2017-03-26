@@ -4,10 +4,8 @@ import java.util.Optional;
 
 import com.promise.auth.sdk.dto.CreateScopeRequest;
 import com.promise.auth.sdk.dto.GetScopeListResponse;
-import com.promise.auth.sdk.dto.GetScopeResponse;
 import com.promise.common.dto.PromiseHttpResponse;
 import com.promise.common.exception.InvalidRequestBodyException;
-import com.promise.common.exception.NoDbInstanceException;
 
 public interface ScopeServiceInterface
 {
@@ -27,16 +25,13 @@ public interface ScopeServiceInterface
      *
      * @param id The id of the scope to return.
      * @return The object that represents the scope returned.
-     * @throws NoDbInstanceException If the scope is unable to find.
      */
-    public GetScopeResponse getScope(String id)
-            throws NoDbInstanceException;
+    public PromiseHttpResponse getScope(String id);
 
     /**
      * Delete Scope by ID.
      *
      * @param id The id of the scope to delete.
-     * @throws NoDbInstanceException If the scope is unable to find.
      */
     public PromiseHttpResponse deleteScope(String id);
 

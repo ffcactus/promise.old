@@ -23,6 +23,7 @@ import com.promise.common.PromiseAccessPoint;
 import com.promise.common.PromiseToken;
 import com.promise.common.dto.PromiseGetResponse;
 import com.promise.common.dto.PromiseOperationResponse;
+import com.promise.common.dto.PromiseResponseState;
 import com.promise.integrationtest.PromisePublicInterfaceTest;
 import com.promise.integrationtest.util.CommonTestUtil;
 import com.promise.integrationtest.util.HttpJsonClient;
@@ -146,9 +147,11 @@ public class UserTest extends PromisePublicInterfaceTest
         // Get the user that is created before.
         final ResponseEntity<PromiseGetResponse<GetUserResponse>> getUserResponseEntity = HttpJsonClient
                 .getWithType(HOSTNAME + userUri, token, GetUserResponse.class);
-        Assert.assertEquals(HttpStatus.OK, getUserResponseEntity.getStatusCode());
+
         final PromiseGetResponse<GetUserResponse> getUserResponse = getUserResponseEntity.getBody();
         final GetUserResponse user = getUserResponse.getData();
+
+        Assert.assertEquals(HttpStatus.OK, getUserResponseEntity.getStatusCode());
         CommonTestUtil.assertPromiseResource(user);
         Assert.assertEquals(createUserRequest.getUsername(), user.getUsername());
         Assert.assertEquals(createUserRequest.getEmail(), user.getEmail());
@@ -165,9 +168,14 @@ public class UserTest extends PromisePublicInterfaceTest
     @Test
     public void testGetNonexistUser()
     {
-        final ResponseEntity<GetUserResponse> getUserResponseEntity = HttpJsonClient
-                .get(HOSTNAME + "/rest/user/xxxx", token, GetUserResponse.class);
+        final ResponseEntity<PromiseGetResponse<GetUserResponse>> getUserResponseEntity = HttpJsonClient
+                .getWithType(HOSTNAME + "/rest/user/xxxx", token, GetUserResponse.class);
         Assert.assertEquals(HttpStatus.NOT_FOUND, getUserResponseEntity.getStatusCode());
+
+        Assert.assertEquals(PromiseResponseState.WARN, getUserResponseEntity.getBody().getState());
+        Assert.assertNotNull(getUserResponseEntity.getBody().getReason());
+        Assert.assertNotNull(getUserResponseEntity.getBody().getSolution());
+        Assert.assertNull(getUserResponseEntity.getBody().getData());
     }
 
     @Test
