@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.promise.common.constant.PromiseCategory;
+import com.promise.common.dto.PromiseGetHttpResponse;
 import com.promise.common.dto.PromiseHttpResponse;
+import com.promise.common.dto.PromiseNotFoundHttpResponse;
 import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
@@ -41,11 +43,17 @@ public class TaskServiceImpl implements TaskServiceInterface
     }
 
     @Override
-    public GetTaskResponse getTask(String id)
-            throws NoDbInstanceException
+    public PromiseHttpResponse getTask(String id)
     {
-        final GetTaskResponse ret = taskDao.get(id);
-        return ret;
+        final GetTaskResponse task = taskDao.get(id);
+        if (task == null)
+        {
+            return new PromiseNotFoundHttpResponse();
+        }
+        else
+        {
+            return new PromiseGetHttpResponse<>(task);
+        }
     }
 
     @Override

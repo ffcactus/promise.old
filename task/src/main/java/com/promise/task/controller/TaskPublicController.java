@@ -33,7 +33,6 @@ import com.promise.common.exception.NoDbInstanceException;
 import com.promise.common.exception.PromiseException;
 import com.promise.task.sdk.dto.CreateTaskRequest;
 import com.promise.task.sdk.dto.GetTaskListResponse;
-import com.promise.task.sdk.dto.GetTaskResponse;
 import com.promise.task.sdk.dto.UpdateTaskRequest;
 import com.promise.task.sdk.dto.UpdateTaskResponse;
 import com.promise.task.service.TaskServiceInterface;
@@ -113,18 +112,12 @@ public class TaskPublicController
      */
     @PromisePublicInterface
     @GetMapping("/task/{id}")
-    public ResponseEntity<GetTaskResponse> getTask(
+    public ResponseEntity<PromiseOperationResponse> getTask(
             @RequestHeader Map<String, String> header,
             @PathVariable String id)
     {
-        try
-        {
-            return new ResponseEntity<>(taskService.getTask(id), HttpStatus.OK);
-        }
-        catch (final NoDbInstanceException e)
-        {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        final PromiseHttpResponse response = taskService.getTask(id);
+        return PromiseHttpResponse.toResponseEntity(response);
     }
 
     /**

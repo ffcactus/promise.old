@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import com.promise.common.PromiseExecutionResultState;
 import com.promise.common.PromiseExecutionState;
 import com.promise.common.PromiseTaskStep;
+import com.promise.common.dto.PromiseGetResponse;
 import com.promise.common.dto.PromiseOperationResponse;
 import com.promise.integrationtest.PromisePublicInterfaceTest;
 import com.promise.integrationtest.util.CommonTestUtil;
@@ -110,25 +111,27 @@ public class TaskTest extends PromisePublicInterfaceTest
         CommonTestUtil.assertPromiseOperationResponse(postResponse);
 
         final String taskUri = postResponse.getUri();
-        final ResponseEntity<GetTaskResponse> getResponseEntity = HttpJsonClient
-                .get(HOSTNAME + taskUri, token, GetTaskResponse.class);
+        final ResponseEntity<PromiseGetResponse<GetTaskResponse>> getResponseEntity = HttpJsonClient
+                .getWithType(HOSTNAME + taskUri, token, GetTaskResponse.class);
 
-        final GetTaskResponse getResponse = getResponseEntity.getBody();
-        Assert.assertEquals(postFullTaskRequest.getName(), getResponse.getName());
-        Assert.assertEquals(postFullTaskRequest.getExpectedExcutionMs(), getResponse.getExpectedExcutionMs());
-        Assert.assertEquals(PromiseExecutionState.READY, getResponse.getState());
-        Assert.assertEquals(postFullTaskRequest.getStepList().size(), getResponse.getStepList().size());
-        for (final PromiseTaskStep each : getResponse.getStepList())
+        final PromiseGetResponse<GetTaskResponse> getResponse = getResponseEntity.getBody();
+        final GetTaskResponse task = getResponse.getData();
+
+        Assert.assertEquals(postFullTaskRequest.getName(), task.getName());
+        Assert.assertEquals(postFullTaskRequest.getExpectedExcutionMs(), task.getExpectedExcutionMs());
+        Assert.assertEquals(PromiseExecutionState.READY, task.getState());
+        Assert.assertEquals(postFullTaskRequest.getStepList().size(), task.getStepList().size());
+        for (final PromiseTaskStep each : task.getStepList())
         {
             Assert.assertEquals(PromiseExecutionState.READY, each.getState());
             Assert.assertEquals(0, each.getPercentage());
             Assert.assertNull(each.getTerminatedTime());
             Assert.assertEquals(PromiseExecutionResultState.UNKNOWN, each.getResult().getState());
         }
-        Assert.assertEquals(0, getResponse.getSubTaskUriList().size());
-        Assert.assertEquals(PromiseExecutionResultState.UNKNOWN, getResponse.getResult().getState());
-        Assert.assertEquals(0, getResponse.getResult().getReason().size());
-        Assert.assertEquals(0, getResponse.getResult().getSolution().size());
+        Assert.assertEquals(0, task.getSubTaskUriList().size());
+        Assert.assertEquals(PromiseExecutionResultState.UNKNOWN, task.getResult().getState());
+        Assert.assertEquals(0, task.getResult().getReason().size());
+        Assert.assertEquals(0, task.getResult().getSolution().size());
 
         Assert.assertEquals(taskUri, getResponse.getUri());
 
