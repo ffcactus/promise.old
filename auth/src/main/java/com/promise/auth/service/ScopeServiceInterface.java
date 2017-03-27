@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import com.promise.auth.sdk.dto.CreateScopeRequest;
 import com.promise.auth.sdk.dto.GetScopeListResponse;
-import com.promise.common.dto.PromiseHttpResponse;
 import com.promise.common.exception.InvalidRequestBodyException;
+import com.promise.common.response.PromiseHttpResponse;
 
 public interface ScopeServiceInterface
 {

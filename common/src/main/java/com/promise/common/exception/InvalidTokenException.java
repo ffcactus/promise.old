@@ -1,7 +1,5 @@
 package com.promise.common.exception;
 
-import com.promise.common.constant.PromiseCategory;
-
 public class InvalidTokenException extends PromiseException
 {
 
@@ -13,8 +11,6 @@ public class InvalidTokenException extends PromiseException
     public InvalidTokenException()
     {
         super();
-        this.setCategory(PromiseCategory.AA);
-        this.setName(PromiseCategory.AA.name());
         this.setDescription("Operation not permitted.");
         final String[] reason = {
                 "Missing token in the header.",

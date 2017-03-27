@@ -6,9 +6,9 @@ import java.util.Optional;
 import com.promise.auth.sdk.dto.CreateUserRequest;
 import com.promise.auth.sdk.dto.GetUserListResponse;
 import com.promise.common.PromiseUser;
-import com.promise.common.dto.PromiseHttpResponse;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
+import com.promise.common.response.PromiseHttpResponse;
 
 public interface UserServiceInterface
 {

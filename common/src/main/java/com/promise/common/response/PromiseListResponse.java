@@ -1,4 +1,4 @@
-package com.promise.common.dto;
+package com.promise.common.response;
 
 import java.util.List;
 

@@ -6,13 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.promise.common.constant.PromiseCategory;
-import com.promise.common.dto.PromiseGetHttpResponse;
-import com.promise.common.dto.PromiseHttpResponse;
-import com.promise.common.dto.PromiseNotFoundHttpResponse;
 import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
+import com.promise.common.response.PromiseGetHttpResponse;
+import com.promise.common.response.PromiseHttpResponse;
+import com.promise.common.response.PromiseNotFoundHttpResponse;
 import com.promise.task.dao.TaskDaoInterface;
 import com.promise.task.sdk.dto.CreateTaskRequest;
 import com.promise.task.sdk.dto.GetTaskListResponse;
@@ -38,7 +37,7 @@ public class TaskServiceImpl implements TaskServiceInterface
         }
         catch (final DbOperationException e)
         {
-            throw new InvalidRequestBodyException(e, PromiseCategory.TASK);
+            throw new InvalidRequestBodyException(e);
         }
     }
 

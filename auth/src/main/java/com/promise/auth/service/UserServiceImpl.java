@@ -22,13 +22,12 @@ import com.promise.auth.sdk.dto.GetUserResponse;
 import com.promise.auth.util.PasswordUtil;
 import com.promise.auth.util.PasswordUtil.HashResult;
 import com.promise.common.PromiseUser;
-import com.promise.common.constant.PromiseCategory;
-import com.promise.common.dto.PromiseGetHttpResponse;
-import com.promise.common.dto.PromiseHttpResponse;
-import com.promise.common.dto.PromiseNotFoundHttpResponse;
 import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
+import com.promise.common.response.PromiseGetHttpResponse;
+import com.promise.common.response.PromiseHttpResponse;
+import com.promise.common.response.PromiseNotFoundHttpResponse;
 
 @Service("userService")
 @Transactional
@@ -87,7 +86,7 @@ public class UserServiceImpl implements UserServiceInterface
         }
         catch (final DbOperationException e)
         {
-            throw new InvalidRequestBodyException(e, PromiseCategory.AA);
+            throw new InvalidRequestBodyException(e);
         }
     }
 

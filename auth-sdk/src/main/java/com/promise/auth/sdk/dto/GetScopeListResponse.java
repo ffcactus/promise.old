@@ -1,6 +1,6 @@
 package com.promise.auth.sdk.dto;
 
-import com.promise.common.dto.PromiseListResponse;
+import com.promise.common.response.PromiseListResponse;
 
 public class GetScopeListResponse extends PromiseListResponse<GetScopeResponse>
 {

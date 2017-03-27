@@ -2,9 +2,9 @@ package com.promise.task.service;
 
 import java.util.Optional;
 
-import com.promise.common.dto.PromiseHttpResponse;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
+import com.promise.common.response.PromiseHttpResponse;
 import com.promise.task.sdk.dto.CreateTaskRequest;
 import com.promise.task.sdk.dto.GetTaskListResponse;
 import com.promise.task.sdk.dto.UpdateTaskRequest;

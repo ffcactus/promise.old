@@ -1,7 +1,5 @@
 package com.promise.common.exception;
 
-import com.promise.common.constant.PromiseCategory;
-
 public class LoginFailureException extends PromiseException
 {
 
@@ -13,8 +11,6 @@ public class LoginFailureException extends PromiseException
     public LoginFailureException()
     {
         super();
-        this.setCategory(PromiseCategory.AA);
-        this.setName(PromiseCategory.AA.name());
         this.setDescription("Login failure");
         final String[] reason = {
                 "Invalied username or password."

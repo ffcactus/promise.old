@@ -1,8 +1,8 @@
 package com.promise.task.service;
 
-import com.promise.common.dto.PromiseHttpResponse;
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
+import com.promise.common.response.PromiseHttpResponse;
 import com.promise.task.sdk.dto.AddServerRequest;
 import com.promise.task.sdk.dto.GetServerResponse;
 

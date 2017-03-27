@@ -1,6 +1,6 @@
 package com.promise.task.sdk.dto;
 
-import com.promise.common.dto.PromiseListResponse;
+import com.promise.common.response.PromiseListResponse;
 
 public class GetTaskListResponse extends PromiseListResponse<GetTaskResponse>
 {

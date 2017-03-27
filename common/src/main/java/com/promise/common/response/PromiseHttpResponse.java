@@ -1,4 +1,4 @@
-package com.promise.common.dto;
+package com.promise.common.response;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,12 +33,11 @@ public class PromiseHttpResponse
         this.response = response;
     }
 
-    public static ResponseEntity<PromiseOperationResponse> toResponseEntity(PromiseHttpResponse httpResponse)
+    public ResponseEntity<PromiseOperationResponse> toResponseEntity()
     {
-        final HttpStatus status = httpResponse.getHttpStatus();
-        final PromiseOperationResponse operationResponse = httpResponse.getResponse();
+        final HttpStatus status = getHttpStatus();
+        final PromiseOperationResponse operationResponse = getResponse();
         return new ResponseEntity<>(operationResponse, status);
-
     }
 
 }

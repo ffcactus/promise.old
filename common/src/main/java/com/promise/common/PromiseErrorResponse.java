@@ -1,11 +1,9 @@
 package com.promise.common;
 
-import com.promise.common.constant.PromiseCategory;
 import com.promise.common.exception.PromiseException;
 
 public class PromiseErrorResponse
 {
-    private PromiseCategory category;
     private String name;
     private String description;
     private String[] reason;
@@ -19,22 +17,11 @@ public class PromiseErrorResponse
     public static PromiseErrorResponse makeInstance(PromiseException e)
     {
         final PromiseErrorResponse ret = new PromiseErrorResponse();
-        ret.setCategory(e.getCategory());
         ret.setName(e.getName());
         ret.setDescription(e.getDescription());
         ret.setReason(e.getReason());
         ret.setSolution(e.getSolution());
         return ret;
-    }
-
-    public PromiseCategory getCategory()
-    {
-        return category;
-    }
-
-    public void setCategory(PromiseCategory category)
-    {
-        this.category = category;
     }
 
     public String getName()

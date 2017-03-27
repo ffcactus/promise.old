@@ -21,7 +21,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.promise.common.exception.PromiseException;
 
 public class PromiseClient
 {
@@ -104,26 +103,6 @@ public class PromiseClient
     }
 
     /**
-     * When you are sure the response always is a fixed class, use this one.
-     * Or use httpPost.
-     *
-     * @param url
-     * @param request
-     * @param header
-     * @param responseClass
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    public static <T, E> ResponseEntity<T> httpPostAndConvert(
-            String url,
-            E request,
-            Map<String, String> header,
-            Class<T> responseClass)
-    {
-        return (ResponseEntity<T>) httpPost(url, request, header, responseClass);
-    }
-
-    /**
      * Common HTTP POST operation.
      *
      * @param url The URL of the operation.
@@ -132,7 +111,7 @@ public class PromiseClient
      * @param responseClass The class of the response.
      * @return The response of the operation.
      */
-    public static <T, E> ResponseEntity<?> httpPost(String url, E request, Map<String, String> header, Class<?> responseClass)
+    public static <R, T> ResponseEntity<T> httpPost(String url, R request, Map<String, String> header, Class<T> responseClass)
     {
         HttpURLConnection c = null;
         try
@@ -162,11 +141,8 @@ public class PromiseClient
                 os.write(new ObjectMapper().writeValueAsBytes(request));
                 os.flush();
             }
-            log.info("POST to " + url + " connect()");
             c.connect();
-            log.info("POST to " + url + " getResponseCode()");
             final int status = c.getResponseCode();
-            log.info("POST to " + url + " getInputStream()");
             final BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
             final StringBuilder sb = new StringBuilder();
             String line;
@@ -174,19 +150,13 @@ public class PromiseClient
             {
                 sb.append(line + "\n");
             }
-            log.info("POST to " + url + " close()");
             br.close();
             final ObjectMapper mapper = new ObjectMapper();
-            log.info("Post to " + url + " return " + status);
             switch (status)
             {
                 case HttpURLConnection.HTTP_OK:
                 case HttpURLConnection.HTTP_CREATED:
                     return new ResponseEntity<>(mapper.readValue(sb.toString(), responseClass), HttpStatus.valueOf(status));
-                case HttpURLConnection.HTTP_INTERNAL_ERROR:
-                    return new ResponseEntity<>(
-                            mapper.readValue(sb.toString(), PromiseException.class),
-                            HttpStatus.valueOf(status));
                 default:
                     // TODO
                     return new ResponseEntity<>(null, HttpStatus.valueOf(status));

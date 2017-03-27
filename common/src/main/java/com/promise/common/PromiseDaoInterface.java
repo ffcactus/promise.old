@@ -2,9 +2,9 @@ package com.promise.common;
 
 import java.util.List;
 
-import com.promise.common.dto.PromiseHttpResponse;
 import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.NoDbInstanceException;
+import com.promise.common.response.PromiseHttpResponse;
 
 /**
  * The common DAO interface.

@@ -10,12 +10,11 @@ import com.promise.auth.dao.ScopeDaoInterface;
 import com.promise.auth.sdk.dto.CreateScopeRequest;
 import com.promise.auth.sdk.dto.GetScopeListResponse;
 import com.promise.auth.sdk.dto.GetScopeResponse;
-import com.promise.common.constant.PromiseCategory;
-import com.promise.common.dto.PromiseGetHttpResponse;
-import com.promise.common.dto.PromiseHttpResponse;
-import com.promise.common.dto.PromiseNotFoundHttpResponse;
 import com.promise.common.exception.DbOperationException;
 import com.promise.common.exception.InvalidRequestBodyException;
+import com.promise.common.response.PromiseGetHttpResponse;
+import com.promise.common.response.PromiseHttpResponse;
+import com.promise.common.response.PromiseNotFoundHttpResponse;
 
 @Service("scopeService")
 @Transactional
@@ -35,7 +34,7 @@ public class ScopeServiceImpl implements ScopeServiceInterface
         }
         catch (final DbOperationException e)
         {
-            throw new InvalidRequestBodyException(e, PromiseCategory.SCOPE);
+            throw new InvalidRequestBodyException(e);
         }
     }
 

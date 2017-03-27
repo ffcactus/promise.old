@@ -1,11 +1,10 @@
-package com.promise.common.dto;
+package com.promise.common.response;
 
 public enum PromiseResponseState
 {
     OK ("ok"),
     WARN ("warn"),
-    ERROR ("error"),
-    ABORT ("abort");
+    ERROR ("error");
 
     private final String value;
 

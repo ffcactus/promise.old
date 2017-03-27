@@ -1,4 +1,4 @@
-package com.promise.common.dto;
+package com.promise.common.response;
 
 public class PromiseGetResponse<T> extends PromiseOperationResponse
 {

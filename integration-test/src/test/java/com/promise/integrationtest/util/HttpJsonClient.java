@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.promise.common.PromiseToken;
-import com.promise.common.dto.PromiseGetResponse;
+import com.promise.common.response.PromiseGetResponse;
 
 public class HttpJsonClient
 {

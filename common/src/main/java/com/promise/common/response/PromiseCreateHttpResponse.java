@@ -1,12 +1,10 @@
-package com.promise.common.dto;
+package com.promise.common.response;
 
 import org.springframework.http.HttpStatus;
 
-import com.promise.common.constant.PromiseCategory;
-
 public class PromiseCreateHttpResponse extends PromiseHttpResponse
 {
-    public PromiseCreateHttpResponse(PromiseCategory category, String uri)
+    public PromiseCreateHttpResponse(String uri)
     {
         final PromiseOperationResponse response = new PromiseOperationResponse();
         response.setUri(uri);

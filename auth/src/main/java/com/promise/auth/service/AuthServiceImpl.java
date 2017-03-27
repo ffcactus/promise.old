@@ -27,7 +27,6 @@ import com.promise.common.PromiseAccessPoint;
 import com.promise.common.PromiseClient;
 import com.promise.common.PromiseToken;
 import com.promise.common.PromiseUser;
-import com.promise.common.constant.PromiseCategory;
 import com.promise.common.exception.InternelErrorException;
 import com.promise.common.exception.LoginFailureException;
 import com.promise.common.exception.NoDbInstanceException;
@@ -82,7 +81,7 @@ public class AuthServiceImpl implements AuthServiceInterface
         catch (final NoSuchAlgorithmException e)
         {
             log.error("Failed to find a algorithm.");
-            throw new InternelErrorException(PromiseCategory.AA);
+            throw new InternelErrorException();
         }
         catch (final NoDbInstanceException e)
         {

@@ -1,4 +1,4 @@
-package com.promise.common.dto;
+package com.promise.common.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

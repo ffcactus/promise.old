@@ -15,11 +15,11 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.promise.common.constant.PromiseCategory;
-import com.promise.common.dto.PromiseCreateHttpResponse;
-import com.promise.common.dto.PromiseDeleteHttpResponse;
-import com.promise.common.dto.PromiseHttpResponse;
-import com.promise.common.dto.PromiseNotFoundHttpResponse;
 import com.promise.common.exception.DbOperationException;
+import com.promise.common.response.PromiseCreateHttpResponse;
+import com.promise.common.response.PromiseDeleteHttpResponse;
+import com.promise.common.response.PromiseHttpResponse;
+import com.promise.common.response.PromiseNotFoundHttpResponse;
 import com.promise.util.PromiseUtil;
 
 public abstract class PromiseDao<E extends PromiseEntity, C, G> implements PromiseDaoInterface<C, G>
@@ -126,6 +126,6 @@ public abstract class PromiseDao<E extends PromiseEntity, C, G> implements Promi
         {
             return new PromiseNotFoundHttpResponse();
         }
-        return new PromiseCreateHttpResponse(category, entity.getUri());
+        return new PromiseCreateHttpResponse(entity.getUri());
     }
 }

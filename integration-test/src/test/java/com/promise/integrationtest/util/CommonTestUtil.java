@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.junit.Assert;
 
 import com.promise.common.PromiseResource;
-import com.promise.common.dto.PromiseOperationResponse;
+import com.promise.common.response.PromiseOperationResponse;
 
 public class CommonTestUtil
 {

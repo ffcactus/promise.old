@@ -127,13 +127,13 @@ public class UserDaoImpl extends PromiseDao<UserEntity, CreateUserRequest, GetUs
             }
             else
             {
-                throw new NoDbInstanceException(PromiseCategory.AA);
+                throw new NoDbInstanceException();
             }
         }
         catch (final Exception e)
         {
             // TODO
-            throw new NoDbInstanceException(PromiseCategory.AA);
+            throw new NoDbInstanceException();
         }
     }
 

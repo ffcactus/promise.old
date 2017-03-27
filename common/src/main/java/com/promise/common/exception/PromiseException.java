@@ -1,7 +1,5 @@
 package com.promise.common.exception;
 
-import com.promise.common.constant.PromiseCategory;
-
 public class PromiseException extends Exception
 {
 
@@ -9,7 +7,6 @@ public class PromiseException extends Exception
      *
      */
     private static final long serialVersionUID = 1444334913003287888L;
-    private PromiseCategory category;
     private String name;
     private String description;
     private String[] reason;
@@ -21,16 +18,6 @@ public class PromiseException extends Exception
      */
     public PromiseException()
     {
-    }
-
-    public PromiseCategory getCategory()
-    {
-        return category;
-    }
-
-    public void setCategory(PromiseCategory category)
-    {
-        this.category = category;
     }
 
     public String getName()
