@@ -20,9 +20,9 @@ import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;
 import com.promise.common.response.PromiseHttpResponse;
 import com.promise.common.response.PromiseOperationResponse;
+import com.promise.server.service.ServerServiceInterface;
 import com.promise.task.sdk.dto.AddServerRequest;
 import com.promise.task.sdk.dto.GetServerResponse;
-import com.promise.task.service.ServerServiceInterface;
 
 @CrossOrigin
 @RestController

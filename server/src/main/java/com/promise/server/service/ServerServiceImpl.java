@@ -1,4 +1,4 @@
-package com.promise.task.service;
+package com.promise.server.service;
 
 import java.util.ArrayList;
 import java.util.List;

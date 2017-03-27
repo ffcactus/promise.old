@@ -1,4 +1,4 @@
-package com.promise.task.service;
+package com.promise.server.service;
 
 import com.promise.common.exception.InvalidRequestBodyException;
 import com.promise.common.exception.NoDbInstanceException;

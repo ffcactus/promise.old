@@ -2,6 +2,7 @@ package com.promise.common;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -143,7 +144,19 @@ public class PromiseClient
             }
             c.connect();
             final int status = c.getResponseCode();
-            final BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
+            InputStream inputStream;
+            switch (status)
+            {
+                case HttpURLConnection.HTTP_OK:
+                    inputStream = c.getInputStream();
+                    break;
+                case HttpURLConnection.HTTP_NOT_FOUND:
+                    inputStream = c.getErrorStream();
+                    break;
+                default:
+                    return new ResponseEntity<>(null, HttpStatus.valueOf(status));
+            }
+            final BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
             final StringBuilder sb = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null)
@@ -152,15 +165,7 @@ public class PromiseClient
             }
             br.close();
             final ObjectMapper mapper = new ObjectMapper();
-            switch (status)
-            {
-                case HttpURLConnection.HTTP_OK:
-                case HttpURLConnection.HTTP_CREATED:
-                    return new ResponseEntity<>(mapper.readValue(sb.toString(), responseClass), HttpStatus.valueOf(status));
-                default:
-                    // TODO
-                    return new ResponseEntity<>(null, HttpStatus.valueOf(status));
-            }
+            return new ResponseEntity<>(mapper.readValue(sb.toString(), responseClass), HttpStatus.valueOf(status));
         }
         catch (final MalformedURLException ex)
         {
