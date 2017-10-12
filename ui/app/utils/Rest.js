@@ -1,7 +1,7 @@
-import store from '../configureStore';
+// import store from '../configureStore';
 
 const Promise = require('promise');
-const HOST = (process.env.NODE_ENV === 'development') ? '192.168.116.135' : store.getState().global.host;
+// const HOST = (process.env.NODE_ENV === 'development') ? '192.168.116.135' : store.getState().global.host;
 
 function createCORSRequest(method, url, async) {
   let xhr = new XMLHttpRequest();
@@ -43,12 +43,49 @@ function doPost(url, request) {
   });
 }
 
-export function login(userName, password) {
-  return doPost('http://' + HOST + '/rest/login', {// + store.getState().global.host, {
+function doGet(url, request) {
+  return new Promise((resolve, reject) => {
+    // TODO do the check at a global place?
+    const xhr = createCORSRequest('GET', url, true);
+    if (!xhr) {
+      throw new Error('CORS not supported');
+    }
+    xhr.setRequestHeader('Accept', 'application/json');
+    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    xhr.onload = () => {
+      resolve({
+        response: JSON.parse(xhr.response),
+        status: xhr.status,
+        statusText: xhr.statusText
+      });
+    };
+    xhr.onerror = (e) => {
+      reject(e);
+    };
+    xhr.send(JSON.stringify(request));
+  });
+}
+
+export function login(hostname, userName, password) {
+  return doPost('http://' + hostname + '/director/rich/v1/login', {// + store.getState().global.host, {
     userName,
     password,
     domain: 'LOCAL'
   });
 }
 
-export { doPost };
+export function loadServerAll(hostname, start, count) {
+  let uri = 'http://' + hostname + '/director/rich/v1/server';
+  if (start && count) {
+    uri += ('?start=' + start + '&count=' + count);
+  } else if (start) {
+    uri += ('?start=' + start);
+  } else if (count) {
+    uri += ('?count=' + count);
+  }
+  return doGet(uri);
+}
+
+export function loadServer(hostname, serverUri) {
+  return doGet('http://' + hostname + serverUri);
+}

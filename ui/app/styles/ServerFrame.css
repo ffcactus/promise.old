@@ -1,0 +1,71 @@
+.ServerAppFrame {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;   
+    bottom: 0;
+    background-color: black;    
+}
+
+.ServerListFrame {
+    width: 20%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: auto;   
+    bottom: 0;
+    float: left;
+    background-color: lightgray;
+    overflow: auto;
+}
+
+.ServerListElement {
+    width: 100%;
+    height: 2em;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-left: 0;
+    margin-right: 0;
+    float: none;
+    display: block;
+    background-color: white;
+}
+
+.serverDetailFrame {
+    width: 80%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    left: auto;   
+    bottom: 0;
+    float: right;
+    background-color: white;
+    overflow: auto;
+}
+
+.serverDetailFrame :global .table {
+    border: 1px solid gray;
+}
+
+.serverDetailFrame :global .tbody {
+    border: 1px solid gray;
+}
+
+.serverDetailFrame :global .thead {
+    border: 1px solid gray;
+    background-color: gray;
+    color: white;
+}
+
+.serverDetailFrame :global .th {
+    border: 1px solid gray;
+}
+
+.serverDetailFrame :global .tr {
+    border: 1px solid gray;
+}
+
+.serverDetailFrame :global .td {
+    border: 1px solid gray;
+}

@@ -9,12 +9,18 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      hostname: '',
       username: '',
       password: ''
     };
+    this.handleHostnameChange = this.handleHostnameChange.bind(this);
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleHostnameChange(event) {
+    this.setState({ hostname: event.target.value });
   }
 
   handleUsernameChange(event) {
@@ -30,7 +36,7 @@ class Login extends Component {
 
     // If we can't find a next path after login, we go to root.
     const nextPathname = this.props.location.state ? this.props.location.state.nextPathname : '/';
-    this.props.dispatch(login(this.state.username, this.state.password, nextPathname));
+    this.props.dispatch(login(this.state.hostname, this.state.username, this.state.password, nextPathname));
   }
 
 
@@ -59,6 +65,7 @@ class Login extends Component {
         <form id="login" onSubmit={this.handleSubmit}>
           <p styleName="loginTitle">Promise</p>
           <section styleName="loginInput">
+            <input id="hostname" type="text" placeholder="hostname" onChange={this.handleHostnameChange} />
             <input id="username" type="text" placeholder="username" onChange={this.handleUsernameChange} />
             <input id="password" type="password" placeholder="password" onChange={this.handlePasswordChange} />
           </section>

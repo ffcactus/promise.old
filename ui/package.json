@@ -7,8 +7,8 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node server",
         "clean": "rm -rf dist",
-        "build": "cnpm run clean && webpack --config ./webpack.production.config.js --progress --profile --colors",
-        "deploy": "cnpm run build && scp ./dist/* root@192.168.116.135:/var/www/html",
+        "build": "npm run clean && webpack --config ./webpack.production.config.js --progress --profile --colors",
+        "deploy": "npm run build && scp ./dist/* root@10.93.81.79:/var/www/html",
         "eslint": "eslint ."
     },
     "author": "bin.bai",
@@ -53,6 +53,7 @@
         "stats-webpack-plugin": "^0.3.1",
         "style-loader": "^0.13.1",
         "url-loader": "^0.5.7",
+        "image-webpack-loader": "latest",
         "webpack": "^1.13.0",
         "webpack-dev-server": "^1.14.1"
     }

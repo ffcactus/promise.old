@@ -1,8 +1,8 @@
 import * as types from './types';
 import { browserHistory } from 'react-router';
-import * as Rest from '../utils/Rest';
+// import * as Rest from '../utils/Rest';
 
-const LOGIN_FAILURE_WAIT_TIME = 3000;
+// const LOGIN_FAILURE_WAIT_TIME = 3000;
 /*
  * When the user press login button, the following state takes in order:
  * 1. login start.
@@ -16,9 +16,10 @@ const LOGIN_FAILURE_WAIT_TIME = 3000;
  * @param {string} username
  * @param {string} password
  */
-function loginRequest(username, password) {
+function loginRequest(hostname, username, password) {
   return {
     type: types.LOGIN_REQUEST,
+    hostname,
     username,
     password
   };
@@ -28,21 +29,21 @@ function loginRequest(username, password) {
  * Login failed.
  * @param {object} info - The json response from server.
  */
-function loginFailure(info) {
-  return {
-    type: types.LOGIN_FAILURE,
-    info
-  };
-}
+// function loginFailure(info) {
+//   return {
+//     type: types.LOGIN_FAILURE,
+//     info
+//   };
+// }
 
 /**
  * Login failed, and waited enough time to try again.
  */
-function loginFailureTimeout() {
-  return {
-    type: types.LOGIN_FAILURE_TIMEOUT
-  };
-}
+// function loginFailureTimeout() {
+//   return {
+//     type: types.LOGIN_FAILURE_TIMEOUT
+//   };
+// }
 
 /**
  * Login success.
@@ -61,22 +62,31 @@ function loginSuccess(token) {
  * @param {string} password
  * @param {string} afterLoginPath
  */
-function login(username, password, afterLoginPath) {
+// function login(hostname, username, password, afterLoginPath) {
+//   return dispatch => {
+//     dispatch(loginRequest(hostname, username, password));
+//     Rest.login(hostname, username, password).then((response) => {
+//       if (response.status === 200) {
+//         dispatch(loginSuccess(response.response.token));
+//         // TODO
+//         // Is it good to do redirection in action?
+//         browserHistory.push(afterLoginPath);
+//         return;
+//       }
+//       setTimeout(() => {
+//         dispatch(loginFailureTimeout());
+//       }, LOGIN_FAILURE_WAIT_TIME);
+//       dispatch(loginFailure(response.response));
+//     }
+//     );
+//   };
+// }
+
+function login(hostname, username, password, afterLoginPath) {
   return dispatch => {
-    dispatch(loginRequest(username, password));
-    Rest.login(username, password).then((response) => {
-      if (response.status === 200) {
-        dispatch(loginSuccess(response.response.token));
-        // TODO
-        // Is it good to do redirection in action?
-        browserHistory.push(afterLoginPath);
-      } else {
-        setTimeout(() => {
-          dispatch(loginFailureTimeout());
-        }, LOGIN_FAILURE_WAIT_TIME);
-        dispatch(loginFailure(response.response));
-      }
-    });
+    dispatch(loginRequest(hostname, username, password));
+    dispatch(loginSuccess(''));
+    browserHistory.push(afterLoginPath);
   };
 }
 
